@@ -10,6 +10,7 @@ import entity.NPCManager;
 import entity.Player;
 import gamestates.CameraManager;
 import gamestates.FlagManager;
+import gamestates.StateManager;
 import input.KeyBindingHandler;		
 import tile.MapManager;
 
@@ -24,15 +25,17 @@ public class GameContentManager {
 	private final PlayerDeckManager playerDeckManager;
 	private final BattleDataManager battleDataManager;
 	private final ReactionAvailabilityManager reactionAvailabilityManager;
+	private final StateManager stateManager;
 
-	public GameContentManager(KeyBindingHandler keyHandler) {
+	public GameContentManager(KeyBindingHandler keyHandler, StateManager stateManager) {
+		this.stateManager = stateManager;
 		this.dialogueManager = new DialogueManager();
 		this.mapManager = new MapManager();
 		this.npcManager = new NPCManager();
 		this.player = new Player(10, 12, keyHandler);
 		this.cameraManager = new CameraManager(player);
 		this.flagManager = new FlagManager();
-		this.cutsceneManager = new CutsceneManager(npcManager, player, cameraManager, flagManager);
+		this.cutsceneManager = new CutsceneManager(npcManager, player, cameraManager, flagManager, stateManager);
 		this.playerDeckManager = new PlayerDeckManager();
 		this.battleDataManager = new BattleDataManager();
 		this.reactionAvailabilityManager = new ReactionAvailabilityManager(flagManager);

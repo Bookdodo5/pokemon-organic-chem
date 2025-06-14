@@ -8,6 +8,7 @@ public class FlagManager {
 
    public FlagManager() {
          this.flags = new HashMap<>();
+         flags.put("ozonolysis_intro", 1);
    }
 
    public void addFlag(String flag) {
@@ -15,17 +16,21 @@ public class FlagManager {
    }
 
    public void removeFlag(String flag) {
-      flags.put(flag, 0);
+      flags.remove(flag);
    }
 
    public boolean matchFlags(String[] yesFlags, String[] noFlags) {
       for (String flagName : yesFlags) {
-         if (!this.flags.containsKey(flagName)) return false;
+         if (!hasFlag(flagName)) return false;
       }
       for (String flagName : noFlags) {
-         if (this.flags.containsKey(flagName)) return false;
+         if (hasFlag(flagName)) return false;
       }
       return true;
+   }
+
+   public boolean hasFlag(String flag) {
+      return flags.containsKey(flag);
    }
 
    public void resetFlags() { flags.clear(); }
@@ -36,5 +41,11 @@ public class FlagManager {
 
    public void setFlag(String flag, int value) {
       flags.put(flag, value);
+   }
+
+   public void printFlags() {
+      for (Map.Entry<String, Integer> entry : flags.entrySet()) {
+         System.out.println(entry.getKey() + ": " + entry.getValue());
+      }
    }
 }

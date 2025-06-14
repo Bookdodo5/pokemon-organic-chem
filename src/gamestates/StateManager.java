@@ -7,7 +7,6 @@ import java.awt.geom.AffineTransform;
 import java.util.HashMap;
 import java.util.Map;
 import static main.Constants.SCALE;
-import main.D;
 
 public class StateManager {
 	private GameStates currentState = GameStates.TITLE;
@@ -28,20 +27,16 @@ public class StateManager {
 	}
 
 	public void transitionToState(GameStates newState, boolean fadeMusicOut, String musicToFadeOut, Runnable midFunction) {
-		D.d("Transitioning from " + currentState + " to " + newState);
 
 		if (fadeMusicOut && SoundManager.getMusicplayer().isPlaying(musicToFadeOut)) {
 			SoundManager.getMusicplayer().stop(true);
 		}
 		transitionManager.startTransition(0.0, 1.0, () -> {
-			D.d("Transition MIDPOINT");
 			midFunction.run();
 			setState(newState);
 			transitionManager.startTransition(1.0, 0.0, () -> {
-				D.d("Transition to " + newState + " complete.");
 			});
 		});
-
 	}
 
 	public void update() {

@@ -28,7 +28,7 @@ public class GameScreen extends JPanel implements Runnable {
 	Thread gameThread;
 	StateManager stateManager = new StateManager();
 	KeyBindingHandler keyHandler = new KeyBindingHandler(stateManager);
-	GameContentManager gameContentManager = new GameContentManager(keyHandler);
+	GameContentManager gameContentManager = new GameContentManager(keyHandler, stateManager);
 
 	public GameScreen() {
 		setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
@@ -42,10 +42,12 @@ public class GameScreen extends JPanel implements Runnable {
 		StateManager.states.put(GameStates.POKEDEX, new PokedexState(stateManager, keyHandler, gameContentManager));
 		StateManager.states.put(GameStates.DIALOGUE, new DialogueState(stateManager, keyHandler, gameContentManager));
 		StateManager.states.put(GameStates.SETTINGS, new SettingsState(stateManager, keyHandler, gameContentManager));
-		stateManager.setState(GameStates.BATTLE);
+		stateManager.setState(GameStates.TITLE);
 	}
 
-	public void update() { stateManager.update(); }
+	public void update() { 
+		stateManager.update();
+	}
 
 	@Override
 	public void paintComponent(Graphics g) {

@@ -21,9 +21,11 @@ public class PlayerDeckManager {
 	}
 
 	private void initializeAvailableCards() {
-		addToCollection("DMS", 5);
-		addToCollection("H2O2", 5);
-		addToCollection("O3", 5);
+		addToCollection("Fish", 5);
+		addToCollection("Cl2", 3);
+		addToCollection("Br2", 3);
+		addToCollection("Sunny Day", 2);
+		addToCollection("Rain Dance", 2);
 	}
 
 	private void initializeDefaultDeck() {

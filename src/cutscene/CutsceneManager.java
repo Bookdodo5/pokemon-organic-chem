@@ -1,78 +1,84 @@
 package cutscene;
 
-import cutscene.cutsceneAction.AnimationCutsceneAction;
-import cutscene.cutsceneAction.CameraCutsceneAction;
+import cutscene.cutsceneAction.BattleCutsceneAction;
 import cutscene.cutsceneAction.CommandCutsceneAction;
 import cutscene.cutsceneAction.DialogueCutsceneAction;
 import cutscene.cutsceneAction.ImageBoxCutsceneAction;
-import cutscene.cutsceneAction.PlaysoundCutsceneAction;
 import cutscene.cutsceneAction.WaitCutsceneAction;
 import dialogue.Dialogue;
-import entity.FacingDirections;
 import entity.NPCManager;
 import entity.Player;
 import gamestates.CameraManager;
 import gamestates.FlagManager;
+import gamestates.StateManager;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class CutsceneManager {
 
-	private final Map<String, Cutscene> cutscenes;
+	private final Map<String, List<Cutscene>> cutscenes;
 	private final FlagManager flagManager;
+	private final StateManager stateManager;
 
-	public CutsceneManager(NPCManager npcManager, Player player, CameraManager cameraManager, FlagManager flagManager) {
+	public CutsceneManager(NPCManager npcManager, Player player, CameraManager cameraManager, FlagManager flagManager, StateManager stateManager) {
 		cutscenes = new HashMap<>();
 		this.flagManager = flagManager;
+		this.stateManager = stateManager;
 
-		// === ORGANIC CHEMISTRY LAB INTRODUCTION CUTSCENE ===
-		// A comprehensive tutorial introducing the player to Professor Smith's lab
-		cutscenes.put(getCutsceneKey(11, 13, "outside"), new Cutscene(
-			new String[] { "organic_chemistry_lab_intro" },
-			new String[] { "organic_chemistry_lab_intro_done" },
-			// === SCENE 1: DRAMATIC ENTRANCE ===
-			// Fade in with mysterious lab atmosphere
-			new PlaysoundCutsceneAction("Title", true),
+		initializeCutscenes();
+	}
+
+	private void initializeCutscenes() {
+		// === OZONOLYSIS BATTLE CUTSCENE ===
+		// Pre-battle cutscene
+		cutscenes.put(getCutsceneKey(11, 13, "outside"), List.of(
+			
+		new Cutscene(
+			new String[] { "ozonolysis_intro" },
+			new String[] { "ozonolysis_intro_done", "BATTLE_WIN", "BATTLE_LOSE" },
 			new ImageBoxCutsceneAction("/animations/electric1.png"),
 			new WaitCutsceneAction(60),
-			new CameraCutsceneAction(cameraManager, 100, 100, 150), // Slow zoom on lab entrance
 			
 			new DialogueCutsceneAction(new Dialogue(new String[] {
-				"*The heavy oak doors of the Organic Chemistry Laboratory creak open...*",
-				"*Strange vapors and colorful lights emanate from within*",
-				"*This is it - your first day as a chemistry student*"
+				"Professor Smith: Today we'll be studying the Ozonolysis reaction!",
+				"This powerful oxidative cleavage reaction can break double bonds in alkenes.",
+				"You'll need to choose between oxidative (H2O2) or reductive (DMS) workup.",
+				"Let's see if you can synthesize the target molecule!"
 			})),
+			
+			new BattleCutsceneAction(stateManager, flagManager, 1)
+		),
 
+		// Win cutscene
+		new Cutscene(
+			new String[] { "BATTLE_WIN" },
+			new String[] { "ozonolysis_intro_done" },
+			new DialogueCutsceneAction(new Dialogue(new String[] {
+				"Professor Smith: Excellent work!",
+				"You successfully performed the Ozonolysis reaction!",
+				"The oxidative cleavage of the double bond gave us our target molecule.",
+				"Remember: O3 first cleaves the double bond, then the workup determines the final products!"
+			})),
 			new CommandCutsceneAction(() -> {
-				player.setFacingDirection(FacingDirections.UP);
-				npcManager.getNPC("test").setFacingDirection(FacingDirections.UP);
-			}),
-			
-			// === SCENE 2: PROFESSOR SMITH'S INTRODUCTION ===
-			new CameraCutsceneAction(cameraManager, npcManager.getNPC("test")), // Focus on professor
-			new WaitCutsceneAction(80),
-			new CameraCutsceneAction(cameraManager, 100, 100), // Focus on professor
-			
-			new DialogueCutsceneAction(new Dialogue(new String[] {
-				"Ah! You must be my new student. Welcome!",
-				"I'm Professor Smith, head of Organic Chemistry here at the university.",
-				"I've been teaching molecular science for over twenty years...",
-				"...and I can tell you, chemistry is pure magic when you understand it!"
-			})),
-			new CameraCutsceneAction(cameraManager, 200), // Focus on professor
-			
-			// Professor demonstrates with a small reaction
-			new AnimationCutsceneAction("electric1", 15, 13, 2.0), // Electrical sparkle near professor
-			new PlaysoundCutsceneAction("GameCursor", false),
-			new WaitCutsceneAction(60),
-			
-			new DialogueCutsceneAction(new Dialogue(new String[] {
-				"That little spark? Just a simple electrolysis demonstration.",
-				"But don't worry - we'll start with much safer experiments today.",
-				"Safety first in my laboratory!"
-			}))
+				flagManager.addFlag("ozonolysis_intro_done");
+				flagManager.removeFlag("BATTLE_WIN");
+			})
+		),
 
-		));
+		// Lose cutscene`
+		new Cutscene(
+			new String[] { "BATTLE_LOSE" },
+			new String[] { "ozonolysis_intro_done" },
+			new DialogueCutsceneAction(new Dialogue(new String[] {
+				"Professor Smith: Not quite right this time...",
+				"Remember: Ozonolysis requires careful control of the workup conditions.",
+				"Try again and think about which workup would give the desired products!"
+			})),
+			new CommandCutsceneAction(() -> {
+				flagManager.removeFlag("BATTLE_LOSE");
+			})
+		)));
 	}
 
 	private String getCutsceneKey(int x, int y, String map) {
@@ -80,9 +86,11 @@ public class CutsceneManager {
 	}
 
 	public Cutscene getCutscene(int x, int y, String map) {
-		Cutscene cutscene = cutscenes.get(getCutsceneKey(x, y, map));
-		if (cutscene == null) return null;
-		if (flagManager.matchFlags(cutscene.getYesFlags(), cutscene.getNoFlags())) return cutscene;
+		List<Cutscene> cutsceneList = cutscenes.get(getCutsceneKey(x, y, map));
+		if (cutsceneList == null) return null;
+		for (Cutscene cutscene : cutsceneList) {
+			if (flagManager.matchFlags(cutscene.getYesFlags(), cutscene.getNoFlags())) return cutscene;
+		}
 		return null;
 	}
 }

@@ -4,7 +4,6 @@ import battle.Battle;
 import battle.BattlePlayer;
 import battle.reactions.Reaction;
 import java.awt.Graphics2D;
-import main.D;
 
 public class ReactionBattleEvent extends BattleEvent {
 
@@ -25,7 +24,6 @@ public class ReactionBattleEvent extends BattleEvent {
     private void executeReaction() {
         Reaction reaction = actor.getSelectedReaction();
         if(reaction != null) {
-            D.d(reaction.getName());
             reaction.executeEffect(actor, battle.getBoard(), battle);
         }
         battle.checkWin();

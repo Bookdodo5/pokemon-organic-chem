@@ -7,9 +7,9 @@ import battle.BattleDataManager;
 import battle.PlayerDeckManager;
 import battle.battlephases.BattlePhases;
 import battle.battlephases.PhaseManager;
-import battle.battlephases.phases.BattleLoseState;
+import battle.battlephases.phases.BattleLosePhase;
 import battle.battlephases.phases.BattleStartPhase;
-import battle.battlephases.phases.BattleWinState;
+import battle.battlephases.phases.BattleWinPhase;
 import battle.battlephases.phases.play.ConditionPlayPhase;
 import battle.battlephases.phases.play.ReactionPlayPhase;
 import battle.battlephases.phases.result.ConditionResultPhase;
@@ -52,8 +52,8 @@ public class BattleState extends GameState {
 	PhaseManager.phases.put(BattlePhases.CONDITION_RESULT, new ConditionResultPhase(phaseManager, keyHandler));
 	PhaseManager.phases.put(BattlePhases.REACTION_PLAY, new ReactionPlayPhase(phaseManager, keyHandler));
 	PhaseManager.phases.put(BattlePhases.REACTION_RESULT, new ReactionResultPhase(phaseManager, keyHandler));
-	PhaseManager.phases.put(BattlePhases.BATTLE_WIN, new BattleWinState(phaseManager, keyHandler, stateManager, flagManager));
-	PhaseManager.phases.put(BattlePhases.BATTLE_LOSE, new BattleLoseState(phaseManager, keyHandler, stateManager, flagManager));
+	PhaseManager.phases.put(BattlePhases.BATTLE_WIN, new BattleWinPhase(phaseManager, keyHandler, stateManager, flagManager));
+	PhaseManager.phases.put(BattlePhases.BATTLE_LOSE, new BattleLosePhase(phaseManager, keyHandler, stateManager, flagManager));
     }
 
     public PhaseManager getPhaseManager() {

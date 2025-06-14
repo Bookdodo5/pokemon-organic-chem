@@ -13,7 +13,7 @@ import gamestates.TransitionManager;
 import input.KeyBindingHandler;
 import java.awt.*;
 
-public class BattleWinState extends BattlePhase {
+public class BattleWinPhase extends BattlePhase {
 
     private final Battle battle;
     private final BattleRenderer battleRenderer;
@@ -31,7 +31,7 @@ public class BattleWinState extends BattlePhase {
     private int animationTimer = 0;
     private final int totalDuration = BattleConstants.WIN_LOSE_ANIMATION_DURATION;
 
-    public BattleWinState(PhaseManager phaseManager, KeyBindingHandler keyHandler, StateManager stateManager, FlagManager flagManager) {
+    public BattleWinPhase(PhaseManager phaseManager, KeyBindingHandler keyHandler, StateManager stateManager, FlagManager flagManager) {
         super(phaseManager, keyHandler);
         this.battle = phaseManager.getBattle();
         this.battleRenderer = new BattleRenderer(battle, battle.getBattleTheme());
@@ -63,8 +63,7 @@ public class BattleWinState extends BattlePhase {
         }
 
         if (animationTimer > totalDuration && phaseManager.getBattle().getEventManager().isFinished()) {
-            stateManager.transitionToState(GameStates.OVERWORLD, false, "", () -> {
-                // Battle cleanup?
+            stateManager.transitionToState(GameStates.CUTSCENE, false, "", () -> {
             });
         }
     }

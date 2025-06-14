@@ -2,7 +2,6 @@ package cutscene.cutsceneAction;
 
 import cutscene.CutsceneAction;
 import java.awt.Graphics2D;
-import main.D;
 
 public class WaitCutsceneAction implements CutsceneAction {
 
@@ -17,7 +16,7 @@ public class WaitCutsceneAction implements CutsceneAction {
 	}
 
 	@Override
-	public void start() { isRunning = true; D.d("START WAIT"); }
+	public void start() { isRunning = true; }
 
 	@Override
 	public void update() {
@@ -32,7 +31,6 @@ public class WaitCutsceneAction implements CutsceneAction {
 
 	@Override
 	public void end() {
-		D.d("END WAIT", endTimer);
 	}
 
 	@Override

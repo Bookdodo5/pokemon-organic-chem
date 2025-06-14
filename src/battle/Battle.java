@@ -83,7 +83,6 @@ public class Battle {
     }
 
     public void checkWin() {
-    System.out.println(player.getMolecule().getName() + " " + targetMolecule.getName());
         if (player.getMolecule().getName().equals(targetMolecule.getName())) {
             win();
         }
@@ -93,7 +92,6 @@ public class Battle {
     }
 
     public void win() {
-        System.out.println("win");
         eventManager.addEvent(new DialogueBattleEvent(
                 new Dialogue( new String[] {
                     "You successfully synthesized the target molecule!\nYou win the battle!",
@@ -103,7 +101,6 @@ public class Battle {
     }
 
     public void lose(boolean run) {
-        System.out.println("lose");
         eventManager.addEvent(new DialogueBattleEvent(
                 new Dialogue( new String[] {
                     run ? "You ran away cowardly.\nYou lose the battle!" :

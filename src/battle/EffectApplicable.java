@@ -22,17 +22,11 @@ public class EffectApplicable {
         int currentDuration = effectsInPlay.getOrDefault(effect, 0);
         effectsInPlay.put(effect, currentDuration + duration);
         effectsTimestamp.put(effect, ++timer);
-        for(String effectString : effectsInPlay.keySet()) {
-            System.out.println(effectString + " " + effectsInPlay.get(effectString));
-        }
     }
 
     public void setEffect(String effect, int duration) {
         effectsInPlay.put(effect, duration);
         effectsTimestamp.put(effect, ++timer);
-        for(String effectString : effectsInPlay.keySet()) {
-            System.out.println(effectString + " " + effectsInPlay.get(effectString));
-        }
     }
 
     public void triggerTurn() {
@@ -72,11 +66,6 @@ public class EffectApplicable {
     }
 
     public List<String> getEffectsInOrder() {
-        System.out.println("--------------------------------");
-        for(String effectString : effectsTimestamp.keySet()) {
-            System.out.println(effectString + " " + effectsTimestamp.get(effectString));
-        }
-        System.out.println("--------------------------------");
         return effectsInPlay.keySet().stream()
                 .sorted((a, b) -> effectsTimestamp.get(a) - effectsTimestamp.get(b))
                 .toList();

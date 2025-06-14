@@ -11,11 +11,11 @@ public class BattleDataManager {
         battleData = new ArrayList<>();
         battleData.add(new BattleData.Builder()
                 .id(1)
-                .battleSpecificCard("O3", "H2O2", "DMS")
+                .battleSpecificCard("O3", "H2O2", "DMS")  // Ozone, Hydrogen Peroxide (oxidative), Dimethyl Sulfide (reductive)
                 .opponentDeck("O3", "H2O2", "DMS", "O3", "H2O2", "DMS", "O3", "H2O2", "DMS", "O3", "H2O2", "DMS")
                 .playerMolecule("Cyclohexene")
                 .opponentMolecule("Cyclohexene")
-                .targetMolecule("Hexanedial")
+                .targetMolecule("Hexanedial")  // Target product from oxidative workup
                 .battleTheme(BattleThemes.CHAMPION2)
                 .build());
         battleData.add(new BattleData.Builder() 

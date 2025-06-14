@@ -8,13 +8,12 @@ import cutscene.cutsceneAction.ImageBoxCutsceneAction;
 import dialogue.Dialogue;
 import dialogue.DialogueRenderer;
 import entity.Player;
+import gamestates.GameState;
 import gamestates.GameStates;
 import gamestates.StateManager;
-import gamestates.GameState;
 import input.KeyBindingHandler;
 import input.Keys;
 import java.awt.Graphics2D;
-import main.D;
 import main.GameContentManager;
 import menu.Settings;
 
@@ -41,7 +40,9 @@ public class CutsceneState extends GameState {
 		overworldState.update();
 		currentCutscene.update();
 		
-		if(currentCutscene.isFinished()) stateManager.setState(GameStates.OVERWORLD);
+		if(currentCutscene.isFinished()) {
+			stateManager.setState(GameStates.OVERWORLD);
+		}
 	}
 
 	@Override
@@ -52,18 +53,21 @@ public class CutsceneState extends GameState {
 
 	@Override
 	public void onEnter(GameStates prevState) {
-		D.d("ENTER CUTSCENE", player.currentMovementState);
 		player.setAcceptInput(false);
+		if(prevState == GameStates.BATTLE) return;
 
 		int playerX = player.getWorldX();
 		int playerY = player.getWorldY();
 
 		currentCutscene = cutsceneManager.getCutscene(playerX, playerY, overworldState.getCurrentMapID());
-		currentCutscene.start();
+		if (currentCutscene != null) {
+			currentCutscene.start();
+		}
 	}
 
 	@Override
 	public void keyTapped() {
+
 		boolean isDialogue = currentCutscene.getCurrentAction() instanceof DialogueCutsceneAction;
 		boolean isImageBox = currentCutscene.getCurrentAction() instanceof ImageBoxCutsceneAction;
 		if (!isDialogue && !isImageBox) return;
@@ -138,7 +142,10 @@ public class CutsceneState extends GameState {
 	@Override
 	public void onExit(GameStates nextState) {
 		player.setAcceptInput(true);
-		currentCutscene.reset();
+		if(nextState == GameStates.OVERWORLD) {
+			currentCutscene.reset();
+			currentCutscene = null;
+		}
 	}
 
 }

@@ -23,6 +23,7 @@ public class Cutscene {
 	}
 
 	public void update() {
+		if(actionIndex < 0 || actionIndex >= cutsceneActions.length) return;
 		cutsceneActions[actionIndex].update();
 		if (cutsceneActions[actionIndex].isFinished()) {
 			cutsceneActions[actionIndex].end();
@@ -31,6 +32,7 @@ public class Cutscene {
 	}
 
 	public void draw(Graphics2D g2) {
+		if(actionIndex < 0 || actionIndex >= cutsceneActions.length) return;
 		if (!cutsceneActions[actionIndex].isFinished())
 			cutsceneActions[actionIndex].draw(g2);
 	}
@@ -46,7 +48,10 @@ public class Cutscene {
 
 	public boolean isFinished() { return isFinished; }
 
-	public CutsceneAction getCurrentAction() { return cutsceneActions[actionIndex]; }
+	public CutsceneAction getCurrentAction() {
+		if (actionIndex < 0 || actionIndex >= cutsceneActions.length) return null;
+		return cutsceneActions[actionIndex];
+	}
 
 	public void reset() {
 		actionIndex = -1;
