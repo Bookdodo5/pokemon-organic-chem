@@ -11,6 +11,8 @@ import dialogue.Dialogue;
 import gamestates.GameStates;
 import gamestates.StateManager;
 import gamestates.states.BattleState;
+import pokedex.MoleculeRecord;
+import pokedex.PlayerDeckManager;
 
 public class Battle {
     private final ConditionBoard board;
@@ -22,7 +24,7 @@ public class Battle {
     private final String battleTheme;
     private int turn;
 
-    public Battle(PlayerDeckManager playerDeckManager, BattleData data, StateManager stateManager) {
+    public Battle(PlayerDeckManager playerDeckManager, BattleData data, StateManager stateManager, MoleculeRecord moleculePokedexManager) {
 	board = new ConditionBoard();
 	this.eventManager = new BattleEventManager();
 
@@ -32,8 +34,11 @@ public class Battle {
 	Molecule playerMolecule = MoleculeFactory.create(data.getPlayerMolecule());
 	Molecule opponentMolecule = MoleculeFactory.create(data.getOpponentMolecule());
 
-	player = new BattlePlayer(playerDeck, playerMolecule, this);
-	opponent = new BattlePlayer(opponentDeck, opponentMolecule, this);
+    moleculePokedexManager.addMolecule(playerMolecule);
+    moleculePokedexManager.addMolecule(opponentMolecule);
+
+	player = new BattlePlayer(playerDeck, playerMolecule, this, moleculePokedexManager);
+	opponent = new BattlePlayer(opponentDeck, opponentMolecule, this, moleculePokedexManager);
 	currentPhase = BattlePhases.CONDITION_PLAY;
 
 	this.targetMolecule = MoleculeFactory.create(data.getTargetMolecule());

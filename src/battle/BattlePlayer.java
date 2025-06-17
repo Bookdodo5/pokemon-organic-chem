@@ -7,6 +7,7 @@ import battle.molecules.Molecule;
 import battle.reactions.Reaction;
 import java.util.LinkedList;
 import java.util.Queue;
+import pokedex.MoleculeRecord;
 
 public class BattlePlayer extends EffectApplicable {
 
@@ -19,13 +20,16 @@ public class BattlePlayer extends EffectApplicable {
 	private int currentLP;
 	private Deck deck;
 
-	public BattlePlayer(Deck deck, Molecule molecule, Battle battle) {
+	private final MoleculeRecord moleculeRecord;
+
+	public BattlePlayer(Deck deck, Molecule molecule, Battle battle, MoleculeRecord moleculeRecord) {
 		this.deck = deck;
 		this.refillLP = 3;
 		this.molecule = molecule;
 		this.originalMolecule = molecule;
 		this.selectedReaction = null;
 		this.battle = battle;
+		this.moleculeRecord = moleculeRecord;
 	}
 
 	public void setDeck(Deck deck) { this.deck = deck; }
@@ -77,7 +81,10 @@ public class BattlePlayer extends EffectApplicable {
 
 	public Reaction getSelectedReaction() { return selectedReaction; }
 
-	public void setMolecule(Molecule molecule) { this.molecule = molecule; }
+	public void setMolecule(Molecule molecule) {
+		this.molecule = molecule;
+		moleculeRecord.addMolecule(molecule);
+	}
 
 	public void setSelectedReaction(Reaction selectedReaction) { this.selectedReaction = selectedReaction; }
 

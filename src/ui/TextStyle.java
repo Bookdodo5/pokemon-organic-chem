@@ -11,10 +11,12 @@ public class TextStyle {
 	private final Font font;
 	private final Color textColor;
 	private final Color shadowColor;
+	private final Color outlineColor;
 	private final int lineHeight;
 	private final int textMarginX;
 	private final int textMarginY;
 	private final int shadowOffset;
+	private final int outlineSize;
 
 	private TextStyle(Builder builder) {
 		if (builder.font == null) {
@@ -23,10 +25,12 @@ public class TextStyle {
 		this.font = builder.font;
 		this.textColor = builder.textColor;
 		this.shadowColor = builder.shadowColor;
+		this.outlineColor = builder.outlineColor;
 		this.lineHeight = builder.lineHeight;
 		this.textMarginX = builder.textMarginX;
 		this.textMarginY = builder.textMarginY;
 		this.shadowOffset = builder.shadowOffset;
+		this.outlineSize = builder.outlineSize;
 	}
 
 	public Font getFont() { return font; }
@@ -43,6 +47,10 @@ public class TextStyle {
 
 	public int getShadowOffset() { return shadowOffset; }
 
+	public Color getOutlineColor() { return outlineColor; }
+
+	public int getOutlineSize() { return outlineSize; }
+
 	public static Builder getDialogueStyle() {
 		return new Builder()
 				.fontSize(20);
@@ -53,6 +61,18 @@ public class TextStyle {
 				.fontSize(16)
 				.lineHeight(20)
 				.textMarginY(8);
+	}
+
+	public static Builder getBoldStyle() {
+		return new Builder()
+				.fontSize(22, "powerclearbold")
+				.lineHeight(22)
+				.textColor(new Color(255, 255, 255))
+				.shadowColor(TRANSPARENT)
+				.outlineColor(new Color(20, 20, 20))
+				.outlineSize(2)
+				.textMarginY(0)
+				.textMarginX(0);
 	}
 
 	public static Builder getTitleStyle() {
@@ -79,10 +99,12 @@ public class TextStyle {
 		private Font font;
 		private Color textColor = new Color(80, 80, 80, 225);
 		private Color shadowColor = new Color(150, 150, 150, 120);
+		private Color outlineColor = TRANSPARENT;
 		private int lineHeight = 24;
 		private int textMarginX = 20;
 		private int textMarginY = 10;
 		private int shadowOffset = 1;
+		private int outlineSize = 0;
 
 		public Builder fontSize(float size) {
 			this.font = AssetManager.loadFont(size);
@@ -121,6 +143,16 @@ public class TextStyle {
 
 		public Builder shadowOffset(int shadowOffset) {
 			this.shadowOffset = shadowOffset;
+			return this;
+		}
+
+		public Builder outlineSize(int outlineSize) {
+			this.outlineSize = outlineSize;
+			return this;
+		}
+
+		public Builder outlineColor(Color outlineColor) {
+			this.outlineColor = outlineColor;
 			return this;
 		}
 

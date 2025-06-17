@@ -120,19 +120,18 @@ public class Sound implements Runnable {
 	public void stop(boolean fade) {
         float musicVolume = Settings.getInstance().getMusicVolume();
         if (clip != null) {
-            final Clip clipToStop = this.clip; // Capture the clip instance
+            final Clip clipToStop = this.clip;
             final String trackThatWasPlaying = this.currentTrackName;
 
             if (fade) {
-                shiftVolume(musicVolume, 0.05 * musicVolume); // Target near silence
+                shiftVolume(musicVolume, 0.05 * musicVolume);
                 new Thread(() -> {
                     try {
-                        Thread.sleep(FADE_TIME); // Wait for fade effect
+                        Thread.sleep(FADE_TIME);
                         if (clipToStop != null && clipToStop.isOpen()) {
                             clipToStop.stop();
                             clipToStop.close();
                         }
-                        // Only nullify currentTrackName if it's still the one we started stopping
                         if (trackThatWasPlaying != null && trackThatWasPlaying.equals(this.currentTrackName)) {
                             this.currentTrackName = null;
                         }
@@ -141,20 +140,15 @@ public class Sound implements Runnable {
             } else {
                 clipToStop.stop();
                 clipToStop.close();
-                this.currentTrackName = null; // <<< CLEAR CURRENT TRACK NAME HERE
+                this.currentTrackName = null;
             }
-            // If not fading, we might assign this.clip = null here,
-            // but setFile() handles creating a new one.
-            // Closing is important to release resources.
         }
     }
 	
-	// Add this getter
     public String getCurrentTrackName() {
         return this.currentTrackName;
     }
 
-    // Add this helper method
     public boolean isPlaying(String trackName) {
     	if(trackName.equals("")) return true;
         return trackName.equals(this.currentTrackName) && clip != null && clip.isRunning();

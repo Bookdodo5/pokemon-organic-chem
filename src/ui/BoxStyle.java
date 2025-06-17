@@ -78,12 +78,22 @@ public class BoxStyle {
 		    .innerHighlightColor(new Color(60, 80, 70));
 	}
 
+	public static Builder getPlainStyle(Color color) {
+		return new Builder()
+			.topFillColor(color)
+			.bottomFillColor(color)
+			.shadowColor(TRANSPARENT)
+			.innerHighlightStrokeWidth(0)
+			.cornerArc(0)
+			.borderThickness(0);
+	}
+
 	public static class Builder {
 		private int cornerArc = 20;
 		private Color topBorderColor = new Color(90, 210, 170, 255);
 		private Color bottomBorderColor = new Color(50, 170, 130, 255);
-		private Color topFillColor = new Color(245, 255, 250, 240);
-		private Color bottomFillColor = new Color(230, 235, 245, 240);
+		private Color topFillColor = new Color(245, 255, 250, 255);
+		private Color bottomFillColor = new Color(230, 235, 245, 255);
 		private int borderThickness = 4; // BORDER_THICKNESS
 		private int shadowOffset = 2; // SHADOW_OFFSET
 		private Color shadowColor = new Color(80, 80, 80); // SHADOW_COLOR

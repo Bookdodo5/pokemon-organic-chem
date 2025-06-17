@@ -8,11 +8,11 @@ import battle.conditions.pH;
 public class BufferSolutionCard extends ConditionCard {
 
     public BufferSolutionCard() {
-        super("Buffer Solution", 
-              "Maintains perfect equilibrium against all pH disturbances.", 
-              "Sets the pH to either WEAK BASE, NEUTRAL, or WEAK ACID (your choice), and the pH cannot change for 2 turns.", 
-              2,
-              "fire4");
+        super("Buffer Solution",
+                "Maintains perfect equilibrium against all pH disturbances.",
+                "Sets the pH to either WEAK BASE, NEUTRAL, or WEAK ACID (your choice), and the pH cannot change for 2 turns.",
+                2,
+                "fire4");
     }
 
     @Override
@@ -21,4 +21,4 @@ public class BufferSolutionCard extends ConditionCard {
         board.getCondition().setpH(pH.NEUTRAL);
         board.addEffect("Buffer Solution", 2);
     }
-} 
+}

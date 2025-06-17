@@ -152,6 +152,7 @@ public class OverworldState extends GameState {
 			case INTERACT -> {
 				if (player.currentMovementState == MovementStates.IDLE) checkDialogue();
 			}
+			case P -> stateManager.setState(GameStates.POKEDEX);
 			default -> {}
 		}
 
@@ -159,11 +160,6 @@ public class OverworldState extends GameState {
 
 	@Override
 	public void keyPressed() {
-
-		switch (keyHandler.getCurrentKey()) {
-			case P -> stateManager.setState(GameStates.POKEDEX);
-			default -> {}
-		}
 
 	}
 

@@ -52,7 +52,7 @@ public class TextRenderer {
 				currentLine.append(appendString);
 			}
 
-			if (currentLine.length() > 0) {
+			if (currentLine.length() >= 0) {
 				textX = innerBoxX + textStyle.getTextMarginX();
 				textY = innerBoxY + textStyle.getTextMarginY() + lineCount * textStyle.getLineHeight();
 				lastLineWidth = getTextWidth(g2, currentLine.toString());
@@ -72,9 +72,16 @@ public class TextRenderer {
 		int textShadowY = baseline + textStyle.getShadowOffset();
 
 		g2.setFont(textStyle.getFont());
-		
 		g2.setColor(textStyle.getShadowColor());
 		g2.drawString(line, textShadowX, textShadowY);
+
+		g2.setColor(textStyle.getOutlineColor());
+		for(int dx = -textStyle.getOutlineSize(); dx <= textStyle.getOutlineSize(); dx++) {
+			for(int dy = -textStyle.getOutlineSize(); dy <= textStyle.getOutlineSize(); dy++) {
+				g2.drawString(line, textX + dx, baseline + dy);
+			}
+		}
+
 		g2.setColor(textStyle.getTextColor());
 		g2.drawString(line, textX, baseline);
 	}

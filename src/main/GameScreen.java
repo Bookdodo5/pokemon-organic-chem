@@ -42,7 +42,7 @@ public class GameScreen extends JPanel implements Runnable {
 		StateManager.states.put(GameStates.POKEDEX, new PokedexState(stateManager, keyHandler, gameContentManager));
 		StateManager.states.put(GameStates.DIALOGUE, new DialogueState(stateManager, keyHandler, gameContentManager));
 		StateManager.states.put(GameStates.SETTINGS, new SettingsState(stateManager, keyHandler, gameContentManager));
-		stateManager.setState(GameStates.TITLE);
+		stateManager.setState(GameStates.OVERWORLD);
 	}
 
 	public void update() { 

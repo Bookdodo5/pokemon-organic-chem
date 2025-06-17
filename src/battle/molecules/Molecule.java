@@ -2,7 +2,6 @@ package battle.molecules;
 
 import assets.AssetManager;
 import battle.reactions.Reaction;
-import battle.reactions.ReactionAvailabilityManager;
 import battle.reactions.ReactionFactory;
 import battle.reactions.ReactionRegistry;
 import java.awt.Graphics2D;
@@ -14,6 +13,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 import java.util.stream.Collectors;
+import pokedex.ReactionRecord;
 
 public class Molecule {
 
@@ -26,7 +26,7 @@ public class Molecule {
     private final Set<String> reactions;
 	private final Random random;
 
-	private static ReactionAvailabilityManager reactionAvailabilityManager;
+	private static ReactionRecord reactionAvailabilityManager;
 
     public Molecule(String name, String smiles, String formula, int molecularWeight, Map<String, Integer> atoms,
 	    Set<String> reactions) {
@@ -40,7 +40,7 @@ public class Molecule {
 		this.random = new Random();
     }
 
-	public static void setReactionAvailabilityManager(ReactionAvailabilityManager reactionAvailabilityManager) {
+	public static void setReactionAvailabilityManager(ReactionRecord reactionAvailabilityManager) {
 		Molecule.reactionAvailabilityManager = reactionAvailabilityManager;
 	}
 

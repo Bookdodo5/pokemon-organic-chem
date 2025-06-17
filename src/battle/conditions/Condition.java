@@ -147,4 +147,24 @@ public class Condition {
                 pH.NEUTRAL;
         };
     }
+
+    public String getConditionString() {
+        String string = "";
+        if(currentpH != null) {
+            string += "\n-- " + currentpH.toString();
+        }   
+        if(currentTemp != null) {
+            string += "\n-- " + currentTemp.toString();
+        }
+        if(currentSolvent != null) {
+            string += "\n-- " + currentSolvent.toString();
+        }
+        if(currentLight != null) {
+            string += "\n-- " + currentLight.toString();
+        }
+        if(string.isEmpty()) {
+            return "None";
+        }
+        return string;
+    }
 }

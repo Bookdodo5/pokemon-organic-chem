@@ -4,7 +4,6 @@ import assets.SoundManager;
 import battle.Battle;
 import battle.BattleData;
 import battle.BattleDataManager;
-import battle.PlayerDeckManager;
 import battle.battlephases.BattlePhases;
 import battle.battlephases.PhaseManager;
 import battle.battlephases.phases.BattleLosePhase;
@@ -16,7 +15,6 @@ import battle.battlephases.phases.result.ConditionResultPhase;
 import battle.battlephases.phases.result.ReactionResultPhase;
 import battle.event.BattleEvent;
 import battle.event.DialogueBattleEvent;
-import battle.reactions.ReactionAvailabilityManager;
 import dialogue.Dialogue;
 import dialogue.DialogueRenderer;
 import gamestates.FlagManager;
@@ -27,14 +25,17 @@ import input.KeyBindingHandler;
 import input.Keys;
 import java.awt.Graphics2D;
 import main.GameContentManager;
+import pokedex.MoleculeRecord;
+import pokedex.PlayerDeckManager;
+import pokedex.ReactionRecord;
 
 public class BattleState extends GameState {
 
     private final PlayerDeckManager playerDeckManager;
     private final FlagManager flagManager;
     private final BattleDataManager battleDataManager;
-    private final ReactionAvailabilityManager reactionAvailabilityManager;
-
+    private final ReactionRecord reactionRecord;
+    private final MoleculeRecord moleculeRecord;
     private PhaseManager phaseManager;
     private Battle battle;
 
@@ -43,7 +44,8 @@ public class BattleState extends GameState {
         this.playerDeckManager = gameContentManager.getPlayerDeckManager();
         this.flagManager = gameContentManager.getFlagManager();
         this.battleDataManager = gameContentManager.getBattleDataManager();
-        this.reactionAvailabilityManager = gameContentManager.getReactionAvailabilityManager();
+        this.reactionRecord = gameContentManager.getReactionRecord();
+        this.moleculeRecord = gameContentManager.getMoleculeRecord();
     }
 
     private void initializePhases() {
@@ -77,9 +79,9 @@ public class BattleState extends GameState {
         int battleNumber = flagManager.getFlag("BATTLE_NUMBER");
         if(battleNumber <= 0 || battleNumber >= 13) battleNumber = 1;
 
-        reactionAvailabilityManager.unlockBattle(battleNumber);
+        reactionRecord.unlockBattle(battleNumber);
         BattleData battleData = battleDataManager.getBattleData(battleNumber);
-        this.battle = new Battle(playerDeckManager, battleData, stateManager);
+        this.battle = new Battle(playerDeckManager, battleData, stateManager, moleculeRecord);
         this.phaseManager = new PhaseManager(battle);
         this.phaseManager.setPhase(BattlePhases.BATTLE_START);
 

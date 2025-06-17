@@ -140,7 +140,7 @@ public class SettingsState extends GameState {
 	}
 
 	@Override
-	public void update() { // TODO Auto-generated method stub
+	public void update() {
 	}
 
 	@Override
@@ -166,7 +166,7 @@ public class SettingsState extends GameState {
 	}
 
 	@Override
-	public void keyTapped() { // TODO Auto-generated method stub
+	public void keyTapped() {
 		boolean isSuccessfulKeypress = true;
 
 		switch (keyHandler.getCurrentKey()) {
@@ -210,12 +210,12 @@ public class SettingsState extends GameState {
 	}
 
 	@Override
-	public void keyReleased(Keys key) { // TODO Auto-generated method stub
+	public void keyReleased(Keys key) {
 		waitForInput = !keyHandler.pressingKey(Keys.ESCAPE);
 	}
 
 	@Override
-	public void onEnter(GameStates prevState) { // TODO Auto-generated method stub
+	public void onEnter(GameStates prevState) {
 		this.prevState = prevState;
 		waitForInput = false;
 		if (prevState == GameStates.TITLE) {

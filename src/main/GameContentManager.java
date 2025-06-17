@@ -1,9 +1,7 @@
 package main;
 
 import battle.BattleDataManager;
-import battle.PlayerDeckManager;
 import battle.molecules.Molecule;
-import battle.reactions.ReactionAvailabilityManager;
 import cutscene.CutsceneManager;
 import dialogue.DialogueManager;
 import entity.NPCManager;
@@ -12,6 +10,9 @@ import gamestates.CameraManager;
 import gamestates.FlagManager;
 import gamestates.StateManager;
 import input.KeyBindingHandler;		
+import pokedex.MoleculeRecord;
+import pokedex.PlayerDeckManager;
+import pokedex.ReactionRecord;
 import tile.MapManager;
 
 public class GameContentManager {
@@ -24,11 +25,10 @@ public class GameContentManager {
 	private final FlagManager flagManager;
 	private final PlayerDeckManager playerDeckManager;
 	private final BattleDataManager battleDataManager;
-	private final ReactionAvailabilityManager reactionAvailabilityManager;
-	private final StateManager stateManager;
+	private final ReactionRecord reactionRecord;
+	private final MoleculeRecord moleculeRecord;
 
 	public GameContentManager(KeyBindingHandler keyHandler, StateManager stateManager) {
-		this.stateManager = stateManager;
 		this.dialogueManager = new DialogueManager();
 		this.mapManager = new MapManager();
 		this.npcManager = new NPCManager();
@@ -38,8 +38,9 @@ public class GameContentManager {
 		this.cutsceneManager = new CutsceneManager(npcManager, player, cameraManager, flagManager, stateManager);
 		this.playerDeckManager = new PlayerDeckManager();
 		this.battleDataManager = new BattleDataManager();
-		this.reactionAvailabilityManager = new ReactionAvailabilityManager(flagManager);
-		Molecule.setReactionAvailabilityManager(reactionAvailabilityManager);
+		this.reactionRecord = new ReactionRecord(flagManager);
+		Molecule.setReactionAvailabilityManager(reactionRecord);
+		this.moleculeRecord = new MoleculeRecord();
 	}
 
 	public DialogueManager getDialogueManager() { return dialogueManager; }
@@ -60,6 +61,8 @@ public class GameContentManager {
 
 	public BattleDataManager getBattleDataManager() { return battleDataManager; }
 
-	public ReactionAvailabilityManager getReactionAvailabilityManager() { return reactionAvailabilityManager; }
+	public ReactionRecord getReactionRecord() { return reactionRecord; }
+
+	public MoleculeRecord getMoleculeRecord() { return moleculeRecord; }
 
 }

@@ -16,8 +16,8 @@ public class MapManager {
 		musics = new HashMap<>();
 		transitions = new HashMap<>();
 
-		initializeMap("outside", "Lab");
-		initializeMap("outside2", "Route2");
+		initializeMap("outside", "Route2");
+		initializeMap("outside2", "Lab");
 
 		initializeTransition(5, 5, "outside", 9, 9, "outside2");
 
