@@ -9,7 +9,7 @@ public class SunnyDayCard extends ConditionCard {
 
     public SunnyDayCard() {
         super("Sunny Day", 
-              "Bright light initiates radicals but evaporates precious water!", 
+              "Water evaporates, while alkane celebrates!", 
               "Radical reactions become available. Hydration reactions cost 1 more LP.", 
               1,
               "26");

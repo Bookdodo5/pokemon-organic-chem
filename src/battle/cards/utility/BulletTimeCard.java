@@ -8,7 +8,7 @@ public class BulletTimeCard extends UtilityCard {
 
     public BulletTimeCard() {
         super("Bullet Time", 
-              "Time slows down, allowing perfect molecular choreography!", 
+              "Time slows down, but your fate is still the same.", 
               "You can play any cards for free this turn.", 
               5,
               "water3",

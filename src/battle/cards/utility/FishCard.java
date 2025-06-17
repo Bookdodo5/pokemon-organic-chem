@@ -9,7 +9,7 @@ public class FishCard extends UtilityCard {
     public FishCard() {
         super("Fish", 
               "A fishy card", 
-              "You became slippy and draw 2 cards", 
+              "You became slippery and draw 2 cards", 
               0,
               "water3",
               AnimationPosition.PLAYER);

@@ -9,7 +9,7 @@ public class OmegaCard extends UtilityCard {
     public OmegaCard() {
         super("Omega", 
               "The end brings aquatic enlightenment!", 
-              "Add 3 \"Fish\" to your draw pile. Next turn,randomize the solvent condition.", 
+              "Add 3 \"Fish\" to your draw pile. Next turn, randomize the solvent condition.", 
               3,
               "water3",
               AnimationPosition.BOARD);

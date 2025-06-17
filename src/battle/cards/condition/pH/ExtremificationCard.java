@@ -9,8 +9,8 @@ public class ExtremificationCard extends ConditionCard {
 
     public ExtremificationCard() {
         super("Extremification", 
-              "Takes things to the extreme!", 
-              "If the current pH condition is WEAK, make it STRONG (WEAK ACID → STRONG ACID, WEAK BASE → STRONG BASE).", 
+              "Takes things to the extreme, like that one 27 step synthesis question!", 
+              "If the current pH condition is WEAK, make it STRONG.", 
               1,
               "fire5");
     }

@@ -24,6 +24,7 @@ public class PlayerDeckManager {
 
 	private void initializeAvailableCards() {
 		addToCollection("Fish", 1);
+		addToCollection("Weather Report", 1);
 		addToCollection("Cl2", 3);
 		addToCollection("Br2", 3);
 		addToCollection("Sunny Day", 2);

@@ -9,7 +9,7 @@ public class LondonCityCard extends ConditionCard {
 
     public LondonCityCard() {
         super("London City", 
-              "The bustling city creates nonpolar dispersion forces!", 
+              "London bridge is falling down, but the dispersion forces will take care of it.", 
               "Sets the solvent to NONPOLAR. Gain LP equal to the number of cards containing \"clock\", \"bridge\", or \"eye\" you have selected.", 
               1,
               "electric1");

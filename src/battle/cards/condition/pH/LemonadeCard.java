@@ -10,7 +10,7 @@ public class LemonadeCard extends ConditionCard {
     public LemonadeCard() {
         super("Lemonade", 
               "Refreshingly acidic, but not too harsh!", 
-              "Sets the pH to WEAK ACID. Citric acid cannot be synthesized while this card is active.", 
+              "Sets the pH to WEAK ACID.", 
               1,
               "electric1");
     }
@@ -20,6 +20,5 @@ public class LemonadeCard extends ConditionCard {
     	if(board.hasEffect("Buffer Solution")) return;
     	
         board.getCondition().setpH(pH.WEAK_ACID);
-        board.addEffect("No Citric Acid", -1);
     }
 } 

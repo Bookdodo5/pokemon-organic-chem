@@ -9,7 +9,7 @@ public class ProtonStreamCard extends ConditionCard {
 
     public ProtonStreamCard() {
         super("Proton Stream", 
-              "A torrent of H⁺ ions overwhelms all basic defenses!", 
+              "Protons are not delicious.", 
               "Sets the pH to STRONG ACID. This effect cancels \"Buffer Solution.\"", 
               2,
               "electric1");

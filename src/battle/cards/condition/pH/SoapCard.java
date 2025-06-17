@@ -9,8 +9,8 @@ public class SoapCard extends ConditionCard {
 
     public SoapCard() {
         super("Soap", 
-              "Clean and basic, but ironically prevents soap-making!", 
-              "Sets the pH to WEAK BASE. Saponification reactions cannot be performed while this card is active.", 
+              "Clean and basic, good for everyday consumption!", 
+              "Sets the pH to WEAK BASE.",
               1,
               "electric1");
     }
@@ -20,6 +20,5 @@ public class SoapCard extends ConditionCard {
     	if(board.hasEffect("Buffer Solution")) return;
     	
         board.getCondition().setpH(pH.WEAK_BASE);
-        board.addEffect("No Saponification", -1);
     }
 } 

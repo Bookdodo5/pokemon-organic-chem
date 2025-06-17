@@ -5,11 +5,11 @@ import battle.conditions.ConditionBoard;
 import battle.conditions.Temperature;
 import battle.event.AnimationPosition;
 
-public class DisulfideBridgeCard extends UtilityCard {
+public class SSBridgeCard extends UtilityCard {
 
-    public DisulfideBridgeCard() {
-        super("Disulfide Bridge", 
-              "Sulfur bonds provide stability and energy!", 
+    public SSBridgeCard() {
+        super("S-S Bridge", 
+              "Sulfur is pretty stinky and dangerous.", 
               "If TEMPERATURE is not HOT, gain LP equal to 2 times the number of Sulfur atoms in your current molecule.", 
               0,
               "water3",

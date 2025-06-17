@@ -3,22 +3,22 @@ package battle.cards;
 import battle.cards.condition.light.RainDanceCard;
 import battle.cards.condition.light.SunnyDayCard;
 import battle.cards.condition.light.WeatherReportCard;
-import battle.cards.condition.pH.AmphotericAdaptationCard;
-import battle.cards.condition.pH.BufferSolutionCard;
+import battle.cards.condition.pH.AmphotericCard;
+import battle.cards.condition.pH.BufferCard;
 import battle.cards.condition.pH.ExtremificationCard;
-import battle.cards.condition.pH.HydroxideWaveCard;
+import battle.cards.condition.pH.ProtonSinkCard;
 import battle.cards.condition.pH.LemonadeCard;
 import battle.cards.condition.pH.ProtonStreamCard;
 import battle.cards.condition.pH.SoapCard;
-import battle.cards.condition.solvent.AquariumWaterCard;
+import battle.cards.condition.solvent.AquariumCard;
 import battle.cards.condition.solvent.GodlySolventCard;
 import battle.cards.condition.solvent.LondonCityCard;
 import battle.cards.condition.solvent.PolarBearCard;
-import battle.cards.condition.temperature.CryogenicShockCard;
+import battle.cards.condition.temperature.CryogenicsCard;
 import battle.cards.condition.temperature.FlashHeatingCard;
 import battle.cards.condition.temperature.GlobalWarmingCard;
 import battle.cards.condition.temperature.IceCreamCard;
-import battle.cards.condition.temperature.ThermalEquilibriumCard;
+import battle.cards.condition.temperature.HomeostasisCard;
 import battle.cards.reagent.ReagentCard;
 import battle.cards.utility.*;
 
@@ -27,9 +27,9 @@ public class CardFactory {
 		return switch (card) {
 			// pH Modifier Cards
 			case "Proton Stream" -> new ProtonStreamCard();
-			case "Hydroxide Wave" -> new HydroxideWaveCard();
-			case "Buffer Solution" -> new BufferSolutionCard();
-			case "Amphoteric Adaptation" -> new AmphotericAdaptationCard();
+			case "Hydroxide Wave" -> new ProtonSinkCard();
+			case "Buffer Solution" -> new BufferCard();
+			case "Amphoteric Adaptation" -> new AmphotericCard();
 			case "Lemonade" -> new LemonadeCard();
 			case "Soap" -> new SoapCard();
 			case "Extremification" -> new ExtremificationCard();
@@ -37,9 +37,9 @@ public class CardFactory {
 			// Temperature Modifier Cards
 			case "Flash Heating" -> new FlashHeatingCard();
 			case "Global Warming" -> new GlobalWarmingCard();
-			case "Cryogenic Shock" -> new CryogenicShockCard();
+			case "Cryogenic Shock" -> new CryogenicsCard();
 			case "Ice Cream" -> new IceCreamCard();
-			case "Thermal Equilibrium" -> new ThermalEquilibriumCard();
+			case "Thermal Equilibrium" -> new HomeostasisCard();
 			
 			// Light Modifier Cards
 			case "Rain Dance" -> new RainDanceCard();
@@ -47,7 +47,7 @@ public class CardFactory {
 			case "Weather Report" -> new WeatherReportCard();
 			
 			// Solvent Modifier Cards
-			case "Aquarium Water" -> new AquariumWaterCard();
+			case "Aquarium Water" -> new AquariumCard();
 			case "Godly Solvent" -> new GodlySolventCard();
 			case "Polar Bear" -> new PolarBearCard();
 			case "London City" -> new LondonCityCard();
@@ -59,7 +59,7 @@ public class CardFactory {
 			case "Beta" -> new BetaCard();
 			case "Omega" -> new OmegaCard();
 			case "Clock Rewind" -> new ClockRewindCard();
-			case "Disulfide Bridge" -> new DisulfideBridgeCard();
+			case "Disulfide Bridge" -> new SSBridgeCard();
 			case "Fish" -> new FishCard();
 
 			// Reagent Cards

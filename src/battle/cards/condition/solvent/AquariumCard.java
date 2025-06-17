@@ -5,12 +5,12 @@ import battle.cards.condition.ConditionCard;
 import battle.conditions.ConditionBoard;
 import battle.conditions.Solvent;
 
-public class AquariumWaterCard extends ConditionCard {
+public class AquariumCard extends ConditionCard {
 
-    public AquariumWaterCard() {
-        super("Aquarium Water", 
-              "The fishies provide polar protic goodness!", 
-              "Sets the solvent to POLAR PROTIC. Gain LP equal to the number of cards containing \"fish\" you have selected.", 
+    public AquariumCard() {
+        super("Aquarium", 
+              "Did you know that in terms of human and fish breeding--", 
+              "Sets the solvent to POLAR PROTIC. Gain LP equal to the number of cards containing \"fish\" you have in your deck.", 
               1,
               "electric1");
     }

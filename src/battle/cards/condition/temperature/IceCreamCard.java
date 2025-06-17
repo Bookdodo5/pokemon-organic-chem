@@ -8,8 +8,8 @@ public class IceCreamCard extends ConditionCard {
 
     public IceCreamCard() {
         super("Ice Cream", 
-              "Cool and sweet, but ruins your sugar chemistry!", 
-              "Decrease TEMPERATURE by 1 level. Sugar cannot be synthesized while this card is active.", 
+              "Cool and sweet, but don't eat it in the lab!", 
+              "Decrease TEMPERATURE by 1 level.", 
               1,
               "electric1");
     }
@@ -17,6 +17,5 @@ public class IceCreamCard extends ConditionCard {
     @Override
     public void executeEffect(BattlePlayer player, BattlePlayer opponent, ConditionBoard board) {
         board.getCondition().decreaseTemp();
-        board.addEffect("No Sugar", -1);
     }
 } 

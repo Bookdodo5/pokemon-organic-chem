@@ -10,7 +10,7 @@ public class PolarBearCard extends ConditionCard {
 
     public PolarBearCard() {
         super("Polar Bear", 
-              "Polar but doesn't share protons - just like a solitary polar bear!", 
+              "Polar but doesn't share protons. Selfish.", 
               "Sets the solvent to POLAR APROTIC. Gain 2 LP if the TEMPERATURE is COLD.", 
               1,
               "electric1");

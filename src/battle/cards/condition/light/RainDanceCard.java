@@ -9,7 +9,7 @@ public class RainDanceCard extends ConditionCard {
 
     public RainDanceCard() {
         super("Rain Dance", 
-              "The clouds block out radical-inducing light, but provide water for hydration!", 
+              "The clouds obscure the light, but provide water for hydration!", 
               "Radical reactions become unavailable. Hydration reactions cost 1 less LP.", 
               1,
               "24");

@@ -8,9 +8,9 @@ public class ClockRewindCard extends UtilityCard {
 
     public ClockRewindCard() {
         super("Clock Rewind", 
-              "Sometimes the best strategy is starting over!", 
+              "You failed. You should just start it all over again.", 
               "Return your opponent's molecule and reaction conditions to their original state at the start of battle. You skip the next 2 turns.", 
-              1,
+              5,
               "water3",
               AnimationPosition.OPPONENT);
     }

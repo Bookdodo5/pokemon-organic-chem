@@ -5,12 +5,12 @@ import battle.cards.condition.ConditionCard;
 import battle.conditions.ConditionBoard;
 import battle.conditions.pH;
 
-public class BufferSolutionCard extends ConditionCard {
+public class BufferCard extends ConditionCard {
 
-    public BufferSolutionCard() {
-        super("Buffer Solution",
-                "Maintains perfect equilibrium against all pH disturbances.",
-                "Sets the pH to either WEAK BASE, NEUTRAL, or WEAK ACID (your choice), and the pH cannot change for 2 turns.",
+    public BufferCard() {
+        super("Buffer",
+                "Maintains perfect equilibrium, but you need to do the calculation );",
+                "Randomly sets the pH to either WEAK BASE, NEUTRAL, or WEAK ACID, and the pH cannot change for 2 turns.",
                 2,
                 "fire4");
     }

@@ -5,11 +5,11 @@ import battle.cards.condition.ConditionCard;
 import battle.conditions.ConditionBoard;
 import battle.conditions.Temperature;
 
-public class CryogenicShockCard extends ConditionCard {
+public class CryogenicsCard extends ConditionCard {
 
-    public CryogenicShockCard() {
-        super("Cryogenic Shock", 
-              "Freezes everything solid in an instant!", 
+    public CryogenicsCard() {
+        super("Cryogenics", 
+              "Freezes everything in an instant!", 
               "Sets the temperature to COLD. This turn, only reactions that require COLD temperature can be played.", 
               2,
               "electric1");

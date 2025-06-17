@@ -5,11 +5,11 @@ import battle.cards.condition.ConditionCard;
 import battle.conditions.ConditionBoard;
 import battle.conditions.pH;
 
-public class HydroxideWaveCard extends ConditionCard {
+public class ProtonSinkCard extends ConditionCard {
 
-    public HydroxideWaveCard() {
-        super("Hydroxide Wave", 
-              "A surge of OH⁻ ions strips away all acidic conditions!", 
+    public ProtonSinkCard() {
+        super("Proton Sink", 
+              "Protons are delicious.", 
               "Sets the pH to STRONG BASE. This effect cancels \"Buffer Solution.\"", 
               2,
               "fire5");

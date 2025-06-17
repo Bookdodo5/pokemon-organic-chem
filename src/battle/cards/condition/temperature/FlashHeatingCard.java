@@ -9,7 +9,7 @@ public class FlashHeatingCard extends ConditionCard {
 
     public FlashHeatingCard() {
         super("Flash Heating", 
-              "A brief but intense burst of thermal energy!", 
+              "A brief but intense burst of thermal energy, just like when your professor becomes angry.", 
               "Instant HOT temperature for this turn only. You cannot use this card again this combat.", 
               0,
               "fire4");
@@ -27,6 +27,6 @@ public class FlashHeatingCard extends ConditionCard {
         	case COLD -> board.addEffect("Return to COLD", 1);
         	case ROOM -> board.addEffect("Return to ROOM", 1);
         	case HOT -> board.addEffect("Return to HOT", 1);
-		}
+	}
     }
 } 
