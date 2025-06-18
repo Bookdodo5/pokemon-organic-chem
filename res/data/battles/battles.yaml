@@ -1,0 +1,45 @@
+# Ozonolysis Challenge
+ID: 1
+Battle Specific Cards:
+  - O3
+  - H2O2
+  - DMS
+Opponent Deck:
+  - O3
+  - H2O2
+  - DMS
+  - O3
+  - H2O2
+  - DMS
+  - O3
+  - H2O2
+  - DMS
+  - O3
+  - H2O2
+  - DMS
+Player Molecule: Cyclohexene
+Opponent Molecule: Cyclohexene
+Target Molecule: Hexanedial
+Battle Theme: champion2
+
+# Radical Halogenation
+ID: 2
+Battle Specific Cards:
+  - Sunny Day
+  - Rain Dance
+Opponent Deck:
+  - Sunny Day
+  - Cl2
+  - Br2
+  - Fish
+  - Cl2
+  - Br2
+  - Fish
+  - Cl2
+  - Br2
+  - Fish
+  - Fish
+Player Molecule: H2O
+Opponent Molecule: H2O
+Target Molecule: C2H4
+Battle Theme: snow

@@ -35,10 +35,10 @@ public class MapManager {
 
 	private void initializeMap(String mapName, String music) {
 		maps.put(mapName, new TileManager[]{
-			new TileManager("/maps/" + mapName + "_GROUND.txt"),
-			new TileManager("/maps/" + mapName + "_DECORATION.txt"),
-			new TileManager("/maps/" + mapName + "_OBSTACLE.txt"),
-			new TileManager("/maps/" + mapName + "_AIR.txt"),
+			new TileManager("/data/maps/" + mapName + "_GROUND.txt"),
+			new TileManager("/data/maps/" + mapName + "_DECORATION.txt"),
+			new TileManager("/data/maps/" + mapName + "_OBSTACLE.txt"),
+			new TileManager("/data/maps/" + mapName + "_AIR.txt"),
 		});
 		musics.put(mapName, music);
 	}

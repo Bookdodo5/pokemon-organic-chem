@@ -39,7 +39,7 @@ public class TileManager {
 
 	private void loadTile() {
 
-		tilePath = "/tiles/" + layerPath.split("_")[0].split("/")[2] + ".png";
+		tilePath = "/tiles/" + layerPath.split("_")[0].split("/")[3] + ".png";
 		// tileLayer = layerPath.split("_")[1];
 
 		BufferedImage spriteSheet = AssetManager.loadImage(tilePath);

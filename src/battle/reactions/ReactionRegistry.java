@@ -1,5 +1,10 @@
 package battle.reactions;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -22,22 +27,53 @@ public final class ReactionRegistry {
     private static final Map<String, Set<String>> molecule2Reaction = new HashMap<>();
     private static final Map<String, List<SubReaction>> reaction2Map = new HashMap<>();
 
-    static {
-	// Battle 1 - Radical Halogenation
-        registerReaction("Radical Halogenation", List.of(
-            new SubReaction(List.of("Cl2"),
-                Map.of("Methane", "Chloromethane")
-            )
-        ));
+    private static String name = null;
+    private static List<SubReaction> subReactions = null;
 
-        registerReaction("Ozonolysis", List.of(
-            new SubReaction(List.of("O3", "H2O2"),
-                Map.of("Cyclohexene", "Hexanedioic acid")
-            ),
-            new SubReaction(List.of("O3", "DMS"),
-                Map.of("Cyclohexene", "Hexanedial")
-            )
-        ));
+    private static void resetData() {
+        name = null;
+        subReactions = null;
+    }
+
+    private static void loadRegistry() {
+        try (InputStream is = ReactionRegistry.class.getResourceAsStream("/data/reactions/reactionRegistry.yaml")) {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+			String line;
+			while ((line = reader.readLine()) != null) {
+				if (line.trim().isEmpty()) continue;
+				if(line.startsWith("#")) putRegistry();
+				if (line.startsWith("Name:")) {
+                    name = line.split(":")[1].trim();
+                }
+				if (line.startsWith("Sub Reactions:")) {
+                    subReactions = new ArrayList<>();
+                }
+                if (line.startsWith("  - Required Reagents:")) {
+                    subReactions.add(new SubReaction(new ArrayList<>(), new HashMap<>()));
+                }
+                if (line.startsWith("    - ")) { // required reagents
+                    subReactions.get(subReactions.size() - 1)
+                        .requiredReagents.add(line.split("-")[1].trim());
+                }
+                if (line.startsWith("      ")) { // reactant products
+                    subReactions.get(subReactions.size() - 1)
+                        .reactantProductsMap.put(line.split(":")[0].trim(), line.split(":")[1].trim());
+                }
+			}
+			putRegistry();
+        } catch (IOException e) {
+            System.err.println("Failed to load reaction registry: " + e.getMessage());
+        }
+    }
+
+    private static void putRegistry() {
+        if(name == null || subReactions == null) return;
+        registerReaction(name, subReactions);
+        resetData();
+    }
+
+    static {
+        loadRegistry();
     }
     
     private static void registerReaction(String reactionName, List<SubReaction> subReactions) {
@@ -60,10 +96,10 @@ public final class ReactionRegistry {
     }
     
     public static String getProduct(String reactionName, String moleculeName, List<String> reagents) {
-        List<SubReaction> subReactions = getSubReactions(reactionName);
-        if(subReactions.isEmpty()) return null;
+        List<SubReaction> allSubReactions = getSubReactions(reactionName);
+        if(allSubReactions.isEmpty()) return null;
 
-        SubReaction selected = subReactions.stream()
+        SubReaction selected = allSubReactions.stream()
             .filter(subReaction -> subReaction.requiredReagents.stream()
                 .allMatch(reagents::contains))
             .max((a, b) -> compare(getIndexList(a, reagents), getIndexList(b, reagents)))

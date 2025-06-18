@@ -1,6 +1,5 @@
 package battle;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class BattleData {
@@ -37,13 +36,13 @@ public class BattleData {
 			return this;
 		}
 
-		public Builder battleSpecificCard(String... battleSpecificCard) {
-			this.battleSpecificCard = Arrays.asList(battleSpecificCard);
+		public Builder battleSpecificCard(List<String> battleSpecificCard) {
+			this.battleSpecificCard = battleSpecificCard;
 			return this;
 		}
 
-		public Builder opponentDeck(String... opponentDeck) {
-			this.opponentDeck = Arrays.asList(opponentDeck);
+		public Builder opponentDeck(List<String> opponentDeck) {
+			this.opponentDeck = opponentDeck;
 			return this;
 		}
 
@@ -62,8 +61,10 @@ public class BattleData {
 			return this;
 		}
 
-		public Builder battleTheme(BattleThemes battleTheme) {
-			this.battleTheme = battleTheme;
+		public Builder battleTheme(String battleTheme) {
+			if(battleTheme == null) return this;
+			if(BattleThemes.valueOf(battleTheme.toUpperCase()) == null) return this;
+			this.battleTheme = BattleThemes.valueOf(battleTheme.toUpperCase());
 			return this;
 		}
 

@@ -75,8 +75,8 @@ public class Molecule {
 	    return this;
 	}
 
-	public Builder atom(String atom, int count) {
-	    this.atoms.put(atom, count);
+	public Builder atoms(Map<String, Integer> atoms) {
+	    this.atoms.putAll(atoms);
 	    return this;
 	}
 

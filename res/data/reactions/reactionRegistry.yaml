@@ -1,0 +1,21 @@
+# Radical Halogenation
+Name: Radical Halogenation
+Sub Reactions:
+  - Required Reagents: 
+    - Cl2
+    Reactant Products:
+      Methane: Chloromethane
+
+# Ozonolysis
+Name: Ozonolysis
+Sub Reactions:
+  - Required Reagents: 
+    - O3
+    - H2O2
+    Reactant Products:
+      Cyclohexene: Hexanedioic acid
+  - Required Reagents:
+    - O3
+    - DMS
+    Reactant Products:
+      Cyclohexene: Hexanedial

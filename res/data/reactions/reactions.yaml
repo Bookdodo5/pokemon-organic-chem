@@ -1,0 +1,12 @@
+# Radical Halogenation
+Name: Radical Halogenation
+Cost: 2
+Description: Adds a halogen to an alkane
+RequiredLight: LIGHT
+AnimationPath: electric1
+
+# Ozonolysis
+Name: Ozonolysis
+Cost: 0
+Description: Breaks alkenes using ozone to form aldehydes or ketones
+AnimationPath: electric1

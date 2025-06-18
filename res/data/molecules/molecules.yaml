@@ -1,0 +1,28 @@
+# Molecule: Cyclohexene
+Name: Cyclohexene
+SMILES: C1CCC=CC1
+Formula: C6H10
+Molecular Weight: 82
+Atoms:
+  C: 6
+  H: 10
+
+# Molecule: Hexanedioic acid
+Name: Hexanedioic acid
+SMILES: OC(=O)CCCCC(=O)O
+Formula: C6H10O4
+Molecular Weight: 146
+Atoms:
+  C: 6
+  H: 10
+  O: 4
+
+# Molecule: Hexanedial
+Name: Hexanedial
+SMILES: O=CCCCCC=O
+Formula: C6H10O2
+Molecular Weight: 114
+Atoms:
+  C: 6
+  H: 10
+  O: 2
