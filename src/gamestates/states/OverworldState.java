@@ -22,9 +22,12 @@ import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
+import static main.Constants.ORIGINAL_TILE_SIZE;
 import static main.Constants.SCALE;
 import main.GameContentManager;
+import tile.MapData;
 import tile.MapManager;
 import tile.TransitionPoint;
 
@@ -52,7 +55,9 @@ public class OverworldState extends GameState {
 
 	private void checkMapTransition() {
 		if (stateManager.getState() == GameStates.CUTSCENE) return;
-		TransitionPoint mapTransition = mapManager.checkTransition(player.getWorldX(), player.getWorldY());
+		TransitionPoint mapTransition = mapManager.checkTransition(
+			player.getMapX(), player.getMapY()
+		);
 
 		if (mapTransition != null && player.isIdle()) {
 			transitionMap(mapTransition);
@@ -62,18 +67,22 @@ public class OverworldState extends GameState {
 	private void transitionMap(TransitionPoint mapTransition) {
 		String currentMusic = mapManager.getCurrentMusic();
 		stateManager.transitionToState(GameStates.OVERWORLD, true, currentMusic, () -> {
-			player.setWorldX(mapTransition.getToX());
-			player.setWorldY(mapTransition.getToY());
-			cameraManager.update();
-			mapManager.setCurrentMap(mapTransition.getMapTo());
-			initializeEntities();
+			setMap(mapTransition);
 		});
+	}
+
+	private void setMap(TransitionPoint mapTransition) {
+		player.setMapX(mapTransition.getToX());
+		player.setMapY(mapTransition.getToY());
+		cameraManager.update();
+		mapManager.setCurrentMap(mapTransition.getMapTo());
+		initializeEntities();
 	}
 
 	private void checkDialogue() {
 		if (stateManager.getState() == GameStates.CUTSCENE) return;
-		int playerX = player.getWorldX();
-		int playerY = player.getWorldY();
+		int playerX = player.getMapX();	
+		int playerY = player.getMapY();
 		FacingDirections playerFacing = player.currentDirection;
 
 		Dialogue dialogue = dialogueManager.getDialogue(playerX, playerY, playerFacing, getCurrentMapID());
@@ -82,8 +91,8 @@ public class OverworldState extends GameState {
 
 	private void checkCutscene() {
 		if (stateManager.getState() == GameStates.CUTSCENE) return;
-		int playerX = player.getWorldX();
-		int playerY = player.getWorldY();
+		int playerX = player.getMapX();
+		int playerY = player.getMapY();
 
 		Cutscene cutscene = cutsceneManager.getCutscene(playerX, playerY, getCurrentMapID());
 		if (cutscene != null && !cutscene.isFinished() && player.isIdle()) stateManager.setState(GameStates.CUTSCENE);
@@ -97,13 +106,49 @@ public class OverworldState extends GameState {
 				.collect(Collectors.toList()));
 	}
 
+	private MapData findNextMap(int playerGlobalX, int playerGlobalY) {
+		for(MapData map : mapManager.getVisibleMaps()) {
+			if(playerGlobalX >= map.getGlobalX() &&
+				playerGlobalX <= map.getGlobalX() + map.getWidth() &&
+				playerGlobalY >= map.getGlobalY() &&
+				playerGlobalY <= map.getGlobalY() + map.getHeight()) {
+				return map;
+			}
+		}
+		return null;
+	}
+
+	private void checkWalkAcrossMap() {
+		if (player.getMapX() < 0 || player.getMapX() >= mapManager.getWidth() ||
+			player.getMapY() < 0 || player.getMapY() >= mapManager.getHeight()) {
+			int playerGlobalX = player.getMapX() + mapManager.getGlobalX();
+			int playerGlobalY = player.getMapY() + mapManager.getGlobalY();
+			MapData nextMap = findNextMap(playerGlobalX, playerGlobalY);
+			if(nextMap == null) return;
+
+			int nextMapX = playerGlobalX - nextMap.getGlobalX();
+			int nextMapY = playerGlobalY - nextMap.getGlobalY();
+			player.setMapX(nextMapX);
+			player.setMapY(nextMapY);
+			initializeEntities();
+			mapManager.setCurrentMap(nextMap.getMapName());
+		}
+	}
+
 	@Override
 	public void update() {
 		player.update(mapManager.getCurrentLayers(), entities);
-		for (NPC npc : npcManager.getNPCs()) { npc.update(mapManager.getCurrentLayers(), entities); }
-
+		for (NPC npc : npcManager.getNPCs()) {
+			for(MapData map : mapManager.getVisibleMaps()) {
+				if(!map.getMapName().equals(npc.getMap())) continue;
+				npc.update(map.getLayers(), entities);
+				break;
+			}
+		}
 		checkMapTransition();
 		checkCutscene();
+		checkWalkAcrossMap();
+		mapManager.updateVisibleMaps(player.getMapX(), player.getMapY());
 		cameraManager.update();
 	}
 
@@ -112,15 +157,31 @@ public class OverworldState extends GameState {
 		AffineTransform originalTransform = g2.getTransform();
 		g2.scale(SCALE, SCALE);
 		
-		mapManager.getCurrentLayers()[0].drawLayer(g2, cameraManager.getCameraX(), cameraManager.getCameraY()	);
-		mapManager.getCurrentLayers()[1].drawLayer(g2, cameraManager.getCameraX(), cameraManager.getCameraY());
-		mapManager.getCurrentLayers()[2].drawLayer(g2, cameraManager.getCameraX(), cameraManager.getCameraY());
+		Set<MapData> visibleMaps = mapManager.getVisibleMaps();
+		
+		// Draw ground, decoration, and obstacle layers
+		for(MapData map : visibleMaps) {
+			for(int i = 0; i <= 2; i++) {
+				drawLayer(g2, map, i, cameraManager.getCameraX(), cameraManager.getCameraY());
+			}
+		}
 
 		drawEntities(g2);
 
-		mapManager.getCurrentLayers()[3].drawLayer(g2, cameraManager.getCameraX(), cameraManager.getCameraY());
+		// Draw air layer
+		for(MapData map : visibleMaps) {
+			drawLayer(g2, map, 3, cameraManager.getCameraX(), cameraManager.getCameraY());
+		}
 
 		g2.setTransform(originalTransform);
+	}
+
+	private void drawLayer(Graphics2D g2, MapData map, int layerIndex, int cameraX, int cameraY) {
+		int relativeX = map.getGlobalX() - mapManager.getGlobalX();
+		int relativeY = map.getGlobalY() - mapManager.getGlobalY();
+		int realX = cameraX - relativeX * ORIGINAL_TILE_SIZE;
+		int realY = cameraY - relativeY * ORIGINAL_TILE_SIZE;
+		map.getLayers()[layerIndex].drawLayer(g2, realX, realY);
 	}
 
 	private void drawEntities(Graphics2D g2) {

@@ -58,6 +58,12 @@ public class TileManager {
 			for (int x = 0; x < tilesPerRow; x++) {
 
 				int tileID = y * tilesPerRow + x;
+
+				if (tileID == 0) {
+					tiles[tileID] = new Tile(null);
+					continue;
+				}
+
 				String[] animatedTilePath = ANIMATED_TILE_PATHS.get(tileID);
 				if (animatedTilePath != null) {
 					BufferedImage tileImage = AssetManager.loadImage(animatedTilePath[0]);
@@ -83,8 +89,8 @@ public class TileManager {
 
 		while ((line = bReader.readLine()) != null) { lines.add(line.split(",")); }
 
-		maxLayerCol = lines.size();
-		maxLayerRow = lines.get(0).length;
+		maxLayerRow = lines.size();
+		maxLayerCol = lines.get(0).length;
 
 		layerTileNum = new int[maxLayerRow][maxLayerCol];
 
@@ -97,15 +103,23 @@ public class TileManager {
 		}
 	}
 
+	public int getMaxLayerCol() { return maxLayerCol; }
+	public int getMaxLayerRow() { return maxLayerRow; }
+
 	public void drawLayer(Graphics2D g2, int cameraX, int cameraY) {
 
 		for (int row = 0; row < maxLayerRow; row++) {
 			for (int col = 0; col < maxLayerCol; col++) {
 
-				int worldX = col * ORIGINAL_TILE_SIZE;
-				int worldY = row * ORIGINAL_TILE_SIZE;
-				int screenX = worldX - cameraX;
-				int screenY = worldY - cameraY;
+				int mapX = col * ORIGINAL_TILE_SIZE;
+				int mapY = row * ORIGINAL_TILE_SIZE;
+				int screenX = mapX - cameraX;
+				int screenY = mapY - cameraY;
+
+				if (screenX + ORIGINAL_TILE_SIZE < 0 || screenX > SCREEN_WIDTH ||
+                screenY + ORIGINAL_TILE_SIZE < 0 || screenY > SCREEN_HEIGHT) {
+					continue;
+				}
 
 				tiles[layerTileNum[row][col]].draw(g2, screenX, screenY);
 			}

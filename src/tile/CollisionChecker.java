@@ -27,9 +27,9 @@ public class CollisionChecker {
 	}
 
 	public boolean checkCollision(int x, int y, TileManager[] tileManagers) {
+		if(x < 0 || y < 0 || x >= tileManagers[0].maxLayerCol || y >= tileManagers[0].maxLayerRow) return true;
 		for (TileManager tileManager : tileManagers) {
 			if (!walkableTiles.contains(tileManager.layerTileNum[y][x] + 1)) return false;
-			if (x < 0 || y < 0 || x >= tileManager.maxLayerCol || y >= tileManager.maxLayerRow) return false;
 		}
 		return true;
 	}

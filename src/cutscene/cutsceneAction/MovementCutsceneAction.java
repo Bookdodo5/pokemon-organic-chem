@@ -33,8 +33,8 @@ public class MovementCutsceneAction implements CutsceneAction {
 
 	@Override
 	public void update() {
-		int currentX = targetHuman.getWorldX();
-		int currentY = targetHuman.getWorldY();
+		int currentX = targetHuman.getMapX();
+		int currentY = targetHuman.getMapY();
 
 		if(targetHuman.isIdle() && currentX == targetX && currentY == targetY) {
 			end();
@@ -60,8 +60,8 @@ public class MovementCutsceneAction implements CutsceneAction {
 
 	@Override
 	public void end() {
-		targetHuman.setWorldX(targetX);
-		targetHuman.setWorldY(targetY);
+		targetHuman.setMapX(targetX);
+		targetHuman.setMapY(targetY);
 		
 		targetHuman.targetX = (int) targetHuman.getX();
 		targetHuman.targetY = (int) targetHuman.getY();

@@ -8,12 +8,12 @@ public abstract class Entity {
 	protected int spriteWidth, spriteHeight;
 	protected static final double SPEED = 2;
 	protected int animationCounter = 0;
-	protected static final int ANIMATION_SPEED = 6;
+	protected static final int ANIMATION_SPEED = 8;
 	protected int spriteIndex = 0;
 
-	public int getWorldX() { return (int) (x / Constants.ORIGINAL_TILE_SIZE); }
+	public int getMapX() { return (int) (x / Constants.ORIGINAL_TILE_SIZE); }
 
-	public int getWorldY() { return (int) (y / Constants.ORIGINAL_TILE_SIZE); }
+	public int getMapY() { return (int) (y / Constants.ORIGINAL_TILE_SIZE); }
 
 	public double getX() { return x; }
 
@@ -23,9 +23,9 @@ public abstract class Entity {
 
 	protected void setY(double y) { this.y = y; }
 
-	public void setWorldX(int x) { this.x = x * Constants.ORIGINAL_TILE_SIZE; }
+	public void setMapX(int x) { this.x = x * Constants.ORIGINAL_TILE_SIZE; }
 
-	public void setWorldY(int y) { this.y = y * Constants.ORIGINAL_TILE_SIZE; }
+	public void setMapY(int y) { this.y = y * Constants.ORIGINAL_TILE_SIZE; }
 
 	public int getSpriteWidth() { return spriteWidth; }
 

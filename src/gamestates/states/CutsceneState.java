@@ -56,8 +56,8 @@ public class CutsceneState extends GameState {
 		player.setAcceptInput(false);
 		if(prevState == GameStates.BATTLE) return;
 
-		int playerX = player.getWorldX();
-		int playerY = player.getWorldY();
+		int playerX = player.getMapX();
+		int playerY = player.getMapY();
 
 		currentCutscene = cutsceneManager.getCutscene(playerX, playerY, overworldState.getCurrentMapID());
 		if (currentCutscene != null) {

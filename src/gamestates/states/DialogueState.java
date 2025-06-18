@@ -59,8 +59,8 @@ public class DialogueState extends GameState {
 
 	@Override
 	public void onEnter(GameStates prevState) {
-		int playerX = player.getWorldX();
-		int playerY = player.getWorldY();
+		int playerX = player.getMapX();
+		int playerY = player.getMapY();
 		FacingDirections playerFacing = player.currentDirection;
 
 		dialogue = dialogueManager.getDialogue(playerX, playerY, playerFacing, overworldState.getCurrentMapID());

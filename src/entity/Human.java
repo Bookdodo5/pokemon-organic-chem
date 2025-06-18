@@ -90,12 +90,12 @@ public abstract class Human extends Entity {
 
 	protected boolean checkCollision(double x, double y, TileManager[] tileManagers, List<Entity> humans) {
 		currentDirectionVector = DIRECTION_VECTORS.get(currentDirection);
-		int checkX = getWorldX() + currentDirectionVector[0];
-		int checkY = getWorldY() + currentDirectionVector[1];
+		int checkX = getMapX() + currentDirectionVector[0];
+		int checkY = getMapY() + currentDirectionVector[1];
 
 		boolean tileResult = collisionChecker.checkCollision(checkX, checkY, tileManagers);
 		boolean humanResult = humans.stream()
-				.allMatch(human -> (human.getWorldX() != checkX) || (human.getWorldY() != checkY));
+				.allMatch(human -> (human.getMapX() != checkX) || (human.getMapY() != checkY));
 		boolean result = tileResult && humanResult;
 
 		if (!result) setIdleWalking();
@@ -106,7 +106,6 @@ public abstract class Human extends Entity {
 		x = targetX;
 		y = targetY;
 		currentMovementState = MovementStates.IDLE;
-		spriteIndex = 0;
 	}
 
 	public void setMoving() {

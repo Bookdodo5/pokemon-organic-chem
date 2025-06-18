@@ -1,11 +1,9 @@
 package tile;
 
-import static main.Constants.*;
-
+import assets.AssetManager;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-
-import assets.AssetManager;
+import static main.Constants.*;
 
 public class AnimatedTile extends Tile {
 

@@ -107,8 +107,6 @@ public class PokedexState extends GameState {
             case Keys.INTERACT -> handleInteract();
             default -> {}
         }
-
-        System.out.println(selection.getArea() + " " + selection.getTabIndex() + " " + selection.getScrollIndex() + " " + selection.getFocusIndex() + " " + selection.getCardIndex());
     }
 
     private void handleUp() {

@@ -75,6 +75,18 @@ public class Sound implements Runnable {
 		loadSound("Lappet", "/music/Lappet.wav");
 		loadSound("NewStart", "/music/NewStart.wav");
 		loadSound("Credits", "/music/Credits.wav");
+		loadSound("Bicycle", "/music/Bicycle.wav");
+		loadSound("Motorcycle", "/music/Motorcycle.wav");
+		loadSound("Center", "/music/Center.wav");
+		loadSound("Cave", "/music/Cave.wav");
+		loadSound("Frontier", "/music/Frontier.wav");
+		loadSound("Game", "/music/Game.wav");
+		loadSound("Indigo", "/music/Indigo.wav");
+		loadSound("Islands", "/music/Islands.wav");
+		loadSound("Mart", "/music/Mart.wav");
+		loadSound("Safari", "/music/Safari.wav");
+		loadSound("Tiall", "/music/Tiall.wav");
+		loadSound("Underwater", "/music/Underwater.wav");
 	}
 
 	public void setFile(String file) {
@@ -105,9 +117,7 @@ public class Sound implements Runnable {
 
 	public void play(String file) {
 		float musicVolume = Settings.getInstance().getMusicVolume();
-		if (clip != null) {
-			stop(false);
-		}
+		if (clip != null) stop(false);
 		setFile(file);
 		if (clip != null) {
 			setVolume(volumeToDB(0.2 * musicVolume));

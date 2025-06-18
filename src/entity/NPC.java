@@ -61,8 +61,8 @@ public class NPC extends Human {
 
 	private boolean checkOutOfRange() {
 		currentDirectionVector = DIRECTION_VECTORS.get(currentDirection);
-		int checkX = getWorldX() + currentDirectionVector[0];
-		int checkY = getWorldY() + currentDirectionVector[1];
+		int checkX = getMapX() + currentDirectionVector[0];
+		int checkY = getMapY() + currentDirectionVector[1];
 		int distX = Math.abs(checkX - originalX);
 		int distY = Math.abs(checkY - originalY);
 		return distX + distY <= range;
