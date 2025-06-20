@@ -23,10 +23,10 @@ public class Player extends Human {
 	private void handleMovementInput(TileManager[] tileManagers, List<Entity> humans) {
 
 		switch (keyHandler.getCurrentKey()) {
-			case UP -> currentDirection = FacingDirections.UP;
-			case DOWN -> currentDirection = FacingDirections.DOWN;
-			case LEFT -> currentDirection = FacingDirections.LEFT;
-			case RIGHT -> currentDirection = FacingDirections.RIGHT;
+			case UP -> setFacingDirection(FacingDirections.UP);
+			case DOWN -> setFacingDirection(FacingDirections.DOWN);
+			case LEFT -> setFacingDirection(FacingDirections.LEFT);
+			case RIGHT -> setFacingDirection(FacingDirections.RIGHT);
 			default -> {}
 		}
 

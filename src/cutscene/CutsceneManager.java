@@ -6,13 +6,14 @@ import cutscene.cutsceneAction.DialogueAction;
 import cutscene.cutsceneAction.EmoteAction;
 import cutscene.cutsceneAction.FadeAction;
 import cutscene.cutsceneAction.ImageBoxAction;
+import cutscene.cutsceneAction.TeleportAction;
 import cutscene.cutsceneAction.WaitAction;
 import dialogue.Dialogue;
+import entity.FacingDirections;
 import entity.NPCManager;
 import entity.Player;
 import gamestates.CameraManager;
 import gamestates.FlagManager;
-import gamestates.GameStates;
 import gamestates.StateManager;
 import gamestates.states.OverworldState;
 import java.util.HashMap;
@@ -24,7 +25,7 @@ public class CutsceneManager {
 	private final Map<String, List<Cutscene>> cutscenes;
 	private final FlagManager flagManager;
 	private final StateManager stateManager;
-	private final OverworldState overworldState;
+	private OverworldState overworldState;
 	private final CameraManager cameraManager;
 	private final Player player;
 
@@ -32,16 +33,21 @@ public class CutsceneManager {
 		cutscenes = new HashMap<>();
 		this.flagManager = flagManager;
 		this.stateManager = stateManager;
-		this.overworldState = (OverworldState) StateManager.states.get(GameStates.OVERWORLD);
 		this.cameraManager = cameraManager;
 		this.player = player;
+	}
+
+	public void setOverworldState(OverworldState overworldState) {
+		this.overworldState = overworldState;
 		initializeCutscenes();
 	}
 
 	private void initializeCutscenes() {
+		if (overworldState == null) return;
+		
 		// === OZONOLYSIS BATTLE CUTSCENE ===
 		// Pre-battle cutscene
-		cutscenes.put(getCutsceneKey(11, 13, "porbitalTown"), List.of(
+		cutscenes.put(getCutsceneKey(11, 13, "porbitalTown", false, null), List.of(
 			
 		new Cutscene(
 			new String[] { "ozonolysis_intro" },
@@ -51,8 +57,9 @@ public class CutsceneManager {
 			new EmoteAction(player, 60, Emotes.WAIT1, cameraManager),
 			new EmoteAction(player, 60, Emotes.WAIT2, cameraManager),
 			new EmoteAction(player, 60, Emotes.WAIT3, cameraManager),
-			new FadeAction(60,0,255),
-			new FadeAction(60,255,0),
+			new FadeAction(60,0,255, 180),
+			new TeleportAction(player, 0, 0, "route1", overworldState),
+			new FadeAction(60,255,0, 30),
 			new EmoteAction(player, 30, Emotes.WAIT3, cameraManager),
 			new EmoteAction(player, 60, Emotes.MUSIC, cameraManager),
 			new DialogueAction(new Dialogue(new String[] {
@@ -94,19 +101,40 @@ public class CutsceneManager {
 				flagManager.removeFlag("BATTLE_LOSE");
 			})
 		)));
+
+		// === SIGN DIALOGUE AT (29, 13) ===
+		cutscenes.put(getCutsceneKey(29, 13, "porbitalTown", true, FacingDirections.UP), List.of(
+			new Cutscene(
+				new String[] { },  // No required flags
+				new String[] { },  // No forbidden flags
+				new EmoteAction(player, 30, Emotes.QUESTION, cameraManager),
+				new DialogueAction(new Dialogue(new String[] {
+					"Sign: Welcome to Porbital Town!",
+					"Home of the Organic Chemistry Research Institute.",
+					"Please respect the laboratory safety protocols.",
+					"Remember: Always wear your safety goggles!"
+				})),
+				new EmoteAction(player, 30, Emotes.SMILE, cameraManager)
+			)
+		));
 	}
 
-	private String getCutsceneKey(int x, int y, String map) {
-		return x + " " + y + " " + map;
+	private String getCutsceneKey(int x, int y, String map, boolean interact, FacingDirections facing) {
+		System.out.println(x + " " + y + " " + map + " " + interact + " " + facing);
+		return x + " " + y + " " + map + " " + interact + " " + facing;
 	}
 
-	public Cutscene getCutscene(int x, int y, String map) {
-
-		List<Cutscene> cutsceneList = cutscenes.get(getCutsceneKey(x, y, map));
+	public Cutscene getCutscene(int x, int y, String map, boolean interact, FacingDirections facing) {
+		List<Cutscene> cutsceneList = cutscenes.get(getCutsceneKey(x, y, map, interact, facing));
 		if (cutsceneList == null) return null;
 		for (Cutscene cutscene : cutsceneList) {
 			if (flagManager.matchFlags(cutscene.getYesFlags(), cutscene.getNoFlags())) return cutscene;
 		}
+
+		if(facing != null) {
+			return getCutscene(x, y, map, interact, null);
+		}
+
 		return null;
 	}
 }

@@ -1,15 +1,6 @@
 package main;
 
-import gamestates.GameStates;
 import gamestates.StateManager;
-import gamestates.states.BattleState;
-import gamestates.states.CutsceneState;
-import gamestates.states.DialogueState;
-import gamestates.states.OverworldState;
-import gamestates.states.PausingState;
-import gamestates.states.PokedexState;
-import gamestates.states.SettingsState;
-import gamestates.states.TitleState;
 import input.KeyBindingHandler;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -27,23 +18,17 @@ public class GameScreen extends JPanel implements Runnable {
 	final double targetTimePerFrame = 1000000000.0 / FPS;
 
 	Thread gameThread;
-	StateManager stateManager = new StateManager();
-	KeyBindingHandler keyHandler = new KeyBindingHandler(stateManager);
-	GameContentManager gameContentManager = new GameContentManager(keyHandler, stateManager);
-
+	GameContentManager gameContentManager;
+	StateManager stateManager;
+	KeyBindingHandler keyHandler;
+	
 	public GameScreen() {
 		setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
 		setBackground(Color.BLACK);
 		setFocusable(true);
-		StateManager.states.put(GameStates.TITLE, new TitleState(stateManager, keyHandler, gameContentManager));
-		StateManager.states.put(GameStates.OVERWORLD, new OverworldState(stateManager, keyHandler, gameContentManager));
-		StateManager.states.put(GameStates.CUTSCENE, new CutsceneState(stateManager, keyHandler, gameContentManager));
-		StateManager.states.put(GameStates.PAUSING, new PausingState(stateManager, keyHandler, gameContentManager));
-		StateManager.states.put(GameStates.BATTLE, new BattleState(stateManager, keyHandler, gameContentManager));
-		StateManager.states.put(GameStates.POKEDEX, new PokedexState(stateManager, keyHandler, gameContentManager));
-		StateManager.states.put(GameStates.DIALOGUE, new DialogueState(stateManager, keyHandler, gameContentManager));
-		StateManager.states.put(GameStates.SETTINGS, new SettingsState(stateManager, keyHandler, gameContentManager));
-		stateManager.setState(GameStates.OVERWORLD);
+		gameContentManager = new GameContentManager();
+		stateManager = gameContentManager.getStateManager();
+		keyHandler = gameContentManager.getKeyHandler();
 	}
 
 	public void update() { 

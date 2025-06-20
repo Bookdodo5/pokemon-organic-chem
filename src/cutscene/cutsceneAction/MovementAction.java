@@ -43,16 +43,16 @@ public class MovementAction implements CutsceneAction {
 
 		if(targetHuman.isIdle()) {
 			if(currentX < targetX) {
-				targetHuman.currentDirection = FacingDirections.RIGHT;
+				targetHuman.setFacingDirection(FacingDirections.RIGHT);
 				targetHuman.setMoving();
 			} else if(currentX > targetX) {
-				targetHuman.currentDirection = FacingDirections.LEFT;
+				targetHuman.setFacingDirection(FacingDirections.LEFT);
 				targetHuman.setMoving();
 			} else if(currentY < targetY) {
-				targetHuman.currentDirection = FacingDirections.DOWN;
+				targetHuman.setFacingDirection(FacingDirections.DOWN);
 				targetHuman.setMoving();
 			} else if(currentY > targetY) {
-				targetHuman.currentDirection = FacingDirections.UP;
+				targetHuman.setFacingDirection(FacingDirections.UP);
 				targetHuman.setMoving();
 			}
 		}

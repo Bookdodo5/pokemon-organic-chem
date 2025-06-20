@@ -47,10 +47,10 @@ public class NPC extends Human {
 
 		int direction = random.nextInt(4);
 		switch (direction) {
-			case 0 -> currentDirection = FacingDirections.UP;
-			case 1 -> currentDirection = FacingDirections.DOWN;
-			case 2 -> currentDirection = FacingDirections.LEFT;
-			case 3 -> currentDirection = FacingDirections.RIGHT;
+			case 0 -> setFacingDirection(FacingDirections.UP);
+			case 1 -> setFacingDirection(FacingDirections.DOWN);
+			case 2 -> setFacingDirection(FacingDirections.LEFT);
+			case 3 -> setFacingDirection(FacingDirections.RIGHT);
 			default -> {}
 		}
 		canMove = checkCollision(x, y, tileManagers, humans) && checkOutOfRange();
@@ -60,7 +60,7 @@ public class NPC extends Human {
 	}
 
 	private boolean checkOutOfRange() {
-		currentDirectionVector = DIRECTION_VECTORS.get(currentDirection);
+		currentDirectionVector = DIRECTION_VECTORS.get(getCurrentDirection());
 		int checkX = getMapX() + currentDirectionVector[0];
 		int checkY = getMapY() + currentDirectionVector[1];
 		int distX = Math.abs(checkX - originalX);

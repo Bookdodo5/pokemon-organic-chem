@@ -40,8 +40,8 @@ public abstract class Human extends Entity {
 	protected BufferedImage spriteSheet;
 
 	// State
-	public FacingDirections currentDirection = FacingDirections.DOWN;
-	public MovementStates currentMovementState = MovementStates.IDLE;
+	private FacingDirections currentDirection = FacingDirections.DOWN;
+	private MovementStates currentMovementState = MovementStates.IDLE;
 	private CollisionChecker collisionChecker;
 
 	public Human(int positionX, int positionY) {
@@ -60,6 +60,14 @@ public abstract class Human extends Entity {
 		} catch (IOException e) {
 			System.err.println("Failed to initialize collision checker: " + e.getMessage());
 		}
+	}
+
+	public FacingDirections getCurrentDirection() {
+		return currentDirection;
+	}
+
+	public MovementStates getCurrentMovementState() {
+		return currentMovementState;
 	}
 
 	public void setFacingDirection(FacingDirections direction) {

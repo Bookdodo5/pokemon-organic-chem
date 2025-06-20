@@ -3,8 +3,6 @@ package gamestates.states;
 import assets.SoundManager;
 import cutscene.Cutscene;
 import cutscene.CutsceneManager;
-import dialogue.Dialogue;
-import dialogue.DialogueManager;
 import entity.Entity;
 import entity.FacingDirections;
 import entity.MovementStates;
@@ -32,19 +30,18 @@ import tile.TransitionPoint;
 public class OverworldState extends GameState {
 	private final Player player;
 	private final MapManager mapManager;
-	private final DialogueManager dialogueManager;
 	private final NPCManager npcManager;
 	private final CutsceneManager cutsceneManager;
 	private final CameraManager cameraManager;
 
 	private List<Entity> entities;
+	private Cutscene pendingCutscene;
 
 	public OverworldState(StateManager stateManager, KeyBindingHandler keyHandler,
 			GameContentManager gameContentManager) {
 		super(stateManager, keyHandler, gameContentManager);
 		this.player = gameContentManager.getPlayer();
 		this.mapManager = gameContentManager.getMapManager();
-		this.dialogueManager = gameContentManager.getDialogueManager();
 		this.cutsceneManager = gameContentManager.getCutsceneManager();
 		this.npcManager = gameContentManager.getNpcManager();
 		this.cameraManager = gameContentManager.getCameraManager();
@@ -77,23 +74,16 @@ public class OverworldState extends GameState {
 		initializeEntities();
 	}
 
-	private void checkDialogue() {
-		if (stateManager.getState() == GameStates.CUTSCENE) return;
-		int playerX = player.getMapX();	
-		int playerY = player.getMapY();
-		FacingDirections playerFacing = player.currentDirection;
-
-		Dialogue dialogue = dialogueManager.getDialogue(playerX, playerY, playerFacing, getCurrentMapID());
-		if (dialogue != null) stateManager.setState(GameStates.DIALOGUE);
-	}
-
-	private void checkCutscene() {
+	private void checkCutscene(boolean isInteracting, FacingDirections facing) {
 		if (stateManager.getState() == GameStates.CUTSCENE) return;
 		int playerX = player.getMapX();
 		int playerY = player.getMapY();
 
-		Cutscene cutscene = cutsceneManager.getCutscene(playerX, playerY, getCurrentMapID());
-		if (cutscene != null && !cutscene.isFinished() && player.isIdle()) stateManager.setState(GameStates.CUTSCENE);
+		Cutscene cutscene = cutsceneManager.getCutscene(playerX, playerY, getCurrentMapID(), isInteracting, facing);
+		if (cutscene != null && !cutscene.isFinished() && player.isIdle()) {
+			pendingCutscene = cutscene;
+			stateManager.setState(GameStates.CUTSCENE);
+		}
 	}
 
 	private void initializeEntities() {
@@ -144,7 +134,7 @@ public class OverworldState extends GameState {
 			}
 		}
 		checkMapTransition();
-		checkCutscene();
+		checkCutscene(false, null);
 		checkWalkAcrossMap();
 		mapManager.updateVisibleMaps(player.getMapX(), player.getMapY());
 		cameraManager.update();
@@ -206,7 +196,9 @@ public class OverworldState extends GameState {
 		switch (keyHandler.getCurrentKey()) {
 			case ESCAPE -> stateManager.setState(GameStates.PAUSING);
 			case INTERACT -> {
-				if (player.currentMovementState == MovementStates.IDLE) checkDialogue();
+				if (player.getCurrentMovementState() == MovementStates.IDLE) {
+					checkCutscene(true, player.getCurrentDirection());
+				}
 			}
 			case P -> stateManager.setState(GameStates.POKEDEX);
 			default -> {}
@@ -229,5 +221,11 @@ public class OverworldState extends GameState {
 	}
 
 	public String getCurrentMapID() { return mapManager.getCurrentMapID(); }
+
+	public Cutscene takePendingCutscene() {
+		Cutscene cutscene = pendingCutscene;
+		pendingCutscene = null;
+		return cutscene;
+	}
 
 }

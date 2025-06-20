@@ -8,8 +8,16 @@ import entity.NPCManager;
 import entity.Player;
 import gamestates.CameraManager;
 import gamestates.FlagManager;
+import gamestates.GameStates;
 import gamestates.StateManager;
-import input.KeyBindingHandler;		
+import gamestates.states.BattleState;
+import gamestates.states.CutsceneState;
+import gamestates.states.OverworldState;
+import gamestates.states.PausingState;
+import gamestates.states.PokedexState;
+import gamestates.states.SettingsState;
+import gamestates.states.TitleState;
+import input.KeyBindingHandler;
 import pokedex.MoleculeRecord;
 import pokedex.PlayerDeckManager;
 import pokedex.ReactionRecord;
@@ -27,20 +35,47 @@ public class GameContentManager {
 	private final BattleDataManager battleDataManager;
 	private final ReactionRecord reactionRecord;
 	private final MoleculeRecord moleculeRecord;
+	private final StateManager stateManager;
+	private final KeyBindingHandler keyHandler;
 
-	public GameContentManager(KeyBindingHandler keyHandler, StateManager stateManager) {
+	public GameContentManager() {
+		this.stateManager = new StateManager();
+		this.keyHandler = new KeyBindingHandler(stateManager);
+		
 		this.dialogueManager = new DialogueManager();
 		this.mapManager = new MapManager();
 		this.npcManager = new NPCManager();
 		this.player = new Player(10, 12, keyHandler);
 		this.cameraManager = new CameraManager(player);
 		this.flagManager = new FlagManager();
-		this.cutsceneManager = new CutsceneManager(npcManager, player, cameraManager, flagManager, stateManager);
 		this.playerDeckManager = new PlayerDeckManager();
 		this.battleDataManager = new BattleDataManager();
 		this.reactionRecord = new ReactionRecord(flagManager);
-		Molecule.setReactionAvailabilityManager(reactionRecord);
 		this.moleculeRecord = new MoleculeRecord();
+		Molecule.setReactionAvailabilityManager(reactionRecord);
+		
+		this.cutsceneManager = new CutsceneManager(
+			npcManager, 
+			player, 
+			cameraManager, 
+			flagManager, 
+			stateManager
+			);
+		initializeGameStates();
+		
+		this.cutsceneManager.setOverworldState(
+			(OverworldState) StateManager.states.get(GameStates.OVERWORLD)
+		);
+	}
+
+	private void initializeGameStates() {
+		StateManager.states.put(GameStates.TITLE, new TitleState(stateManager, keyHandler, this));
+		StateManager.states.put(GameStates.OVERWORLD, new OverworldState(stateManager, keyHandler, this));
+		StateManager.states.put(GameStates.CUTSCENE, new CutsceneState(stateManager, keyHandler, this));
+		StateManager.states.put(GameStates.PAUSING, new PausingState(stateManager, keyHandler, this));
+		StateManager.states.put(GameStates.BATTLE, new BattleState(stateManager, keyHandler, this));
+		StateManager.states.put(GameStates.POKEDEX, new PokedexState(stateManager, keyHandler, this));
+		StateManager.states.put(GameStates.SETTINGS, new SettingsState(stateManager, keyHandler, this));
 	}
 
 	public DialogueManager getDialogueManager() { return dialogueManager; }
@@ -64,5 +99,9 @@ public class GameContentManager {
 	public ReactionRecord getReactionRecord() { return reactionRecord; }
 
 	public MoleculeRecord getMoleculeRecord() { return moleculeRecord; }
+
+	public StateManager getStateManager() { return stateManager; }
+
+	public KeyBindingHandler getKeyHandler() { return keyHandler; }
 
 }

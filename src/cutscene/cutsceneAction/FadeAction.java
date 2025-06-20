@@ -9,18 +9,24 @@ public class FadeAction implements CutsceneAction {
 
     private final int fadeDuration;
     private final int targetAlpha;
-    private final int startAlpha;
+    private final int alphaChange;
     private int currentAlpha;
     private int currentTimer;
     private boolean isFinished;
-
-    public FadeAction(int fadeDuration, int startAlpha, int targetAlpha) {
+    private final int persistence;
+    
+    public FadeAction(int fadeDuration, int startAlpha, int targetAlpha, int persistence) {
         this.fadeDuration = fadeDuration;
         this.targetAlpha = targetAlpha;
-        this.startAlpha = startAlpha;
+        this.alphaChange = (targetAlpha - startAlpha) / fadeDuration;
         this.currentAlpha = startAlpha;
         this.currentTimer = 0;
         this.isFinished = false;
+        this.persistence = persistence;
+    }
+
+    public FadeAction(int fadeDuration, int startAlpha, int targetAlpha) {
+        this(fadeDuration, startAlpha, targetAlpha, 0);
     }
 
     @Override
@@ -31,12 +37,13 @@ public class FadeAction implements CutsceneAction {
     @Override
     public void update() {
         currentTimer++;
+        currentAlpha += alphaChange;
         if (currentTimer >= fadeDuration) {
             currentAlpha = targetAlpha;
+        }
+        if(currentTimer >= persistence + fadeDuration) {
             isFinished = true;
         }
-        int alphaChange = (targetAlpha - startAlpha) / fadeDuration;
-        currentAlpha += alphaChange;
     }
 
     @Override

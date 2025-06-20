@@ -2,7 +2,6 @@ package gamestates.states;
 
 import assets.SoundManager;
 import cutscene.Cutscene;
-import cutscene.CutsceneManager;
 import cutscene.cutsceneAction.DialogueAction;
 import cutscene.cutsceneAction.ImageBoxAction;
 import cutscene.cutsceneAction.WaitForInputAction;
@@ -20,7 +19,6 @@ import menu.Settings;
 
 public class CutsceneState extends GameState {
 
-	private final CutsceneManager cutsceneManager;
 	private final OverworldState overworldState;
 	private final Player player;
 
@@ -29,7 +27,6 @@ public class CutsceneState extends GameState {
 	public CutsceneState(StateManager stateManager, KeyBindingHandler keyHandler,
 			GameContentManager gameContentManager) {
 		super(stateManager, keyHandler, gameContentManager);
-		this.cutsceneManager = gameContentManager.getCutsceneManager();
 		this.player = gameContentManager.getPlayer();
 		this.overworldState = (OverworldState) StateManager.states.get(GameStates.OVERWORLD);
 	}
@@ -57,10 +54,8 @@ public class CutsceneState extends GameState {
 		player.setAcceptInput(false);
 		if(prevState == GameStates.BATTLE) return;
 
-		int playerX = player.getMapX();
-		int playerY = player.getMapY();
+		currentCutscene = overworldState.takePendingCutscene();
 
-		currentCutscene = cutsceneManager.getCutscene(playerX, playerY, overworldState.getCurrentMapID());
 		if (currentCutscene != null) {
 			currentCutscene.start();
 		}
