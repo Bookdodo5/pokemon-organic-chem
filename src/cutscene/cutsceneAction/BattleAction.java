@@ -7,14 +7,14 @@ import gamestates.GameStates;
 import gamestates.StateManager;
 import java.awt.Graphics2D;
 
-public class BattleCutsceneAction implements CutsceneAction {
+public class BattleAction implements CutsceneAction {
 
     private final StateManager stateManager;
     private final FlagManager flagManager;
     private boolean isFinished;
     private final int battleID;
 
-    public BattleCutsceneAction(StateManager stateManager, FlagManager flagManager, int battleID) {
+    public BattleAction(StateManager stateManager, FlagManager flagManager, int battleID) {
         this.stateManager = stateManager;
         this.isFinished = false;
         this.flagManager = flagManager;

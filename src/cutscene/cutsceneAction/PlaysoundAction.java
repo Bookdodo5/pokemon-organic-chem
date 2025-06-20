@@ -4,12 +4,12 @@ import assets.SoundManager;
 import cutscene.CutsceneAction;
 import java.awt.Graphics2D;
 
-public class PlaysoundCutsceneAction implements CutsceneAction {
+public class PlaysoundAction implements CutsceneAction {
 	private final String soundFile;
 	private final boolean isMusic;
 	private boolean isFinished;
 
-	public PlaysoundCutsceneAction(String soundFile, boolean isMusic) {
+	public PlaysoundAction(String soundFile, boolean isMusic) {
 		this.soundFile = soundFile;
 		this.isMusic = isMusic;
 		this.isFinished = false;

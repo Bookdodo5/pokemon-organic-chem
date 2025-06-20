@@ -93,8 +93,10 @@ public class MapManager {
     public void setCurrentMap(String newMap) {
         if (maps.containsKey(newMap)) {
             MapData newMapData = maps.get(newMap);
+            if(!newMapData.getMusic().equals(currentMap.getMusic())) {
+                SoundManager.getMusicplayer().play(newMapData.getMusic());
+            }
             currentMap = newMapData;
-            SoundManager.getMusicplayer().play(newMapData.getMusic());
         }
     }
 

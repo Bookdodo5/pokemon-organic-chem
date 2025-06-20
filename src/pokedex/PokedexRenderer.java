@@ -5,7 +5,6 @@ import battle.reactions.Reaction;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.geom.AffineTransform;
 import java.util.List;
 import static main.Constants.SCALE;
 import static main.Constants.SCREEN_HEIGHT;
@@ -69,9 +68,6 @@ public class PokedexRenderer {
     public void draw(Graphics2D g2, Molecule selectedMolecule, Reaction selectedReaction) {
         updateCurrentPalette();
 
-        AffineTransform originalTransform = g2.getTransform();
-        g2.scale(SCALE, SCALE);
-
         drawBackground(g2);
         drawSelectionBoxes(g2);
 
@@ -83,8 +79,6 @@ public class PokedexRenderer {
             case MOLECULE ->
                 moleculeTabRenderer.draw(g2, selectedMolecule, selectedReaction, currentPalette);
         }
-
-        g2.setTransform(originalTransform);
     }
 
     private void drawBackground(Graphics2D g2) {

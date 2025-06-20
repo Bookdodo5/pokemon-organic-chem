@@ -16,6 +16,7 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.awt.geom.AffineTransform;
 import javax.swing.JPanel;
 import static main.Constants.*;
 import menu.Settings;
@@ -55,7 +56,11 @@ public class GameScreen extends JPanel implements Runnable {
 		Graphics2D g2 = (Graphics2D) g;
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		g2.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE);
+
+		AffineTransform originalTransform = g2.getTransform();
+		g2.scale(SCALE, SCALE);
 		stateManager.draw(g2);
+		g2.setTransform(originalTransform);
 	}
 
 	public void setupKeyBindings() { keyHandler.setupKeyBindings(this); }

@@ -4,7 +4,7 @@ import assets.AnimationManager;
 import cutscene.CutsceneAction;
 import java.awt.Graphics2D;
 
-public class AnimationCutsceneAction implements CutsceneAction {
+public class AnimationAction implements CutsceneAction {
 
 	private final AnimationManager animationManager;
 	private final String animationPath;
@@ -15,7 +15,7 @@ public class AnimationCutsceneAction implements CutsceneAction {
 	private boolean isFinished;
 	private int animationCounter;
 
-	public AnimationCutsceneAction(String animationPath, int x, int y, double scale) {
+	public AnimationAction(String animationPath, int x, int y, double scale) {
 		this.animationManager = new AnimationManager();
 		this.animationPath = animationPath;
 		this.x = x;

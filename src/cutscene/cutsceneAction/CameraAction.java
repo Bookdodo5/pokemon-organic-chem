@@ -5,7 +5,7 @@ import entity.Human;
 import gamestates.CameraManager;
 import java.awt.Graphics2D;
 
-public class CameraCutsceneAction implements CutsceneAction {
+public class CameraAction implements CutsceneAction {
 
 	enum CameraMode {
 		FOLLOW_HUMAN,
@@ -24,7 +24,7 @@ public class CameraCutsceneAction implements CutsceneAction {
 	private boolean isFinished;
 	private Human focusPoint = null;
 
-	public CameraCutsceneAction(CameraManager cameraManager, int moveX, int moveY, int time) {
+	public CameraAction(CameraManager cameraManager, int moveX, int moveY, int time) {
 		this.cameraManager = cameraManager;
 		this.moveX = moveX;
 		this.moveY = moveY;
@@ -34,14 +34,14 @@ public class CameraCutsceneAction implements CutsceneAction {
 		this.timeCounter = 0;
 	}
 
-	public CameraCutsceneAction(CameraManager cameraManager, Human focusPoint) {
+	public CameraAction(CameraManager cameraManager, Human focusPoint) {
 		this.cameraManager = cameraManager;
 		this.focusPoint = focusPoint;
 		this.cameraMode = CameraMode.FOLLOW_HUMAN;
 		this.isFinished = false;
 	}
 
-	public CameraCutsceneAction(CameraManager cameraManager, int setX, int setY) {
+	public CameraAction(CameraManager cameraManager, int setX, int setY) {
 		this.cameraManager = cameraManager;
 		this.setX = setX;
 		this.setY = setY;
@@ -49,7 +49,7 @@ public class CameraCutsceneAction implements CutsceneAction {
 		this.isFinished = false;
 	}
 
-	public CameraCutsceneAction(CameraManager cameraManager, int shakeDuration) {
+	public CameraAction(CameraManager cameraManager, int shakeDuration) {
 		this.cameraManager = cameraManager;
 		this.time = shakeDuration;
 		this.shakeIntensity = 5;

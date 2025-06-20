@@ -4,14 +4,13 @@ import assets.AssetManager;
 import assets.SoundManager;
 import cutscene.CutsceneAction;
 import java.awt.Graphics2D;
-import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import main.Constants;
 import ui.BoxRenderer;
 import ui.BoxStyle;
 
 
-public class ImageBoxCutsceneAction implements CutsceneAction {
+public class ImageBoxAction implements CutsceneAction {
 
 	private final BoxStyle boxStyle;
 	private final BoxRenderer boxRenderer;
@@ -23,7 +22,7 @@ public class ImageBoxCutsceneAction implements CutsceneAction {
 
 	BufferedImage image;
 
-	public ImageBoxCutsceneAction(String imagePath) {
+	public ImageBoxAction(String imagePath) {
 		this.boxStyle = BoxStyle.getDialogueStyle().build();
 		this.boxRenderer = new BoxRenderer(boxStyle);
 		this.isFinished = false;
@@ -49,9 +48,6 @@ public class ImageBoxCutsceneAction implements CutsceneAction {
 
 	@Override
 	public void draw(Graphics2D g2) {
-		AffineTransform originalTransform = g2.getTransform();
-		g2.scale(Constants.SCALE, Constants.SCALE);
-
 		int boxWidth = (int) (Constants.SCREEN_WIDTH / Constants.SCALE - 2 * BOX_MARGIN);
 		int boxHeight = (int) (Constants.SCREEN_HEIGHT / Constants.SCALE - 2 * BOX_MARGIN);
 		boxRenderer.renderBox(g2, BOX_MARGIN, BOX_MARGIN, boxWidth, boxHeight);
@@ -74,7 +70,6 @@ public class ImageBoxCutsceneAction implements CutsceneAction {
 		int imageY = BOX_MARGIN + (boxHeight - scaledHeight) / 2;
 
 		g2.drawImage(image, imageX, imageY, scaledWidth, scaledHeight, null);
-		g2.setTransform(originalTransform);
 	 }
 
 	@Override

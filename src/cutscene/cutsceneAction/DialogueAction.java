@@ -5,14 +5,14 @@ import dialogue.Dialogue;
 import dialogue.DialogueRenderer;
 import java.awt.Graphics2D;
 
-public class DialogueCutsceneAction implements CutsceneAction {
+public class DialogueAction implements CutsceneAction {
 
 	private final DialogueRenderer dialogueRenderer;
 	private final Dialogue originalDialogue;
 	private Dialogue dialogue;
 	private boolean isFinished;
 	
-	public DialogueCutsceneAction(Dialogue dialogue) {
+	public DialogueAction(Dialogue dialogue) {
 		this.originalDialogue = dialogue;
 		this.dialogue = dialogue;
 		this.dialogueRenderer = new DialogueRenderer();

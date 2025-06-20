@@ -28,6 +28,8 @@ public class Cutscene {
 		if (cutsceneActions[actionIndex].isFinished()) {
 			cutsceneActions[actionIndex].end();
 			nextAction();
+			if(isFinished) return;
+			if(cutsceneActions[actionIndex].isFinished()) update();
 		}
 	}
 

@@ -3,7 +3,6 @@ package dialogue;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.geom.AffineTransform;
 import static main.Constants.*;
 import menu.OptionRenderer;
 import menu.Settings;
@@ -91,15 +90,11 @@ public class DialogueRenderer {
 	}
 
 	public void renderDialogue(Graphics2D g2) {
-		AffineTransform originalTransform = g2.getTransform();
-		g2.scale(SCALE, SCALE);
 		BoxDimensions dims = calculateDimensions(dialogueBoxStyle, dialogueTextStyle);
 
 		drawBox(g2, dims, dialogueBoxStyle);
 		TextRenderResult textRenderResult = drawText(g2, dims);
 		if (animationFinished) drawPostAnimationDetail(g2, dims, textRenderResult);
-
-		g2.setTransform(originalTransform);
 	}
 
 	private TextRenderResult drawText(Graphics2D g2, BoxDimensions dims) {

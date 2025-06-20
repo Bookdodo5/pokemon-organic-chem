@@ -108,18 +108,18 @@ public class TileManager {
 
 	public void drawLayer(Graphics2D g2, int cameraX, int cameraY) {
 
-		for (int row = 0; row < maxLayerRow; row++) {
-			for (int col = 0; col < maxLayerCol; col++) {
+		int startCol = Math.max(0, cameraX / ORIGINAL_TILE_SIZE);
+		int endCol = Math.min(maxLayerCol, (cameraX + SCREEN_WIDTH) / ORIGINAL_TILE_SIZE + 1);
+		int startRow = Math.max(0, cameraY / ORIGINAL_TILE_SIZE);
+		int endRow = Math.min(maxLayerRow, (cameraY + SCREEN_HEIGHT) / ORIGINAL_TILE_SIZE + 1);
+
+		for (int row = startRow; row < endRow; row++) {
+			for (int col = startCol; col < endCol; col++) {
 
 				int mapX = col * ORIGINAL_TILE_SIZE;
 				int mapY = row * ORIGINAL_TILE_SIZE;
 				int screenX = mapX - cameraX;
 				int screenY = mapY - cameraY;
-
-				if (screenX + ORIGINAL_TILE_SIZE < 0 || screenX > SCREEN_WIDTH ||
-                screenY + ORIGINAL_TILE_SIZE < 0 || screenY > SCREEN_HEIGHT) {
-					continue;
-				}
 
 				tiles[layerTileNum[row][col]].draw(g2, screenX, screenY);
 			}

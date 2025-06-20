@@ -9,7 +9,6 @@ import dialogue.DialogueRenderer;
 import java.awt.Color;
 import java.awt.GradientPaint;
 import java.awt.Graphics2D;
-import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import static main.Constants.*;
 import ui.BoxRenderer;
@@ -119,9 +118,6 @@ public class BattleRenderer {
             animationCounter = 0;
         }
 
-        AffineTransform originalTransform = g2.getTransform();
-        g2.scale(SCALE, SCALE);
-
         drawBackground(g2);
         drawPlayerAreas(g2);
         drawMolecule(g2);
@@ -129,8 +125,6 @@ public class BattleRenderer {
         drawLP(g2);
         drawConditionArea(g2);
         drawBlankDialogue(g2);
-
-        g2.setTransform(originalTransform);
     }
 
     private void drawBackground(Graphics2D g2) {

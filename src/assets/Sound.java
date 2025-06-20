@@ -107,7 +107,16 @@ public class Sound implements Runnable {
 				clip = (Clip) AudioSystem.getLine(info);
 				clip.open(convertedStream);
 				currentTrackName = file;
-				gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+				
+				try {
+					gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+				} catch (IllegalArgumentException e) {
+					try {
+						gainControl = (FloatControl) clip.getControl(FloatControl.Type.VOLUME);
+					} catch (IllegalArgumentException e2) {						System.err.println("Warning: No volume control available for audio system");
+						gainControl = null;
+					}
+				}
 
 			}
 		} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
@@ -179,7 +188,9 @@ public class Sound implements Runnable {
 		return Math.max(-80.0f, dB);
 	}
 
-	public void setVolume(float valueDB) { gainControl.setValue(valueDB); }
+	public void setVolume(float valueDB) { 
+		if(gainControl != null) gainControl.setValue(valueDB);
+	}
 
 	public void shiftVolume(double valueFrom, double valueTo) {
 		currDB = volumeToDB(valueFrom);

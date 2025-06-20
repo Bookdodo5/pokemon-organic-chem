@@ -18,14 +18,12 @@ import gamestates.StateManager;
 import input.KeyBindingHandler;
 import input.Keys;
 import java.awt.Graphics2D;
-import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import static main.Constants.ORIGINAL_TILE_SIZE;
-import static main.Constants.SCALE;
 import main.GameContentManager;
 import tile.MapData;
 import tile.MapManager;
@@ -60,22 +58,22 @@ public class OverworldState extends GameState {
 		);
 
 		if (mapTransition != null && player.isIdle()) {
-			transitionMap(mapTransition);
+			String currentMusic = mapManager.getCurrentMusic();
+			stateManager.transitionToState(GameStates.OVERWORLD, true, currentMusic, () -> {
+				int toX = mapTransition.getToX();
+				int toY = mapTransition.getToY();
+				String nextMap = mapTransition.getMapTo();
+				setMap(toX, toY, nextMap);
+				update();
+			});
 		}
 	}
 
-	private void transitionMap(TransitionPoint mapTransition) {
-		String currentMusic = mapManager.getCurrentMusic();
-		stateManager.transitionToState(GameStates.OVERWORLD, true, currentMusic, () -> {
-			setMap(mapTransition);
-		});
-	}
-
-	private void setMap(TransitionPoint mapTransition) {
-		player.setMapX(mapTransition.getToX());
-		player.setMapY(mapTransition.getToY());
+	public void setMap(int nextX, int nextY, String nextMap) {
+		player.setMapX(nextX);
+		player.setMapY(nextY);
+		mapManager.setCurrentMap(nextMap);
 		cameraManager.update();
-		mapManager.setCurrentMap(mapTransition.getMapTo());
 		initializeEntities();
 	}
 
@@ -109,9 +107,9 @@ public class OverworldState extends GameState {
 	private MapData findNextMap(int playerGlobalX, int playerGlobalY) {
 		for(MapData map : mapManager.getVisibleMaps()) {
 			if(playerGlobalX >= map.getGlobalX() &&
-				playerGlobalX <= map.getGlobalX() + map.getWidth() &&
+				playerGlobalX < map.getGlobalX() + map.getWidth() &&
 				playerGlobalY >= map.getGlobalY() &&
-				playerGlobalY <= map.getGlobalY() + map.getHeight()) {
+				playerGlobalY < map.getGlobalY() + map.getHeight()) {
 				return map;
 			}
 		}
@@ -124,14 +122,14 @@ public class OverworldState extends GameState {
 			int playerGlobalX = player.getMapX() + mapManager.getGlobalX();
 			int playerGlobalY = player.getMapY() + mapManager.getGlobalY();
 			MapData nextMap = findNextMap(playerGlobalX, playerGlobalY);
-			if(nextMap == null) return;
-
+			if (nextMap == null) {
+				player.setMapX(Math.max(0, Math.min(player.getMapX(), mapManager.getWidth() - 1)));
+				player.setMapY(Math.max(0, Math.min(player.getMapY(), mapManager.getHeight() - 1)));
+				return;
+			}
 			int nextMapX = playerGlobalX - nextMap.getGlobalX();
 			int nextMapY = playerGlobalY - nextMap.getGlobalY();
-			player.setMapX(nextMapX);
-			player.setMapY(nextMapY);
-			initializeEntities();
-			mapManager.setCurrentMap(nextMap.getMapName());
+			setMap(nextMapX, nextMapY, nextMap.getMapName());
 		}
 	}
 
@@ -154,9 +152,6 @@ public class OverworldState extends GameState {
 
 	@Override
 	public void draw(Graphics2D g2) {
-		AffineTransform originalTransform = g2.getTransform();
-		g2.scale(SCALE, SCALE);
-		
 		Set<MapData> visibleMaps = mapManager.getVisibleMaps();
 		
 		// Draw ground, decoration, and obstacle layers
@@ -172,8 +167,6 @@ public class OverworldState extends GameState {
 		for(MapData map : visibleMaps) {
 			drawLayer(g2, map, 3, cameraManager.getCameraX(), cameraManager.getCameraY());
 		}
-
-		g2.setTransform(originalTransform);
 	}
 
 	private void drawLayer(Graphics2D g2, MapData map, int layerIndex, int cameraX, int cameraY) {
@@ -185,9 +178,11 @@ public class OverworldState extends GameState {
 	}
 
 	private void drawEntities(Graphics2D g2) {
-		entities.sort(Comparator.comparingDouble(Entity::getY));
+		List<Entity> sortedEntities = entities.stream()
+			.sorted(Comparator.comparingDouble(Entity::getY))
+			.toList();
 
-		for (Entity entity : entities) {
+		for (Entity entity : sortedEntities) {
 			if (entity == null) continue;
 			if (entity instanceof Player) {
 				entity.draw(g2, cameraManager.getCameraX(), cameraManager.getCameraY());
@@ -226,8 +221,6 @@ public class OverworldState extends GameState {
 
 	@Override
 	public void keyReleased(Keys key) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override

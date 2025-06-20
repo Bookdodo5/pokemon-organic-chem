@@ -8,7 +8,6 @@ import input.KeyBindingHandler;
 import input.Keys;
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.geom.AffineTransform;
 import static main.Constants.*;
 import main.GameContentManager;
 import menu.Option;
@@ -70,12 +69,7 @@ public class PausingState extends GameState {
 			g2.fillRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 		}
 
-		AffineTransform originalTransform = g2.getTransform();
-		g2.scale(SCALE, SCALE);
-
 		pausingRenderer.renderOptionsCenter(g2, 0);
-
-		g2.setTransform(originalTransform);
 	}
 
 	@Override

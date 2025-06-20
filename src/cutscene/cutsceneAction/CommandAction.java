@@ -3,12 +3,12 @@ package cutscene.cutsceneAction;
 import cutscene.CutsceneAction;
 import java.awt.Graphics2D;
 
-public class CommandCutsceneAction implements CutsceneAction {
+public class CommandAction implements CutsceneAction {
 
 	private final Runnable command;
 	private boolean isFinished;
 
-	public CommandCutsceneAction(Runnable command) {
+	public CommandAction(Runnable command) {
 		this.command = command;
 		this.isFinished = false;
 	}

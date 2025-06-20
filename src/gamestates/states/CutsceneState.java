@@ -3,8 +3,9 @@ package gamestates.states;
 import assets.SoundManager;
 import cutscene.Cutscene;
 import cutscene.CutsceneManager;
-import cutscene.cutsceneAction.DialogueCutsceneAction;
-import cutscene.cutsceneAction.ImageBoxCutsceneAction;
+import cutscene.cutsceneAction.DialogueAction;
+import cutscene.cutsceneAction.ImageBoxAction;
+import cutscene.cutsceneAction.WaitForInputAction;
 import dialogue.Dialogue;
 import dialogue.DialogueRenderer;
 import entity.Player;
@@ -68,16 +69,19 @@ public class CutsceneState extends GameState {
 	@Override
 	public void keyTapped() {
 
-		boolean isDialogue = currentCutscene.getCurrentAction() instanceof DialogueCutsceneAction;
-		boolean isImageBox = currentCutscene.getCurrentAction() instanceof ImageBoxCutsceneAction;
-		if (!isDialogue && !isImageBox) return;
+		boolean isDialogue = currentCutscene.getCurrentAction() instanceof DialogueAction;
+		boolean isImageBox = currentCutscene.getCurrentAction() instanceof ImageBoxAction;
+		boolean isWaitForInput = currentCutscene.getCurrentAction() instanceof WaitForInputAction;
+		if (!isDialogue && !isImageBox && !isWaitForInput) return;
 
-		if(isImageBox && keyHandler.getCurrentKey() == Keys.INTERACT) {
-			currentCutscene.getCurrentAction().end();
+		if((isImageBox || isWaitForInput)) {
+			if(keyHandler.getCurrentKey() == Keys.INTERACT) {
+				currentCutscene.getCurrentAction().end();
+			}
 			return;
 		}
 
-		DialogueCutsceneAction dialogueAction = (DialogueCutsceneAction) currentCutscene.getCurrentAction();
+		DialogueAction dialogueAction = (DialogueAction) currentCutscene.getCurrentAction();
 		DialogueRenderer dialogueRenderer = dialogueAction.getDialogueRenderer();
 		Dialogue dialogue = dialogueAction.getDialogue();
 
@@ -116,10 +120,10 @@ public class CutsceneState extends GameState {
 
 	@Override
 	public void keyPressed() {
-		boolean isDialogue = currentCutscene.getCurrentAction() instanceof DialogueCutsceneAction;
+		boolean isDialogue = currentCutscene.getCurrentAction() instanceof DialogueAction;
 		if (!isDialogue) return;
 
-		DialogueCutsceneAction dialogueAction = (DialogueCutsceneAction) currentCutscene.getCurrentAction();
+		DialogueAction dialogueAction = (DialogueAction) currentCutscene.getCurrentAction();
 		DialogueRenderer dialogueRenderer = dialogueAction.getDialogueRenderer();
 
 		if (keyHandler.getCurrentKey() == Keys.INTERACT)
@@ -129,10 +133,10 @@ public class CutsceneState extends GameState {
 
 	@Override
 	public void keyReleased(Keys key) {
-		boolean isDialogue = currentCutscene.getCurrentAction() instanceof DialogueCutsceneAction;
+		boolean isDialogue = currentCutscene.getCurrentAction() instanceof DialogueAction;
 		if (!isDialogue) return;
 
-		DialogueCutsceneAction dialogueAction = (DialogueCutsceneAction) currentCutscene.getCurrentAction();
+		DialogueAction dialogueAction = (DialogueAction) currentCutscene.getCurrentAction();
 		DialogueRenderer dialogueRenderer = dialogueAction.getDialogueRenderer();
 
 		if (keyHandler.getCurrentKey() == Keys.INTERACT)

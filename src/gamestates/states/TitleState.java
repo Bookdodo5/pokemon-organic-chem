@@ -7,7 +7,6 @@ import gamestates.StateManager;
 import input.KeyBindingHandler;
 import input.Keys;
 import java.awt.Graphics2D;
-import java.awt.geom.AffineTransform;
 import static main.Constants.*;
 import main.GameContentManager;
 import menu.Option;
@@ -65,9 +64,6 @@ public class TitleState extends GameState {
 
 	@Override
 	public void draw(Graphics2D g2) {
-		AffineTransform originalTransform = g2.getTransform();
-		g2.scale(SCALE, SCALE);
-
 		TextRenderer titleRenderer = new TextRenderer(titleTextStyle);
 
 		String title = "Pokemon Organic Chem";
@@ -78,8 +74,6 @@ public class TitleState extends GameState {
 		titleRenderer.renderLine(g2, titleX, titleY, title);
 
 		optionRenderer.renderOptionsCenter(g2, titleY / 2);
-
-		g2.setTransform(originalTransform);
 	}
 
 	@Override

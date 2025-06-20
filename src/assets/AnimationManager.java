@@ -1,11 +1,9 @@
 package assets;
 
 import java.awt.Graphics2D;
-import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.Map;
-import main.Constants;
 
 public class AnimationManager {
 
@@ -87,16 +85,10 @@ public class AnimationManager {
     }
 
     public void draw(Graphics2D g2, int x, int y, double scale) {
-        if (currentFrame >= totalFrames) {
-            return;
-        }
-        AffineTransform originalTransform = g2.getTransform();
-        g2.scale(Constants.SCALE, Constants.SCALE);
+        if (currentFrame >= totalFrames) return;
 
         int newSize = (int) (frameSize * scale * scaleFactor);
         g2.drawImage(frames[currentFrame], x, y, newSize, newSize, null);
-
-        g2.setTransform(originalTransform);
     }
 
 }

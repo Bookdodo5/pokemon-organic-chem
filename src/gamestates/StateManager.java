@@ -3,10 +3,8 @@ package gamestates;
 import assets.SoundManager;
 import input.Keys;
 import java.awt.Graphics2D;
-import java.awt.geom.AffineTransform;
 import java.util.HashMap;
 import java.util.Map;
-import static main.Constants.SCALE;
 
 public class StateManager {
 	private GameStates currentState = GameStates.TITLE;
@@ -50,12 +48,7 @@ public class StateManager {
 		if (states.get(currentState) != null) {
 			states.get(currentState).draw(g2);
 		}
-		
-		AffineTransform originalTransform = g2.getTransform();
-		g2.scale(SCALE, SCALE);
-
 		transitionManager.draw(g2);
-		g2.setTransform(originalTransform);
 	}
 
 	public void keyTapped() {

@@ -11,9 +11,7 @@ import dialogue.BoxDimensions;
 import dialogue.DialogueRenderer;
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.geom.AffineTransform;
 import java.util.List;
-import static main.Constants.*;
 import ui.BoxRenderer;
 import ui.BoxStyle;
 import ui.TextRenderer;
@@ -84,9 +82,6 @@ public class BattleInputRenderer {
     
     public void renderActionSelection(Graphics2D g2, ActionPages currentPage, int selectionIndex, int focusIndex) {
         
-        AffineTransform originalTransform = g2.getTransform();
-        g2.scale(SCALE, SCALE);
-        
         DialogueRenderer dialogueRenderer = new DialogueRenderer();
         BoxDimensions dims = dialogueRenderer.calculateDimensions(actionBoxStyle, disabledWhiteTextStyle);
         
@@ -96,7 +91,6 @@ public class BattleInputRenderer {
             case REACTIONS -> drawReactionsPage(g2, dims, selectionIndex, focusIndex);
         }
         
-        g2.setTransform(originalTransform);
     }
 
     private void drawBox(Graphics2D g2, int x, int y, int width, int height, BoxStyle boxStyle) {

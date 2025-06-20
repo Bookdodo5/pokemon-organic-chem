@@ -8,7 +8,6 @@ import input.KeyBindingHandler;
 import input.Keys;
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.geom.AffineTransform;
 import java.util.Arrays;
 import java.util.List;
 import static main.Constants.SCALE;
@@ -155,14 +154,9 @@ public class SettingsState extends GameState {
 			titleState.draw(g2);
 		}
 
-		AffineTransform originalTransform = g2.getTransform();
-		g2.scale(SCALE, SCALE);
-
 		int titleOffset = (int) (SCREEN_HEIGHT / (8 * SCALE));
 		if (prevState == GameStates.TITLE) settingsRenderer.renderOptionsCenter(g2, titleOffset);
 		if (prevState == GameStates.PAUSING) settingsRenderer.renderOptionsCenter(g2, 0);
-
-		g2.setTransform(originalTransform);
 	}
 
 	@Override

@@ -3,16 +3,17 @@ package cutscene.cutsceneAction;
 import cutscene.CutsceneAction;
 import java.awt.Graphics2D;
 
-public class WaitCutsceneAction implements CutsceneAction {
+public class WaitAction implements CutsceneAction {
 
 	private boolean isFinished, isRunning;
 	private final int endTimer;
 	private int currentTimer;
 
-	public WaitCutsceneAction(int endTimer) {
+	public WaitAction(int endTimer) {
 		this.isFinished = false;
 		this.currentTimer = 0;
 		this.endTimer = endTimer;
+		this.isRunning = false;
 	}
 
 	@Override

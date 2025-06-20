@@ -6,7 +6,7 @@ import main.Constants;
 public abstract class Entity {
 	protected double x, y;
 	protected int spriteWidth, spriteHeight;
-	protected static final double SPEED = 2;
+	protected static final double SPEED = 3;
 	protected int animationCounter = 0;
 	protected static final int ANIMATION_SPEED = 8;
 	protected int spriteIndex = 0;

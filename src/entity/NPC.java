@@ -7,8 +7,8 @@ import tile.TileManager;
 
 public class NPC extends Human {
 	private final String id;
-	private final String map;
 	private final Random random;
+	private String map;
 	private int moveCounter;
 	private int movementInterval;
 
@@ -85,4 +85,6 @@ public class NPC extends Human {
 	public void setAIMode(AIMode mode) { this.aiMode = mode; }
 
 	public String getId() { return id; }
+
+	public void setMap(String map) { this.map = map; }
 }
