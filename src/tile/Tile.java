@@ -6,9 +6,15 @@ import static main.Constants.ORIGINAL_TILE_SIZE;
 
 public class Tile {
 	protected BufferedImage tileImage;
+	protected int tileID;
 	
-	public Tile(BufferedImage tileImage) {
+	public Tile(BufferedImage tileImage, int tileID) {
 		this.tileImage = tileImage;
+		this.tileID = tileID;
+	}
+
+	public int getTileID() {
+		return tileID;
 	}
 	
 	public void draw(Graphics2D g2, int screenX, int screenY) {

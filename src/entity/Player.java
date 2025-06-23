@@ -4,6 +4,7 @@ import assets.AssetManager;
 import assets.SoundManager;
 import input.KeyBindingHandler;
 import java.util.List;
+import tile.MapManager;
 import tile.TileManager;
 
 public class Player extends Human {
@@ -20,7 +21,7 @@ public class Player extends Human {
 
 	public void setAcceptInput(boolean acceptInput) { this.acceptInput = acceptInput; }
 
-	private void handleMovementInput(TileManager[] tileManagers, List<Entity> humans) {
+	private void handleMovementInput(TileManager[] tileManagers, List<Entity> humans, MapManager mapManager) {
 
 		switch (keyHandler.getCurrentKey()) {
 			case UP -> setFacingDirection(FacingDirections.UP);
@@ -31,17 +32,22 @@ public class Player extends Human {
 		}
 
 		if (keyHandler.movementKeyPressed()) {
-			canMove = checkCollision(x, y, tileManagers, humans);
+			canMove = checkCollision(x, y, tileManagers, humans, mapManager);
 			if (!canMove) SoundManager.getSfxplayer().playSE("PlayerBump");
 		}
+	}
+	
+	@Override
+	protected void handleIdle(TileManager[] tileManagers, List<Entity> humans, MapManager mapManager) {
+		canMove = false;
+		if (acceptInput) handleMovementInput(tileManagers, humans, mapManager);
+
+		if (canMove) setMoving();
+		else spriteIndex = 0;
 	}
 
 	@Override
 	protected void handleIdle(TileManager[] tileManagers, List<Entity> humans) {
-		canMove = false;
-		if (acceptInput) handleMovementInput(tileManagers, humans);
-
-		if (canMove) setMoving();
-		else spriteIndex = 0;
+		handleIdle(tileManagers, humans, null);
 	}
 }

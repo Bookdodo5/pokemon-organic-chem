@@ -5,15 +5,15 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import static main.Constants.*;
 
-public class AnimatedTile extends Tile {
+public class TileAnimated extends Tile {
 
 	private final int animationSpeed = 120;
 	private int animationCounter = 0;
 	private int currentFrame = 0;
 	private int totalFrame = 1;
 	
-	public AnimatedTile(BufferedImage tileImage, int totalFrame) {
-		super(tileImage);
+	public TileAnimated(BufferedImage tileImage, int tileID, int totalFrame) {
+		super(tileImage, tileID);
 		this.totalFrame = totalFrame;
 	}
 	

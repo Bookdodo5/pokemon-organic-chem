@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Set;
 import static main.Constants.MAX_SCREEN_COL;
 import static main.Constants.MAX_SCREEN_ROW;
+import static main.Constants.ORIGINAL_TILE_SIZE;
 
 public class MapManager {
 
@@ -21,10 +22,160 @@ public class MapManager {
         transitions = new HashMap<>();
         visibleMaps = new HashSet<>();
 
-        initializeMap("porbitalTown", "Motorcycle", 0, 0);
-        initializeMap("route1", "Bicycle", 48, -32);
+        // Starting towns and routes
+        initializeMap(
+            "porbitalTown", 
+            "essentials", 
+            "Motorcycle", 
+            0, 0
+        );
+        initializeMap(
+            "route1",
+            "essentials",
+            "Bicycle",
+            1664, -1024
+        );
+        initializeMap(
+            "methanopolis",
+            "essentials",
+            "BattleTrainer",
+            1344, -2816
+        );
+        initializeMap(
+            "route2",
+            "essentials",
+            "Bicycle",
+            3136, -2496
+        );
+        initializeMap(
+            "hallogue_town",
+            "essentials",
+            "Motorcycle",
+            5440, -2496
+        );
+        initializeMap(
+            "route3",
+            "essentials",
+            "Bicycle",
+            1344, -5120
+        );
+        initializeMap(
+            "pyrrole_town",
+            "essentials",
+            "Motorcycle",
+            64, -5728
+        );
+        
+        /* Major cities and locations
+        initializeMap(
+            "alkenystra",
+            "essentials",
+            "BattleGymLeader",
+            -4032, -5920
+        );
+        initializeMap(
+            "cyclenchyma",
+            "essentials",
+            "BattleGymLeader",
+            -4112, -1840
+        );
+        initializeMap(
+            "hydroziva",
+            "essentials",
+            "BattleGymLeader",
+            -7776, -8032
+        );
+        initializeMap(
+            "incisiona",
+            "essentials",
+            "BattleTrainer",
+            -7440, -112
+        );
+        initializeMap(
+            "tresyneca",
+            "essentials",
+            "BattleGymLeader",
+            -10992, -2384
+        );
+        initializeMap(
+            "x-liminera",
+            "essentials",
+            "BattleTrainer",
+            -10960, -5712
+        );
+        initializeMap(
+            "azo_village",
+            "essentials",
+            "Motorcycle",
+            -14224, -240
+        );
+        
+        // Coastal and special areas
+        initializeMap(
+            "saponis_anomalocaris",
+            "essentials",
+            "BattleTrainer",
+            -8080, 3184
+        );
+        initializeMap(
+            "fisher_fjord",
+            "essentials",
+            "Bicycle",
+            -4672, 5248
+        );
+        initializeMap(
+            "port_oxton",
+            "essentials",
+            "Motorcycle",
+            -1872, 3056
+        );
+        initializeMap(
+            "oxidation_observatory",
+            "essentials",
+            "BattleTrainer",
+            1840, 2736
+        );
+        initializeMap(
+            "the_crucible",
+            "essentials",
+            "BattleGymLeader",
+            656, 6096
+        );
+        
+        // Northern regions
+        initializeMap(
+            "phenol_falls",
+            "essentials",
+            "Bicycle",
+            -7856, -11440
+        );
+        initializeMap(
+            "harmony_complex",
+            "essentials",
+            "BattleTrainer",
+            -11056, -13072
+        );
+        initializeMap(
+            "the_six_rings",
+            "essentials",
+            "BattleGymLeader",
+            -11280, -16496
+        );
+        initializeMap(
+            "polymer_research_institute",
+            "essentials",
+            "BattleTrainer",
+            -8112, -18256
+        );
+        initializeMap(
+            "nose_town",
+            "essentials",
+            "Motorcycle",
+            -13424, -19984
+        );
+        */
 
-        currentMap = maps.get("porbitalTown");
+        currentMap = maps.get("methanopolis");
         initializeTransition(8, 10, "porbitalTown", 9, 9, "route1");
 		updateVisibleMaps(10, 12);
 	}
@@ -38,16 +189,29 @@ public class MapManager {
         return x + " " + y + " " + mapFrom;
     }
 
-    private void initializeMap(String mapName, String music, int globalX, int globalY) {
-        TileManager ground = new TileManager("/data/maps/" + mapName + "/ground.txt");
-        TileManager decoration = new TileManager("/data/maps/" + mapName + "/decoration.txt");
-        TileManager obstacle = new TileManager("/data/maps/" + mapName + "/obstacle.txt");
-        TileManager air = new TileManager("/data/maps/" + mapName + "/air.txt");
+    private void initializeMap(String mapName, String tilesetName, String music, int globalX, int globalY) {
+        TileManager ground = new TileManager(
+            "/data/maps/" + mapName + "/ground.txt",
+            tilesetName
+        );
+        TileManager decoration = new TileManager(
+            "/data/maps/" + mapName + "/decoration.txt",
+            tilesetName
+        );
+        TileManager obstacle = new TileManager(
+            "/data/maps/" + mapName + "/obstacle.txt",
+            tilesetName
+        );
+        TileManager air = new TileManager(
+            "/data/maps/" + mapName + "/air.txt", 
+            tilesetName
+        );
 
         MapData mapData = new MapData(
                 mapName, music,
                 new TileManager[]{ground, decoration, obstacle, air},
-                globalX, globalY, ground.getMaxLayerCol(), ground.getMaxLayerRow()
+                globalX / ORIGINAL_TILE_SIZE, globalY / ORIGINAL_TILE_SIZE,
+                ground.getMaxLayerCol(), ground.getMaxLayerRow()
         );
         maps.put(mapName, mapData);
     }

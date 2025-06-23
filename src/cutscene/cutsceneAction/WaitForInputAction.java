@@ -1,9 +1,11 @@
 package cutscene.cutsceneAction;
 
-import cutscene.CutsceneAction;
+import cutscene.InputCutsceneAction;
+import input.KeyBindingHandler;
+import input.Keys;
 import java.awt.Graphics2D;
 
-public class WaitForInputAction implements CutsceneAction {
+public class WaitForInputAction implements InputCutsceneAction {
 
 	private boolean isFinished;
 
@@ -36,5 +38,20 @@ public class WaitForInputAction implements CutsceneAction {
 	@Override
 	public void reset() {
 		isFinished = false;
+	}
+
+	@Override
+	public void keyTapped(KeyBindingHandler keyHandler) {
+		if(keyHandler.getCurrentKey() == Keys.INTERACT) {
+			end();
+		}
+	}
+
+	@Override
+	public void keyPressed(KeyBindingHandler keyHandler) {
+	}
+
+	@Override
+	public void keyReleased(Keys key) {
 	}
 }

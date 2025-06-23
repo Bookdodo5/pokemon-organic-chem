@@ -1,32 +1,34 @@
 package cutscene.cutsceneAction;
 
-import cutscene.CutsceneAction;
+import cutscene.InputCutsceneAction;
+import input.KeyBindingHandler;
+import input.Keys;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import main.Constants;
 
-public class FadeAction implements CutsceneAction {
+public class FadeAction implements InputCutsceneAction {
 
-    private final int fadeDuration;
-    private final int targetAlpha;
+    private final int duration;
+    private final int target;
     private final int alphaChange;
     private int currentAlpha;
     private int currentTimer;
     private boolean isFinished;
     private final int persistence;
     
-    public FadeAction(int fadeDuration, int startAlpha, int targetAlpha, int persistence) {
-        this.fadeDuration = fadeDuration;
-        this.targetAlpha = targetAlpha;
-        this.alphaChange = (targetAlpha - startAlpha) / fadeDuration;
-        this.currentAlpha = startAlpha;
+    public FadeAction(int duration, int start, int target, int persistence) {
+        this.duration = duration;
+        this.target = target;
+        this.alphaChange = (target - start) / duration;
+        this.currentAlpha = start;
         this.currentTimer = 0;
         this.isFinished = false;
         this.persistence = persistence;
     }
 
-    public FadeAction(int fadeDuration, int startAlpha, int targetAlpha) {
-        this(fadeDuration, startAlpha, targetAlpha, 0);
+    public FadeAction(int duration, int start, int target) {
+        this(duration, start, target, 0);
     }
 
     @Override
@@ -38,10 +40,11 @@ public class FadeAction implements CutsceneAction {
     public void update() {
         currentTimer++;
         currentAlpha += alphaChange;
-        if (currentTimer >= fadeDuration) {
-            currentAlpha = targetAlpha;
+        if (currentTimer >= duration) {
+            currentAlpha = target;
         }
-        if(currentTimer >= persistence + fadeDuration) {
+        if(persistence == -1) return;
+        if(currentTimer >= persistence + duration) {
             isFinished = true;
         }
     }
@@ -67,6 +70,24 @@ public class FadeAction implements CutsceneAction {
     @Override
     public boolean isFinished() {
         return isFinished;
+    }
+
+    @Override
+    public void keyReleased(Keys key) {
+    }
+
+    @Override
+    public void keyTapped(KeyBindingHandler keyHandler) {
+        if(persistence != -1) return;
+        if(currentTimer < duration) return;
+        if(keyHandler.getCurrentKey() == Keys.INTERACT) {
+            isFinished = true;
+            end();
+        }
+    }
+
+    @Override
+    public void keyPressed(KeyBindingHandler keyHandler) {
     }
 
 }

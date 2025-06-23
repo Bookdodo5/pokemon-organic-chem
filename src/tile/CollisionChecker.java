@@ -1,36 +1,45 @@
 package tile;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.HashSet;
-import java.util.Set;
-
 public class CollisionChecker {
 
-	private static Set<Integer> walkableTiles;
-
-	public CollisionChecker() throws NumberFormatException, IOException {
-		walkableTiles = new HashSet<>();
-		loadWalkableTiles();
-	}
-
-	private void loadWalkableTiles() throws NumberFormatException, IOException {
-		InputStream is = getClass().getResourceAsStream("/tiles/walkable_tiles.txt");
-		BufferedReader bReader = new BufferedReader(new InputStreamReader(is));
-
-		String line;
-		while ((line = bReader.readLine()) != null) {
-			walkableTiles.add(Integer.valueOf(line.trim()));
-		}
+	public CollisionChecker() {
 	}
 
 	public boolean checkCollision(int x, int y, TileManager[] tileManagers) {
 		if(x < 0 || y < 0 || x >= tileManagers[0].maxLayerCol || y >= tileManagers[0].maxLayerRow) return true;
-		for (TileManager tileManager : tileManagers) {
-			if (!walkableTiles.contains(tileManager.layerTileNum[y][x] + 1)) return false;
+		if(tileManagers[2].layerTileNum[y][x] == 0) return true;
+		if(tileManagers[2].layerTileNum[y][x] == 1) return false;
+		return false;
+	}
+
+	public boolean checkCollisionAcrossMaps(int x, int y, TileManager[] currentTileManagers, MapManager mapManager) {
+		// If within current map bounds, use normal collision check
+		if(x >= 0 && y >= 0 && x < currentTileManagers[0].maxLayerCol && y < currentTileManagers[0].maxLayerRow) {
+			return checkCollision(x, y, currentTileManagers);
 		}
-		return true;
+		
+		// If outside current map bounds, check collision on destination map
+		if(mapManager == null) return true;
+		
+		int globalX = x + mapManager.getGlobalX();
+		int globalY = y + mapManager.getGlobalY();
+		
+		System.out.println("Cross-map check: local(" + x + "," + y + ") -> global(" + globalX + "," + globalY + ")");
+		
+		// Find map containing the target coordinates
+		for(MapData map : mapManager.getVisibleMaps()) {
+			if(globalX >= map.getGlobalX() && globalX < map.getGlobalX() + map.getWidth() &&
+			   globalY >= map.getGlobalY() && globalY < map.getGlobalY() + map.getHeight()) {
+				
+				int localX = globalX - map.getGlobalX();
+				int localY = globalY - map.getGlobalY();
+				boolean result = checkCollision(localX, localY, map.getLayers());
+				System.out.println("Found map " + map.getMapName() + ": local(" + localX + "," + localY + ") collision=" + result);
+				return result;
+			}
+		}
+		
+		System.out.println("No map found for global(" + globalX + "," + globalY + ") - blocking movement");
+		return true; // Block movement if no map found
 	}
 }

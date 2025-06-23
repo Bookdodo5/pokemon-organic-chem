@@ -7,7 +7,7 @@ import java.awt.Graphics2D;
 public class AnimationAction implements CutsceneAction {
 
 	private final AnimationManager animationManager;
-	private final String animationPath;
+	private final String animation;
 	private final int x;
 	private final int y;
 	private final double scale;
@@ -15,9 +15,9 @@ public class AnimationAction implements CutsceneAction {
 	private boolean isFinished;
 	private int animationCounter;
 
-	public AnimationAction(String animationPath, int x, int y, double scale) {
+	public AnimationAction(String animation, int x, int y, double scale) {
 		this.animationManager = new AnimationManager();
-		this.animationPath = animationPath;
+		this.animation = animation;
 		this.x = x;
 		this.y = y;
 		this.scale = scale;
@@ -28,7 +28,7 @@ public class AnimationAction implements CutsceneAction {
 
 	@Override
 	public void start() {
-		animationManager.loadAnimation(animationPath);
+		animationManager.loadAnimation(animation);
 	 }
 
 	@Override

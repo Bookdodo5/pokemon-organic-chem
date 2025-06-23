@@ -1,35 +1,23 @@
 package tile;
 
-import assets.AssetManager;
 import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.HashMap;
-import java.util.Map;
 import static main.Constants.*;
 
 public class TileManager {
 
+	private Tileset tileset;
 	protected int layerTileNum[][];
-	private Tile tiles[];
-	private String layerPath, tilePath;
+	private String layerPath;
 	protected int maxLayerCol = 0;
 	protected int maxLayerRow = 0;
 
-	private static final Map<Integer, String[]> ANIMATED_TILE_PATHS = new HashMap<>();
-
-	static {
-		ANIMATED_TILE_PATHS.put(956, new String[] {
-				"/animations/Flowers1.png", "5"
-		});
-	}
-
-	public TileManager(String layerPath) {
+	public TileManager(String layerPath, String tilesetName) {
 		this.layerPath = layerPath;
-		loadTile();
+		loadTileset(tilesetName);
 		try {
 			loadLayer();
 		} catch (IOException e) {
@@ -37,51 +25,16 @@ public class TileManager {
 		}
 	}
 
-	private void loadTile() {
-
-		tilePath = "/tiles/" + layerPath.split("_")[0].split("/")[3] + ".png";
-		// tileLayer = layerPath.split("_")[1];
-
-		BufferedImage spriteSheet = AssetManager.loadImage(tilePath);
-
-		if (spriteSheet == null) {
-			System.err.println("Failed to load tile spritesheet: " + tilePath);
-			return;
-		}
-
-		int tilesPerRow = spriteSheet.getWidth() / ORIGINAL_TILE_SIZE;
-		int tilesPerCol = spriteSheet.getHeight() / ORIGINAL_TILE_SIZE;
-		int totalTiles = tilesPerRow * tilesPerCol;
-		this.tiles = new Tile[totalTiles];
-
-		for (int y = 0; y < tilesPerCol; y++) {
-			for (int x = 0; x < tilesPerRow; x++) {
-
-				int tileID = y * tilesPerRow + x;
-
-				if (tileID == 0) {
-					tiles[tileID] = new Tile(null);
-					continue;
-				}
-
-				String[] animatedTilePath = ANIMATED_TILE_PATHS.get(tileID);
-				if (animatedTilePath != null) {
-					BufferedImage tileImage = AssetManager.loadImage(animatedTilePath[0]);
-					int totalFrame = Integer.parseInt(animatedTilePath[1]);
-					tiles[tileID] = new AnimatedTile(tileImage, totalFrame);
-					continue;
-				}
-
-				BufferedImage tileImage = AssetManager.getSprite(spriteSheet, x * ORIGINAL_TILE_SIZE,
-						y * ORIGINAL_TILE_SIZE, ORIGINAL_TILE_SIZE, ORIGINAL_TILE_SIZE);
-
-				tiles[y * tilesPerRow + x] = new Tile(tileImage);
-			}
+	private void loadTileset(String tilesetName) {
+		tileset = TilesetManager.getTileset(tilesetName);
+		if (tileset == null) {
+			System.err.println("Failed to load tileset: " + tilesetName);
 		}
 	}
 
 	private void loadLayer() throws IOException {
 		InputStream is = getClass().getResourceAsStream(layerPath);
+		System.out.println(layerPath + " " + is);
 		BufferedReader bReader = new BufferedReader(new InputStreamReader(is));
 
 		java.util.List<String[]> lines = new java.util.ArrayList<>();
@@ -106,6 +59,8 @@ public class TileManager {
 	public int getMaxLayerCol() { return maxLayerCol; }
 	public int getMaxLayerRow() { return maxLayerRow; }
 
+	public Tileset getTileset() { return tileset; }
+
 	public void drawLayer(Graphics2D g2, int cameraX, int cameraY) {
 
 		int startCol = Math.max(0, cameraX / ORIGINAL_TILE_SIZE);
@@ -121,9 +76,15 @@ public class TileManager {
 				int screenX = mapX - cameraX;
 				int screenY = mapY - cameraY;
 
-				tiles[layerTileNum[row][col]].draw(g2, screenX, screenY);
+				tileset.getTile(layerTileNum[row][col]).draw(g2, screenX, screenY);
 			}
 		}
 	}
 
+	public Tile getTile(int x, int y) {
+		if(x < 0 || y < 0 || x >= maxLayerCol || y >= maxLayerRow) {
+			return tileset.getTile(0);
+		}
+		return tileset.getTile(layerTileNum[y][x]);
+	}
 }

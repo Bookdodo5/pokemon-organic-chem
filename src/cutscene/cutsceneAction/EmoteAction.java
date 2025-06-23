@@ -10,7 +10,7 @@ import java.awt.image.BufferedImage;
 
 public class EmoteAction implements CutsceneAction {
     
-    private final Human targetHuman;
+    private final Human target;
     private final CameraManager cameraManager;
     private final int displayDuration;
     private int currentTimer;
@@ -19,10 +19,10 @@ public class EmoteAction implements CutsceneAction {
 
     private final int EMOTE_SIZE = 192;
 
-    public EmoteAction(Human targetHuman, int displayDuration, Emotes emote, CameraManager cameraManager) {
-        this.targetHuman = targetHuman;
+    public EmoteAction(Human target, int duration, Emotes emote, CameraManager cameraManager) {
+        this.target = target;
         this.cameraManager = cameraManager;
-        this.displayDuration = displayDuration;
+        this.displayDuration = duration;
         this.isFinished = false;
         this.currentTimer = 0;
 
@@ -64,12 +64,12 @@ public class EmoteAction implements CutsceneAction {
 
     @Override
     public void draw(Graphics2D g2) {
-        if(targetHuman == null) return;
+        if(target == null) return;
 
         int cameraX = cameraManager.getCameraX();
         int cameraY = cameraManager.getCameraY();
-        int x = (int) (targetHuman.getX() - cameraX - EMOTE_SIZE / 2) + targetHuman.getSpriteWidth() / 2;
-        int y = (int) (targetHuman.getY() - cameraY - EMOTE_SIZE / 2) - targetHuman.getSpriteHeight() / 2;
+        int x = (int) (target.getX() - cameraX - EMOTE_SIZE / 2) + target.getSpriteWidth() / 2;
+        int y = (int) (target.getY() - cameraY - EMOTE_SIZE / 2) - target.getSpriteHeight() / 2;
 
         g2.drawImage(emoteImage, x, y, null);
     }

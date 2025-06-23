@@ -5,12 +5,12 @@ import cutscene.CutsceneAction;
 import java.awt.Graphics2D;
 
 public class PlaysoundAction implements CutsceneAction {
-	private final String soundFile;
+	private final String sound;
 	private final boolean isMusic;
 	private boolean isFinished;
 
-	public PlaysoundAction(String soundFile, boolean isMusic) {
-		this.soundFile = soundFile;
+	public PlaysoundAction(String sound, boolean isMusic) {
+		this.sound = sound;
 		this.isMusic = isMusic;
 		this.isFinished = false;
 	}
@@ -18,10 +18,10 @@ public class PlaysoundAction implements CutsceneAction {
 	@Override
 	public void start() {
 		if (isMusic) {
-			SoundManager.getMusicplayer().play(soundFile);
+			SoundManager.getMusicplayer().play(sound);
 		}
 		else {
-			SoundManager.getSfxplayer().playSE(soundFile);
+			SoundManager.getSfxplayer().playSE(sound);
 		}
 		isFinished = true;
 	}

@@ -8,19 +8,45 @@ import java.awt.Graphics2D;
 public class FaceDirectionAction implements CutsceneAction {
 
     private final Human targetHuman;
-	private final FacingDirections direction;
-	private boolean isFinished;
+    private final FacingDirections direction;
+    private final Human directionHuman;
+    private boolean isFinished;
 
     public FaceDirectionAction(Human targetHuman, FacingDirections direction) {
         this.targetHuman = targetHuman;
         this.direction = direction;
-		this.isFinished = false;
+        this.directionHuman = null;
+        this.isFinished = false;
+    }
+
+    public FaceDirectionAction(Human targetHuman, Human directionHuman) {
+        this.targetHuman = targetHuman;
+        this.direction = null;
+        this.directionHuman = directionHuman;
+        this.isFinished = false;
     }
 
     @Override
     public void start() {
-        targetHuman.setFacingDirection(direction);
-		isFinished = true;
+        FacingDirections targetDirection = calculateTargetDirection();
+        targetHuman.setFacingDirection(targetDirection);
+        isFinished = true;
+    }
+
+    private FacingDirections calculateTargetDirection() {
+        if (directionHuman == null) return direction;
+        return determineDirectionTowardsTarget();
+    }
+
+    private FacingDirections determineDirectionTowardsTarget() {
+        int deltaX = targetHuman.getMapX() - directionHuman.getMapX();
+        int deltaY = targetHuman.getMapY() - directionHuman.getMapY();
+        
+        if (Math.abs(deltaX) > Math.abs(deltaY)) {
+            return deltaX > 0 ? FacingDirections.LEFT : FacingDirections.RIGHT;
+        } else {
+            return deltaY > 0 ? FacingDirections.UP : FacingDirections.DOWN;
+        }
     }
 
     @Override
@@ -33,7 +59,7 @@ public class FaceDirectionAction implements CutsceneAction {
 
     @Override
     public void reset() {
-		isFinished = false;
+        isFinished = false;
     }
 
     @Override
@@ -42,6 +68,6 @@ public class FaceDirectionAction implements CutsceneAction {
 
     @Override
     public boolean isFinished() {
-		return isFinished;
+        return isFinished;
     }
 }

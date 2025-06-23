@@ -3,6 +3,7 @@ package entity;
 import assets.AssetManager;
 import java.util.List;
 import java.util.Random;
+import tile.MapManager;
 import tile.TileManager;
 
 public class NPC extends Human {
@@ -53,16 +54,13 @@ public class NPC extends Human {
 			case 3 -> setFacingDirection(FacingDirections.RIGHT);
 			default -> {}
 		}
-		canMove = checkCollision(x, y, tileManagers, humans) && checkOutOfRange();
-
+		canMove = checkCollision(x, y, tileManagers, humans, null) && checkOutOfRange();
 		if (canMove) setMoving();
-		else spriteIndex = 0;
 	}
 
 	private boolean checkOutOfRange() {
-		currentDirectionVector = DIRECTION_VECTORS.get(getCurrentDirection());
-		int checkX = getMapX() + currentDirectionVector[0];
-		int checkY = getMapY() + currentDirectionVector[1];
+		int checkX = getMapX() + getCurrentDirection().getX();
+		int checkY = getMapY() + getCurrentDirection().getY();
 		int distX = Math.abs(checkX - originalX);
 		int distY = Math.abs(checkY - originalY);
 		return distX + distY <= range;
@@ -76,6 +74,12 @@ public class NPC extends Human {
 			default ->
 				throw new IllegalArgumentException("Unexpected value: " + aiMode);
 		}
+		spriteIndex = 0;
+	}
+
+	@Override
+	protected void handleIdle(TileManager[] tileManagers, List<Entity> humans, MapManager mapManager) {
+		handleIdle(tileManagers, humans);
 	}
 
 	public String getMap() { return map; }

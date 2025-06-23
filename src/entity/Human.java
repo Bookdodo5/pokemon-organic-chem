@@ -1,48 +1,31 @@
 package entity;
 
+import assets.AnimationManager;
 import assets.AssetManager;
+import assets.SoundManager;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 import main.Constants;
 import static main.Constants.*;
 import tile.CollisionChecker;
+import tile.MapManager;
+import tile.TileGrass;
 import tile.TileManager;
 
 public abstract class Human extends Entity {
 
-	// Constants
-	protected static final Map<FacingDirections, int[]> DIRECTION_VECTORS = Map.of(
-			FacingDirections.UP, new int[]{
-				0,
-				-1
-			},
-			FacingDirections.DOWN, new int[]{
-				0,
-				1
-			},
-			FacingDirections.LEFT, new int[]{
-				-1,
-				0
-			},
-			FacingDirections.RIGHT, new int[]{
-				1,
-				0
-			});
-
 	// Movement
 	public int targetX, targetY;
-	protected int[] currentDirectionVector = DIRECTION_VECTORS.get(FacingDirections.DOWN);
 	protected int idleWalkingCounter = 0;
 	protected boolean canMove = false;
 	protected BufferedImage spriteSheet;
 
-	// State
 	private FacingDirections currentDirection = FacingDirections.DOWN;
 	private MovementStates currentMovementState = MovementStates.IDLE;
-	private CollisionChecker collisionChecker;
+	private final CollisionChecker collisionChecker = new CollisionChecker();
+
+	private final AnimationManager grassAnimationManager;
 
 	public Human(int positionX, int positionY) {
 
@@ -55,11 +38,7 @@ public abstract class Human extends Entity {
 		this.currentMovementState = MovementStates.IDLE;
 		this.currentDirection = FacingDirections.DOWN;
 
-		try {
-			this.collisionChecker = new CollisionChecker();
-		} catch (IOException e) {
-			System.err.println("Failed to initialize collision checker: " + e.getMessage());
-		}
+		this.grassAnimationManager = new AnimationManager();
 	}
 
 	public FacingDirections getCurrentDirection() {
@@ -96,12 +75,11 @@ public abstract class Human extends Entity {
 		return AssetManager.getSprite(spriteSheet, frameLocation, directionLocation, spriteWidth, spriteHeight);
 	}
 
-	protected boolean checkCollision(double x, double y, TileManager[] tileManagers, List<Entity> humans) {
-		currentDirectionVector = DIRECTION_VECTORS.get(currentDirection);
-		int checkX = getMapX() + currentDirectionVector[0];
-		int checkY = getMapY() + currentDirectionVector[1];
+	protected boolean checkCollision(double x, double y, TileManager[] tileManagers, List<Entity> humans, MapManager mapManager) {
+		int checkX = getMapX() + currentDirection.getX();
+		int checkY = getMapY() + currentDirection.getY();
 
-		boolean tileResult = collisionChecker.checkCollision(checkX, checkY, tileManagers);
+		boolean tileResult = collisionChecker.checkCollisionAcrossMaps(checkX, checkY, tileManagers, mapManager);
 		boolean humanResult = humans.stream()
 				.allMatch(human -> (human.getMapX() != checkX) || (human.getMapY() != checkY));
 		boolean result = tileResult && humanResult;
@@ -118,9 +96,8 @@ public abstract class Human extends Entity {
 
 	public void setMoving() {
 		idleWalkingCounter = 0;
-		currentDirectionVector = DIRECTION_VECTORS.get(currentDirection);
-		targetX = (int) x + ORIGINAL_TILE_SIZE * currentDirectionVector[0];
-		targetY = (int) y + ORIGINAL_TILE_SIZE * currentDirectionVector[1];
+		targetX = (int) x + ORIGINAL_TILE_SIZE * currentDirection.getX();
+		targetY = (int) y + ORIGINAL_TILE_SIZE * currentDirection.getY();
 		currentMovementState = MovementStates.MOVING;
 	}
 
@@ -129,13 +106,13 @@ public abstract class Human extends Entity {
 		currentMovementState = MovementStates.IDLE_WALKING;
 	}
 
-	protected void handleIdle(TileManager[] tileManagers, List<Entity> humans) {
+	protected abstract void handleIdle(TileManager[] tileManagers, List<Entity> humans);
 
-	};
+	protected abstract void handleIdle(TileManager[] tileManagers, List<Entity> humans, MapManager mapManager);
 
 	private void handleMoving() {
-		x += currentDirectionVector[0] * SPEED;
-		y += currentDirectionVector[1] * SPEED;
+		x += currentDirection.getX() * SPEED;
+		y += currentDirection.getY() * SPEED;
 
 		if ((currentDirection == FacingDirections.UP && y <= targetY)
 				|| (currentDirection == FacingDirections.DOWN && y >= targetY)
@@ -157,18 +134,77 @@ public abstract class Human extends Entity {
 	public boolean isIdle() { return currentMovementState == MovementStates.IDLE; }
 
 	public void update(TileManager[] tileManagers, List<Entity> humans) {
+		MovementStates prevState = currentMovementState;
+		
 		switch (currentMovementState) {
 			case IDLE -> handleIdle(tileManagers, humans);
 			case MOVING -> handleMoving();
 			case IDLE_WALKING -> handleIdleWalking();
 		}
+
+		boolean isPlayer = this instanceof Player;
+		boolean isOnGrass = isOnGrass(tileManagers);
+		boolean isIdle = currentMovementState == MovementStates.IDLE;
+		boolean wasMoving = prevState == MovementStates.MOVING;
+
+		if (isPlayer && isOnGrass && wasMoving && isIdle) {
+			SoundManager.getSfxplayer().playSE("Grass");
+			grassAnimationManager.loadAnimation("grass");
+		}
+
+		if (!grassAnimationManager.isFinished()) {
+			grassAnimationManager.update();
+		}
+	}
+
+	public void update(TileManager[] tileManagers, List<Entity> humans, MapManager mapManager) {
+		MovementStates prevState = currentMovementState;
+		
+		switch (currentMovementState) {
+			case IDLE -> handleIdle(tileManagers, humans, mapManager);
+			case MOVING -> handleMoving();
+			case IDLE_WALKING -> handleIdleWalking();
+		}
+
+		boolean isPlayer = this instanceof Player;
+		boolean isOnGrass = isOnGrass(tileManagers);
+		boolean isIdle = currentMovementState == MovementStates.IDLE;
+		boolean wasMoving = prevState == MovementStates.MOVING;
+
+		if (isPlayer && isOnGrass && wasMoving && isIdle) {
+			SoundManager.getSfxplayer().playSE("Grass");
+			grassAnimationManager.loadAnimation("grass");
+		}
+
+		if (!grassAnimationManager.isFinished()) {
+			grassAnimationManager.update();
+		}
 	}
 
 	@Override
-	public void draw(Graphics2D g2, int cameraX, int cameraY) {
+	public void draw(Graphics2D g2, int cameraX, int cameraY, TileManager[] tileManagers) {
+		boolean isOnGrass = isOnGrass(tileManagers);
 		int drawX = (int) (x - cameraX);
 		int drawY = (int) (y - cameraY - (int) ((getSpriteHeight() * SCALE) / 6));
+		
+		java.awt.Shape originalClip = g2.getClip();
+		if (isOnGrass && Math.abs(x-targetX) < 20 && Math.abs(y-targetY) < 20) {
+			g2.setClip(drawX, drawY, getSpriteWidth(), getSpriteHeight() - 10);
+		}
 		g2.drawImage(getSpriteAnimation(spriteSheet), drawX, drawY, getSpriteWidth(), getSpriteHeight(),
-				null);
+			null);
+		g2.setClip(originalClip);
+
+		if(!grassAnimationManager.isFinished()) {
+			int grassDrawX = drawX + getSpriteWidth() / 2;
+			int grassDrawY = drawY + getSpriteHeight() / 2 + 10;
+			grassAnimationManager.drawCenter(g2, grassDrawX, grassDrawY, 2);
+		}
+	}
+
+	private boolean isOnGrass(TileManager[] tileManagers) {
+		boolean humanOnGrass = tileManagers[1].getTile(getMapX(), getMapY()) instanceof TileGrass;
+		boolean targetOnGrass = tileManagers[1].getTile(targetX/ORIGINAL_TILE_SIZE, targetY/ORIGINAL_TILE_SIZE) instanceof TileGrass;
+		return humanOnGrass && targetOnGrass;
 	}
 }

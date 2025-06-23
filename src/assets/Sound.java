@@ -45,6 +45,7 @@ public class Sound implements Runnable {
 	public Sound() {
 		// Load sound effects
 		loadSound("PlayerBump", "/sound_effect/PlayerBump.wav");
+		loadSound("PlayerJump", "/sound_effect/PlayerJump.wav");
 		loadSound("PkmnHealing", "/sound_effect/PkmnHealing.wav");
 		loadSound("PkmnGet", "/sound_effect/PkmnGet.wav");
 		loadSound("PkmnFaint", "/sound_effect/PkmnFaint.wav");
@@ -58,6 +59,9 @@ public class Sound implements Runnable {
 		loadSound("BattleDamageSuper", "/sound_effect/BattleDamageSuper.wav");
 		loadSound("BattleDamageNormal", "/sound_effect/BattleDamageNormal.wav");
 		loadSound("GameCursor", "/sound_effect/GameCursor.wav");
+		loadSound("Grass1", "/sound_effect/Grass1.wav");
+		loadSound("Grass2", "/sound_effect/Grass2.wav");
+		loadSound("Grass3", "/sound_effect/Grass3.wav");
 
 		// Load music
 		loadSound("Title", "/music/Title.wav");
@@ -175,6 +179,7 @@ public class Sound implements Runnable {
 
 	public void playSE(String file) {
 		float sfxVolume = Settings.getInstance().getSfxVolume();
+		if (file.equals("Grass")) file += ((int)(Math.random() * 3) + 1);
 		setFile(file);
 		setVolume(volumeToDB(sfxVolume));
 		if (clip != null) {

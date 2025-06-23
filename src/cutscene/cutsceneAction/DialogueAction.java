@@ -1,11 +1,15 @@
 package cutscene.cutsceneAction;
 
-import cutscene.CutsceneAction;
+import assets.SoundManager;
+import cutscene.InputCutsceneAction;
 import dialogue.Dialogue;
 import dialogue.DialogueRenderer;
+import input.KeyBindingHandler;
+import input.Keys;
 import java.awt.Graphics2D;
+import menu.Settings;
 
-public class DialogueAction implements CutsceneAction {
+public class DialogueAction implements InputCutsceneAction {
 
 	private final DialogueRenderer dialogueRenderer;
 	private final Dialogue originalDialogue;
@@ -56,4 +60,59 @@ public class DialogueAction implements CutsceneAction {
 		dialogue = originalDialogue;
 		dialogue.resetPage();
 	}	
+
+	@Override
+	public void keyTapped(KeyBindingHandler keyHandler) {
+		if(isFinished) return;
+		if(!dialogueRenderer.isAnimationFinished()) return;
+
+		switch (keyHandler.getCurrentKey()) {
+			case UP -> {
+				if (!dialogueRenderer.showingOption()) break;
+				dialogue.previousSelectionIndex();
+				SoundManager.getSfxplayer().playSE("GameCursor");
+			}
+			case DOWN -> {
+				if (!dialogueRenderer.showingOption()) break;
+				dialogue.nextSelectionIndex();
+				SoundManager.getSfxplayer().playSE("GameCursor");
+			}
+			case INTERACT -> {
+				if (dialogue.canShowOptions()) {
+					dialogue.resetPage();
+					dialogue.getCurrentOption().execute();
+					setDialogue(dialogue.getCurrentOption().getNextDialogue());
+					dialogueRenderer.setRenderingDialogue(dialogue);
+				}
+				else if (dialogue.isFinalPage()) {
+					dialogue.resetPage();
+					end();
+				}
+				else {
+					dialogue.nextPage();
+					dialogueRenderer.setRenderingDialogue(dialogue);
+				}
+				SoundManager.getSfxplayer().playSE("GameCursor");
+			}
+			default -> {}
+		}
+	}
+
+	@Override
+	public void keyPressed(KeyBindingHandler keyHandler) {
+		if (keyHandler.getCurrentKey() == Keys.INTERACT) {
+			dialogueRenderer.setTextAnimationSpeed(
+				Settings.getInstance().getTextSpeed().holdSpeed
+			);
+		}
+	}
+
+	@Override
+	public void keyReleased(Keys key) {
+		if (key == Keys.INTERACT) {
+			dialogueRenderer.setTextAnimationSpeed(
+				Settings.getInstance().getTextSpeed().baseSpeed
+			);
+		}
+	}
 }

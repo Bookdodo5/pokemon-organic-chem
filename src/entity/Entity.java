@@ -2,11 +2,12 @@ package entity;
 
 import java.awt.Graphics2D;
 import main.Constants;
+import tile.TileManager;
 
 public abstract class Entity {
 	protected double x, y;
 	protected int spriteWidth, spriteHeight;
-	protected static final double SPEED = 3;
+	protected static final double SPEED = 2.4;
 	protected int animationCounter = 0;
 	protected static final int ANIMATION_SPEED = 8;
 	protected int spriteIndex = 0;
@@ -35,5 +36,5 @@ public abstract class Entity {
 
 	public void setSpriteHeight(int spriteHeight) { this.spriteHeight = spriteHeight; }
 
-	public void draw(Graphics2D g2, int cameraX, int cameraY) {}
+	public void draw(Graphics2D g2, int cameraX, int cameraY, TileManager[] tileManagers) {}
 }

@@ -4,7 +4,6 @@ import assets.SoundManager;
 import cutscene.Cutscene;
 import cutscene.CutsceneManager;
 import entity.Entity;
-import entity.FacingDirections;
 import entity.MovementStates;
 import entity.NPC;
 import entity.NPCManager;
@@ -74,12 +73,10 @@ public class OverworldState extends GameState {
 		initializeEntities();
 	}
 
-	private void checkCutscene(boolean isInteracting, FacingDirections facing) {
+	private void checkCutscene(boolean isInteracting) {
 		if (stateManager.getState() == GameStates.CUTSCENE) return;
-		int playerX = player.getMapX();
-		int playerY = player.getMapY();
 
-		Cutscene cutscene = cutsceneManager.getCutscene(playerX, playerY, getCurrentMapID(), isInteracting, facing);
+		Cutscene cutscene = cutsceneManager.getCutscene(player, isInteracting);
 		if (cutscene != null && !cutscene.isFinished() && player.isIdle()) {
 			pendingCutscene = cutscene;
 			stateManager.setState(GameStates.CUTSCENE);
@@ -125,7 +122,7 @@ public class OverworldState extends GameState {
 
 	@Override
 	public void update() {
-		player.update(mapManager.getCurrentLayers(), entities);
+		player.update(mapManager.getCurrentLayers(), entities, mapManager);
 		for (NPC npc : npcManager.getNPCs()) {
 			for(MapData map : mapManager.getVisibleMaps()) {
 				if(!map.getMapName().equals(npc.getMap())) continue;
@@ -134,7 +131,7 @@ public class OverworldState extends GameState {
 			}
 		}
 		checkMapTransition();
-		checkCutscene(false, null);
+		checkCutscene(false);
 		checkWalkAcrossMap();
 		mapManager.updateVisibleMaps(player.getMapX(), player.getMapY());
 		cameraManager.update();
@@ -175,9 +172,9 @@ public class OverworldState extends GameState {
 		for (Entity entity : sortedEntities) {
 			if (entity == null) continue;
 			if (entity instanceof Player) {
-				entity.draw(g2, cameraManager.getCameraX(), cameraManager.getCameraY());
+				entity.draw(g2, cameraManager.getCameraX(), cameraManager.getCameraY(), mapManager.getCurrentLayers());
 			} else {
-				entity.draw(g2, cameraManager.getCameraX(), cameraManager.getCameraY());
+				entity.draw(g2, cameraManager.getCameraX(), cameraManager.getCameraY(), mapManager.getCurrentLayers());
 			}
 		}
 	}
@@ -197,7 +194,7 @@ public class OverworldState extends GameState {
 			case ESCAPE -> stateManager.setState(GameStates.PAUSING);
 			case INTERACT -> {
 				if (player.getCurrentMovementState() == MovementStates.IDLE) {
-					checkCutscene(true, player.getCurrentDirection());
+					checkCutscene(true);
 				}
 			}
 			case P -> stateManager.setState(GameStates.POKEDEX);
