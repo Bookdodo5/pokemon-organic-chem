@@ -16,7 +16,7 @@ import tile.TileManager;
 public abstract class Human extends Entity {
 
 	// Movement
-	public int targetX, targetY;
+	private int targetX, targetY;
 	protected int idleWalkingCounter = 0;
 	protected boolean canMove = false;
 	protected BufferedImage spriteSheet;
@@ -53,6 +53,19 @@ public abstract class Human extends Entity {
 		currentDirection = direction;
 	}
 
+	public void setTarget(int x, int y) {
+		targetX = x;
+		targetY = y;
+	}
+
+	public int getTargetX() {
+		return targetX;
+	}
+
+	public int getTargetY() {
+		return targetY;
+	}
+
 	protected void updateAnimation() {
 		animationCounter++;
 		if (animationCounter >= ANIMATION_SPEED) {
@@ -75,11 +88,11 @@ public abstract class Human extends Entity {
 		return AssetManager.getSprite(spriteSheet, frameLocation, directionLocation, spriteWidth, spriteHeight);
 	}
 
-	protected boolean checkCollision(double x, double y, TileManager[] tileManagers, List<Entity> humans, MapManager mapManager) {
+	protected boolean checkCollision(double x, double y, List<Entity> humans, MapManager mapManager) {
 		int checkX = getMapX() + currentDirection.getX();
 		int checkY = getMapY() + currentDirection.getY();
 
-		boolean tileResult = collisionChecker.checkCollisionAcrossMaps(checkX, checkY, tileManagers, mapManager);
+		boolean tileResult = collisionChecker.checkCollision(checkX, checkY, mapManager);
 		boolean humanResult = humans.stream()
 				.allMatch(human -> (human.getMapX() != checkX) || (human.getMapY() != checkY));
 		boolean result = tileResult && humanResult;
@@ -106,9 +119,7 @@ public abstract class Human extends Entity {
 		currentMovementState = MovementStates.IDLE_WALKING;
 	}
 
-	protected abstract void handleIdle(TileManager[] tileManagers, List<Entity> humans);
-
-	protected abstract void handleIdle(TileManager[] tileManagers, List<Entity> humans, MapManager mapManager);
+	protected abstract void handleIdle(List<Entity> humans, MapManager mapManager);
 
 	private void handleMoving() {
 		x += currentDirection.getX() * SPEED;
@@ -133,17 +144,17 @@ public abstract class Human extends Entity {
 
 	public boolean isIdle() { return currentMovementState == MovementStates.IDLE; }
 
-	public void update(TileManager[] tileManagers, List<Entity> humans) {
+	public void update(MapManager mapManager, List<Entity> humans) {
 		MovementStates prevState = currentMovementState;
 		
 		switch (currentMovementState) {
-			case IDLE -> handleIdle(tileManagers, humans);
+			case IDLE -> handleIdle(humans, mapManager);
 			case MOVING -> handleMoving();
 			case IDLE_WALKING -> handleIdleWalking();
 		}
 
 		boolean isPlayer = this instanceof Player;
-		boolean isOnGrass = isOnGrass(tileManagers);
+		boolean isOnGrass = isOnGrass(mapManager);
 		boolean isIdle = currentMovementState == MovementStates.IDLE;
 		boolean wasMoving = prevState == MovementStates.MOVING;
 
@@ -157,21 +168,20 @@ public abstract class Human extends Entity {
 		}
 	}
 
-	public void update(TileManager[] tileManagers, List<Entity> humans, MapManager mapManager) {
+	public void update(List<Entity> humans, MapManager mapManager) {
 		MovementStates prevState = currentMovementState;
 		
 		switch (currentMovementState) {
-			case IDLE -> handleIdle(tileManagers, humans, mapManager);
+			case IDLE -> handleIdle(humans, mapManager);
 			case MOVING -> handleMoving();
 			case IDLE_WALKING -> handleIdleWalking();
 		}
 
-		boolean isPlayer = this instanceof Player;
-		boolean isOnGrass = isOnGrass(tileManagers);
+		boolean isOnGrass = isOnGrass(mapManager);
 		boolean isIdle = currentMovementState == MovementStates.IDLE;
 		boolean wasMoving = prevState == MovementStates.MOVING;
 
-		if (isPlayer && isOnGrass && wasMoving && isIdle) {
+		if (isOnGrass && wasMoving && isIdle) {
 			SoundManager.getSfxplayer().playSE("Grass");
 			grassAnimationManager.loadAnimation("grass");
 		}
@@ -182,8 +192,8 @@ public abstract class Human extends Entity {
 	}
 
 	@Override
-	public void draw(Graphics2D g2, int cameraX, int cameraY, TileManager[] tileManagers) {
-		boolean isOnGrass = isOnGrass(tileManagers);
+	public void draw(Graphics2D g2, int cameraX, int cameraY, MapManager mapManager) {
+		boolean isOnGrass = isOnGrass(mapManager);
 		int drawX = (int) (x - cameraX);
 		int drawY = (int) (y - cameraY - (int) ((getSpriteHeight() * SCALE) / 6));
 		
@@ -202,9 +212,10 @@ public abstract class Human extends Entity {
 		}
 	}
 
-	private boolean isOnGrass(TileManager[] tileManagers) {
-		boolean humanOnGrass = tileManagers[1].getTile(getMapX(), getMapY()) instanceof TileGrass;
-		boolean targetOnGrass = tileManagers[1].getTile(targetX/ORIGINAL_TILE_SIZE, targetY/ORIGINAL_TILE_SIZE) instanceof TileGrass;
+	private boolean isOnGrass(MapManager mapManager) {
+		TileManager decorationLayer = mapManager.getCurrentLayers()[1];
+		boolean humanOnGrass = decorationLayer.getTile(getMapX(), getMapY()) instanceof TileGrass;
+		boolean targetOnGrass = decorationLayer.getTile(targetX/ORIGINAL_TILE_SIZE, targetY/ORIGINAL_TILE_SIZE) instanceof TileGrass;
 		return humanOnGrass && targetOnGrass;
 	}
 }

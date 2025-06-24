@@ -63,8 +63,7 @@ public class MovementAction implements CutsceneAction {
 		targetHuman.setMapX(targetX);
 		targetHuman.setMapY(targetY);
 		
-		targetHuman.targetX = (int) targetHuman.getX();
-		targetHuman.targetY = (int) targetHuman.getY();
+		targetHuman.setTarget((int) targetHuman.getX(), (int) targetHuman.getY());
 		
 		targetHuman.setIdle();
 

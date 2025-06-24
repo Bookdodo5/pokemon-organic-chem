@@ -91,48 +91,20 @@ public class OverworldState extends GameState {
 				.collect(Collectors.toList()));
 	}
 
-	private MapData findNextMap(int playerGlobalX, int playerGlobalY) {
-		for(MapData map : mapManager.getVisibleMaps()) {
-			if(playerGlobalX >= map.getGlobalX() &&
-				playerGlobalX < map.getGlobalX() + map.getWidth() &&
-				playerGlobalY >= map.getGlobalY() &&
-				playerGlobalY < map.getGlobalY() + map.getHeight()) {
-				return map;
-			}
-		}
-		return null;
-	}
-
-	private void checkWalkAcrossMap() {
-		if (player.getMapX() < 0 || player.getMapX() >= mapManager.getWidth() ||
-			player.getMapY() < 0 || player.getMapY() >= mapManager.getHeight()) {
-			int playerGlobalX = player.getMapX() + mapManager.getGlobalX();
-			int playerGlobalY = player.getMapY() + mapManager.getGlobalY();
-			MapData nextMap = findNextMap(playerGlobalX, playerGlobalY);
-			if (nextMap == null) {
-				player.setMapX(Math.max(0, Math.min(player.getMapX(), mapManager.getWidth() - 1)));
-				player.setMapY(Math.max(0, Math.min(player.getMapY(), mapManager.getHeight() - 1)));
-				return;
-			}
-			int nextMapX = playerGlobalX - nextMap.getGlobalX();
-			int nextMapY = playerGlobalY - nextMap.getGlobalY();
-			setMap(nextMapX, nextMapY, nextMap.getMapName());
-		}
-	}
-
 	@Override
 	public void update() {
-		player.update(mapManager.getCurrentLayers(), entities, mapManager);
+		player.update(entities, mapManager);
+		
 		for (NPC npc : npcManager.getNPCs()) {
 			for(MapData map : mapManager.getVisibleMaps()) {
 				if(!map.getMapName().equals(npc.getMap())) continue;
-				npc.update(map.getLayers(), entities);
+				npc.update(entities, mapManager);
 				break;
 			}
 		}
+		
 		checkMapTransition();
 		checkCutscene(false);
-		checkWalkAcrossMap();
 		mapManager.updateVisibleMaps(player.getMapX(), player.getMapY());
 		cameraManager.update();
 	}
@@ -172,9 +144,9 @@ public class OverworldState extends GameState {
 		for (Entity entity : sortedEntities) {
 			if (entity == null) continue;
 			if (entity instanceof Player) {
-				entity.draw(g2, cameraManager.getCameraX(), cameraManager.getCameraY(), mapManager.getCurrentLayers());
+				entity.draw(g2, cameraManager.getCameraX(), cameraManager.getCameraY(), mapManager);
 			} else {
-				entity.draw(g2, cameraManager.getCameraX(), cameraManager.getCameraY(), mapManager.getCurrentLayers());
+				entity.draw(g2, cameraManager.getCameraX(), cameraManager.getCameraY(), mapManager);
 			}
 		}
 	}

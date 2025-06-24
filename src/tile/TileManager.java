@@ -34,7 +34,6 @@ public class TileManager {
 
 	private void loadLayer() throws IOException {
 		InputStream is = getClass().getResourceAsStream(layerPath);
-		System.out.println(layerPath + " " + is);
 		BufferedReader bReader = new BufferedReader(new InputStreamReader(is));
 
 		java.util.List<String[]> lines = new java.util.ArrayList<>();

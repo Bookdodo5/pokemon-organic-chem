@@ -191,20 +191,16 @@ public class MapManager {
 
     private void initializeMap(String mapName, String tilesetName, String music, int globalX, int globalY) {
         TileManager ground = new TileManager(
-            "/data/maps/" + mapName + "/ground.txt",
-            tilesetName
+            "/data/maps/" + mapName + "/ground.txt", tilesetName
         );
         TileManager decoration = new TileManager(
-            "/data/maps/" + mapName + "/decoration.txt",
-            tilesetName
+            "/data/maps/" + mapName + "/decoration.txt", tilesetName
         );
         TileManager obstacle = new TileManager(
-            "/data/maps/" + mapName + "/obstacle.txt",
-            tilesetName
+            "/data/maps/" + mapName + "/obstacle.txt", tilesetName
         );
         TileManager air = new TileManager(
-            "/data/maps/" + mapName + "/air.txt", 
-            tilesetName
+            "/data/maps/" + mapName + "/air.txt",  tilesetName
         );
 
         MapData mapData = new MapData(
@@ -296,4 +292,15 @@ public class MapManager {
         return transitions.get(transitionKey);
     }
 
+    public MapData findMap(int globalX, int globalY) {
+		for(MapData map : visibleMaps) {
+			if(globalX >= map.getGlobalX() &&
+				globalX < map.getGlobalX() + map.getWidth() &&
+				globalY >= map.getGlobalY() &&
+				globalY < map.getGlobalY() + map.getHeight()) {
+				return map;
+			}
+		}
+		return null;
+	}
 }

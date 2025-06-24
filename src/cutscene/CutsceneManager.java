@@ -241,7 +241,7 @@ public class CutsceneManager {
 				new DialogueAction(new Dialogue(new String[] {
 					"Sign: Welcome back to Porbital Town!",
 					"You've seen the full cutscene demonstration.",
-					"All cutscene actions are working perfectly!"
+					"All cutzscene actions are working perfectly!"
 				})),
 				
 				new ParallelAction(

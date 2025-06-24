@@ -4,7 +4,6 @@ import assets.AssetManager;
 import java.util.List;
 import java.util.Random;
 import tile.MapManager;
-import tile.TileManager;
 
 public class NPC extends Human {
 	private final String id;
@@ -37,7 +36,7 @@ public class NPC extends Human {
 		originalY = y;
 	}
 
-	private void handleWander(TileManager[] tileManagers, List<Entity> humans) {
+	private void handleWander(MapManager mapManager, List<Entity> humans) {
 		canMove = false;
 
 		moveCounter++;
@@ -54,7 +53,7 @@ public class NPC extends Human {
 			case 3 -> setFacingDirection(FacingDirections.RIGHT);
 			default -> {}
 		}
-		canMove = checkCollision(x, y, tileManagers, humans, null) && checkOutOfRange();
+		canMove = checkCollision(x, y, humans, mapManager) && checkOutOfRange();
 		if (canMove) setMoving();
 	}
 
@@ -67,19 +66,14 @@ public class NPC extends Human {
 	}
 
 	@Override
-	protected void handleIdle(TileManager[] tileManagers, List<Entity> humans) {
+	protected void handleIdle(List<Entity> humans, MapManager mapManager) {
 		switch (aiMode) {
-			case WANDER -> handleWander(tileManagers, humans);
+			case WANDER -> handleWander(mapManager, humans);
 			case STILL -> {}
 			default ->
 				throw new IllegalArgumentException("Unexpected value: " + aiMode);
 		}
 		spriteIndex = 0;
-	}
-
-	@Override
-	protected void handleIdle(TileManager[] tileManagers, List<Entity> humans, MapManager mapManager) {
-		handleIdle(tileManagers, humans);
 	}
 
 	public String getMap() { return map; }

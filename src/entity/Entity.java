@@ -2,7 +2,7 @@ package entity;
 
 import java.awt.Graphics2D;
 import main.Constants;
-import tile.TileManager;
+import tile.MapManager;
 
 public abstract class Entity {
 	protected double x, y;
@@ -36,5 +36,5 @@ public abstract class Entity {
 
 	public void setSpriteHeight(int spriteHeight) { this.spriteHeight = spriteHeight; }
 
-	public void draw(Graphics2D g2, int cameraX, int cameraY, TileManager[] tileManagers) {}
+	public void draw(Graphics2D g2, int cameraX, int cameraY, MapManager mapManager) {}
 }
