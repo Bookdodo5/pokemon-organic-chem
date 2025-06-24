@@ -1,5 +1,5 @@
 package entity;
 
 public enum MovementStates {
-	IDLE, MOVING, IDLE_WALKING
+	IDLE, MOVING, IDLE_WALKING, JUMPING
 }

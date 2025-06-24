@@ -45,7 +45,7 @@ public class GameContentManager {
 		this.dialogueManager = new DialogueManager();
 		this.mapManager = new MapManager();
 		this.npcManager = new NPCManager();
-		this.player = new Player(10, 14, keyHandler);
+		this.player = new Player(10, 11, keyHandler);
 		this.cameraManager = new CameraManager(player);
 		this.flagManager = new FlagManager();
 		this.playerDeckManager = new PlayerDeckManager();

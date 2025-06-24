@@ -9,8 +9,9 @@ import java.util.List;
 import main.Constants;
 import static main.Constants.*;
 import tile.CollisionChecker;
+import tile.CollisionTypes;
 import tile.MapManager;
-import tile.TileGrass;
+import tile.Tile;
 import tile.TileManager;
 
 public abstract class Human extends Entity {
@@ -26,6 +27,11 @@ public abstract class Human extends Entity {
 	private final CollisionChecker collisionChecker = new CollisionChecker();
 
 	private final AnimationManager grassAnimationManager;
+	
+	private int jumpCounter = 0;
+	private static final int JUMP_DURATION = 24;
+	private double jumpStartX, jumpStartY;
+	private double jumpTargetX, jumpTargetY;
 
 	public Human(int positionX, int positionY) {
 
@@ -92,13 +98,14 @@ public abstract class Human extends Entity {
 		int checkX = getMapX() + currentDirection.getX();
 		int checkY = getMapY() + currentDirection.getY();
 
-		boolean tileResult = collisionChecker.checkCollision(checkX, checkY, mapManager);
+		CollisionTypes tileResult = collisionChecker.checkCollision(checkX, checkY, mapManager, currentDirection);
 		boolean humanResult = humans.stream()
 				.allMatch(human -> (human.getMapX() != checkX) || (human.getMapY() != checkY));
-		boolean result = tileResult && humanResult;
 
-		if (!result) setIdleWalking();
-		return result;
+		if(humanResult) setIdleWalking();
+		if (tileResult == CollisionTypes.BLOCKED) setIdleWalking();
+		if(tileResult == CollisionTypes.CAN_JUMP) setJumping();
+		return tileResult == CollisionTypes.WALKABLE;
 	}
 
 	public void setIdle() {
@@ -117,6 +124,16 @@ public abstract class Human extends Entity {
 	public void setIdleWalking() {
 		idleWalkingCounter = 18;
 		currentMovementState = MovementStates.IDLE_WALKING;
+	}
+	
+	public void setJumping() {
+		jumpCounter = 0;
+		jumpStartX = x;
+		jumpStartY = y;
+		jumpTargetX = x + ORIGINAL_TILE_SIZE * currentDirection.getX() * 2;
+		jumpTargetY = y + ORIGINAL_TILE_SIZE * currentDirection.getY() * 2;
+		currentMovementState = MovementStates.JUMPING;
+		SoundManager.getSfxplayer().playSE("PlayerJump");
 	}
 
 	protected abstract void handleIdle(List<Entity> humans, MapManager mapManager);
@@ -141,6 +158,25 @@ public abstract class Human extends Entity {
 
 		updateAnimation();
 	}
+	
+	private void handleJumping() {
+		jumpCounter++;
+		double progress = (double) jumpCounter / JUMP_DURATION;
+			
+		double heightMultiplier = 32.0 * progress * (1.0 - progress);
+		
+		x = jumpStartX + (jumpTargetX - jumpStartX) * progress;
+		y = jumpStartY + (jumpTargetY - jumpStartY) * progress - heightMultiplier;
+		
+		if (jumpCounter >= JUMP_DURATION) {
+			x = jumpTargetX;
+			y = jumpTargetY;
+			setTarget((int) x, (int) y);
+			setIdle();
+		}
+		
+		updateAnimation();
+	}
 
 	public boolean isIdle() { return currentMovementState == MovementStates.IDLE; }
 
@@ -151,6 +187,7 @@ public abstract class Human extends Entity {
 			case IDLE -> handleIdle(humans, mapManager);
 			case MOVING -> handleMoving();
 			case IDLE_WALKING -> handleIdleWalking();
+			case JUMPING -> handleJumping();
 		}
 
 		boolean isPlayer = this instanceof Player;
@@ -175,6 +212,7 @@ public abstract class Human extends Entity {
 			case IDLE -> handleIdle(humans, mapManager);
 			case MOVING -> handleMoving();
 			case IDLE_WALKING -> handleIdleWalking();
+			case JUMPING -> handleJumping();
 		}
 
 		boolean isOnGrass = isOnGrass(mapManager);
@@ -214,8 +252,10 @@ public abstract class Human extends Entity {
 
 	private boolean isOnGrass(MapManager mapManager) {
 		TileManager decorationLayer = mapManager.getCurrentLayers()[1];
-		boolean humanOnGrass = decorationLayer.getTile(getMapX(), getMapY()) instanceof TileGrass;
-		boolean targetOnGrass = decorationLayer.getTile(targetX/ORIGINAL_TILE_SIZE, targetY/ORIGINAL_TILE_SIZE) instanceof TileGrass;
+		Tile humanTile = decorationLayer.getTile(getMapX(), getMapY());
+		Tile targetTile = decorationLayer.getTile(targetX/ORIGINAL_TILE_SIZE, targetY/ORIGINAL_TILE_SIZE);
+		boolean humanOnGrass = humanTile != null && humanTile.isGrass();
+		boolean targetOnGrass = targetTile != null && targetTile.isGrass();
 		return humanOnGrass && targetOnGrass;
 	}
 }

@@ -38,7 +38,7 @@ public class DialogueManager {
 				new DialogueOption("I'm just looking around", endDialogue)
 		});
 
-		dialogues.put(getDialogueKey(4, 4, FacingDirections.UP, "outside"), mainDialogue);
+		dialogues.put(getDialogueKey(4, 4, FacingDirections.UP, "porbital_town"), mainDialogue);
 	}
 
 	private String getDialogueKey(int x, int y, FacingDirections facingDirections, String map) {

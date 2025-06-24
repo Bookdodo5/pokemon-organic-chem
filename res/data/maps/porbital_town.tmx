@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="52" height="36" tilewidth="32" tileheight="32" infinite="0" nextlayerid="6" nextobjectid="1">
- <tileset firstgid="1" source="Outside.tsx"/>
+ <tileset firstgid="1" source="essentials.tsx"/>
  <layer id="1" name="ground" width="52" height="36">
   <data encoding="csv">
 797,797,797,791,797,792,797,797,797,797,797,6,3,4,4,5,2,3,4,5,2,3,4,5,2,3,4,5,2,3,4,5,2,3,4,5,2,3,4,5,2,3,4,5,2,3,4,5,2,3,4,5,

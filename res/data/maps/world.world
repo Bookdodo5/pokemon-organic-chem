@@ -1,0 +1,174 @@
+{
+    "maps": [
+        {
+            "fileName": "porbital_town.tmx",
+            "height": 1152,
+            "width": 1664,
+            "x": 0,
+            "y": 0
+        },
+        {
+            "fileName": "route1.tmx",
+            "height": 2176,
+            "width": 896,
+            "x": 1664,
+            "y": -1024
+        },
+        {
+            "fileName": "methanopolis.tmx",
+            "height": 1792,
+            "width": 1792,
+            "x": 1344,
+            "y": -2816
+        },
+        {
+            "fileName": "route2.tmx",
+            "height": 1024,
+            "width": 2304,
+            "x": 3136,
+            "y": -2496
+        },
+        {
+            "fileName": "hallogue_town.tmx",
+            "height": 1024,
+            "width": 1024,
+            "x": 5440,
+            "y": -2496
+        },
+        {
+            "fileName": "route3.tmx",
+            "height": 2304,
+            "width": 1024,
+            "x": 1344,
+            "y": -5120
+        },
+        {
+            "fileName": "pyrrole_town.tmx",
+            "height": 1280,
+            "width": 1280,
+            "x": 64,
+            "y": -5728
+        },
+        {
+            "fileName": "alkenystra.tmx",
+            "height": 2048,
+            "width": 2048,
+            "x": -4032,
+            "y": -5920
+        },
+        {
+            "fileName": "cyclenchyma.tmx",
+            "height": 2048,
+            "width": 2048,
+            "x": -4112,
+            "y": -1840
+        },
+        {
+            "fileName": "hydroziva.tmx",
+            "height": 2048,
+            "width": 2048,
+            "x": -7776,
+            "y": -8032
+        },
+        {
+            "fileName": "incisiona.tmx",
+            "height": 1536,
+            "width": 1536,
+            "x": -7440,
+            "y": -112
+        },
+        {
+            "fileName": "tresyneca.tmx",
+            "height": 2048,
+            "width": 2048,
+            "x": -10992,
+            "y": -2384
+        },
+        {
+            "fileName": "x-liminera.tmx",
+            "height": 1536,
+            "width": 1536,
+            "x": -10960,
+            "y": -5712
+        },
+        {
+            "fileName": "azo_village.tmx",
+            "height": 1280,
+            "width": 1536,
+            "x": -14224,
+            "y": -240
+        },
+        {
+            "fileName": "saponis_anomalocaris.tmx",
+            "height": 1536,
+            "width": 2048,
+            "x": -8080,
+            "y": 3184
+        },
+        {
+            "fileName": "fisher_fjord.tmx",
+            "height": 2048,
+            "width": 1792,
+            "x": -4672,
+            "y": 5248
+        },
+        {
+            "fileName": "port_oxton.tmx",
+            "height": 2048,
+            "width": 1792,
+            "x": -1872,
+            "y": 3056
+        },
+        {
+            "fileName": "oxidation_observatory.tmx",
+            "height": 1536,
+            "width": 1536,
+            "x": 1840,
+            "y": 2736
+        },
+        {
+            "fileName": "the_crucible.tmx",
+            "height": 1536,
+            "width": 1280,
+            "x": 656,
+            "y": 6096
+        },
+        {
+            "fileName": "phenol_falls.tmx",
+            "height": 1536,
+            "width": 2048,
+            "x": -7856,
+            "y": -11440
+        },
+        {
+            "fileName": "harmony_complex.tmx",
+            "height": 1536,
+            "width": 1536,
+            "x": -11056,
+            "y": -13072
+        },
+        {
+            "fileName": "the_six_rings.tmx",
+            "height": 2048,
+            "width": 1792,
+            "x": -11280,
+            "y": -16496
+        },
+        {
+            "fileName": "polymer_research_institute.tmx",
+            "height": 1536,
+            "width": 3072,
+            "x": -8112,
+            "y": -18256
+        },
+        {
+            "fileName": "nose_town.tmx",
+            "height": 1536,
+            "width": 1792,
+            "x": -13424,
+            "y": -19984
+        }
+    ],
+    "onlyShowAdjacentMaps": false,
+    "type": "world"
+}

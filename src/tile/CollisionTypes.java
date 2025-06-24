@@ -1,7 +1,8 @@
 package tile;
 
-public enum CollisionType {
+public enum CollisionTypes {
     WALKABLE,
+    CAN_JUMP,
     BLOCKED,
     CLIFF_N,
     CLIFF_S,

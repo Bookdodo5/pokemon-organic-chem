@@ -8,6 +8,7 @@ import sys
 import os
 import xml.etree.ElementTree as ET
 from pathlib import Path
+import glob
 
 def convert_tmx(tmx_file, output_dir):
     """Convert TMX file to individual layer text files"""
@@ -82,23 +83,94 @@ def process_csv_data(csv_data, layer_name, output_path, width, height):
     except Exception as e:
         print(f"Error writing file {output_file}: {e}")
 
+def convert_all_tmx_files():
+    """Convert all TMX files in the res/data/maps directory"""
+    
+    # Get the path to the maps directory
+    script_dir = Path(__file__).parent
+    maps_dir = script_dir.parent / "res" / "data" / "maps"
+    
+    if not maps_dir.exists():
+        print(f"Error: Maps directory not found at {maps_dir}")
+        return False
+    
+    # Find all TMX files
+    tmx_files = list(maps_dir.glob("*.tmx"))
+    
+    if not tmx_files:
+        print("No TMX files found in the maps directory")
+        return False
+    
+    print(f"Found {len(tmx_files)} TMX files to convert:")
+    for tmx_file in tmx_files:
+        print(f"  - {tmx_file.name}")
+    
+    print("\nStarting conversion...")
+    
+    success_count = 0
+    failed_count = 0
+    
+    for tmx_file in tmx_files:
+        # Generate output directory name from TMX filename
+        # Remove .tmx extension and convert to lowercase
+        output_dir_name = tmx_file.stem.lower()
+        
+        # Handle special cases for naming consistency
+        if output_dir_name == "porbital_town":
+            output_dir_name = "porbitalTown"
+        elif output_dir_name == "hallogue_town":
+            output_dir_name = "hallogue_town"  # Keep as is
+        elif output_dir_name == "pyrrole_town":
+            output_dir_name = "pyrrole_town"   # Keep as is
+        elif output_dir_name.startswith("route"):
+            output_dir_name = output_dir_name  # Keep as is
+        
+        output_dir = maps_dir / output_dir_name
+        
+        print(f"\n--- Converting {tmx_file.name} to {output_dir.name} ---")
+        
+        if convert_tmx(tmx_file, output_dir):
+            success_count += 1
+            print(f"✓ Successfully converted {tmx_file.name}")
+        else:
+            failed_count += 1
+            print(f"✗ Failed to convert {tmx_file.name}")
+    
+    print(f"\n=== Conversion Summary ===")
+    print(f"Successfully converted: {success_count} files")
+    print(f"Failed conversions: {failed_count} files")
+    print(f"Total files processed: {len(tmx_files)}")
+    
+    return failed_count == 0
+
 def main():
-    if len(sys.argv) != 3:
-        print("Usage: python tmx_converter.py <input.tmx> <output_directory>")
-        print("Example: python tmx_converter.py ../res/data/maps/porbital_town.tmx ../res/data/maps/porbitalTown")
-        sys.exit(1)
-    
-    input_file = sys.argv[1]
-    output_dir = sys.argv[2]
-    
-    if not os.path.exists(input_file):
-        print(f"Error: Input file '{input_file}' does not exist")
-        sys.exit(1)
-    
-    if convert_tmx(input_file, output_dir):
-        print("Conversion completed successfully!")
+    if len(sys.argv) == 2 and sys.argv[1] == "--all":
+        # Convert all TMX files
+        if convert_all_tmx_files():
+            print("\nAll conversions completed successfully!")
+        else:
+            print("\nSome conversions failed!")
+            sys.exit(1)
+    elif len(sys.argv) == 3:
+        # Convert single TMX file
+        input_file = sys.argv[1]
+        output_dir = sys.argv[2]
+        
+        if not os.path.exists(input_file):
+            print(f"Error: Input file '{input_file}' does not exist")
+            sys.exit(1)
+        
+        if convert_tmx(input_file, output_dir):
+            print("Conversion completed successfully!")
+        else:
+            print("Conversion failed!")
+            sys.exit(1)
     else:
-        print("Conversion failed!")
+        print("Usage: python tmx_converter.py <input.tmx> <output_directory>")
+        print("   OR: python tmx_converter.py --all")
+        print("\nExamples:")
+        print("  python tmx_converter.py ../res/data/maps/porbital_town.tmx ../res/data/maps/porbitalTown")
+        print("  python tmx_converter.py --all")
         sys.exit(1)
 
 if __name__ == "__main__":
