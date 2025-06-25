@@ -55,10 +55,14 @@ public class OverworldState extends GameState {
 
 		if (mapTransition != null && player.isIdle()) {
 			String currentMusic = mapManager.getCurrentMusic();
-			stateManager.transitionToState(GameStates.OVERWORLD, true, currentMusic, () -> {
+			String nextMap = mapTransition.getMapTo();
+			MapData nextMapData = mapManager.getMap(mapTransition.getMapTo());
+			String nextMusic = nextMapData != null ? nextMapData.getMusic() : "";
+			boolean shouldFadeMusic = !currentMusic.equals(nextMusic);
+			
+			stateManager.transitionToState(GameStates.OVERWORLD, shouldFadeMusic, currentMusic, () -> {
 				int toX = mapTransition.getToX();
 				int toY = mapTransition.getToY();
-				String nextMap = mapTransition.getMapTo();
 				setMap(toX, toY, nextMap);
 				update();
 			});

@@ -6,7 +6,7 @@ import static main.Constants.*;
 import menu.Settings;
 
 public class TransitionManager {
-	private final double TRANSITION_TIME = 1.0;
+	private final double TRANSITION_TIME = 0.5;
 	private final Color transitionColor = Color.BLACK;
 	private double alpha = 0;
 	private double alphaStart = 0;

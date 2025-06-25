@@ -9,6 +9,7 @@ import os
 import xml.etree.ElementTree as ET
 from pathlib import Path
 import glob
+import re
 
 def convert_tmx(tmx_file, output_dir):
     """Convert TMX file to individual layer text files"""
@@ -61,8 +62,10 @@ def process_csv_data(csv_data, layer_name, output_path, width, height):
     # Clean up CSV data and split by commas
     values = [val.strip() for val in csv_data.replace('\n', '').replace(' ', '').split(',') if val.strip()]
     
-    # Create output file
-    output_file = output_path / f"{layer_name}.txt"
+    # Create output file with consistent naming
+    # Use title case for layer names to match existing conventions
+    layer_filename = layer_name.title() + ".txt"
+    output_file = output_path / layer_filename
     
     try:
         with open(output_file, 'w') as f:
@@ -82,6 +85,22 @@ def process_csv_data(csv_data, layer_name, output_path, width, height):
         
     except Exception as e:
         print(f"Error writing file {output_file}: {e}")
+
+def normalize_directory_name(tmx_filename):
+    """
+    Convert all directory names to snake_case for consistency.
+    """
+    base_name = tmx_filename.stem
+    
+    # If it's already snake_case, return as is
+    if '_' in base_name or base_name.islower():
+        return base_name
+    
+    # Convert camelCase to snake_case
+    # This handles cases like 'methanopolis' -> 'methanopolis' (already snake_case)
+    # and 'porbitalTown' -> 'porbital_town'
+    snake_case = re.sub(r'([a-z])([A-Z])', r'\1_\2', base_name).lower()
+    return snake_case
 
 def convert_all_tmx_files():
     """Convert all TMX files in the res/data/maps directory"""
@@ -111,20 +130,8 @@ def convert_all_tmx_files():
     failed_count = 0
     
     for tmx_file in tmx_files:
-        # Generate output directory name from TMX filename
-        # Remove .tmx extension and convert to lowercase
-        output_dir_name = tmx_file.stem.lower()
-        
-        # Handle special cases for naming consistency
-        if output_dir_name == "porbital_town":
-            output_dir_name = "porbitalTown"
-        elif output_dir_name == "hallogue_town":
-            output_dir_name = "hallogue_town"  # Keep as is
-        elif output_dir_name == "pyrrole_town":
-            output_dir_name = "pyrrole_town"   # Keep as is
-        elif output_dir_name.startswith("route"):
-            output_dir_name = output_dir_name  # Keep as is
-        
+        # Generate output directory name using the normalization function
+        output_dir_name = normalize_directory_name(tmx_file)
         output_dir = maps_dir / output_dir_name
         
         print(f"\n--- Converting {tmx_file.name} to {output_dir.name} ---")
@@ -169,7 +176,7 @@ def main():
         print("Usage: python tmx_converter.py <input.tmx> <output_directory>")
         print("   OR: python tmx_converter.py --all")
         print("\nExamples:")
-        print("  python tmx_converter.py ../res/data/maps/porbital_town.tmx ../res/data/maps/porbitalTown")
+        print("  python tmx_converter.py ../res/data/maps/porbital_town.tmx ../res/data/maps/porbital_town")
         print("  python tmx_converter.py --all")
         sys.exit(1)
 

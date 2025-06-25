@@ -1,7 +1,12 @@
 {
-    "activeFile": "",
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "route2.tmx",
     "automapping.whileDrawing": true,
     "expandedProjectPaths": [
+        "."
     ],
     "fileStates": {
         ":/automap-tiles.tsx": {
@@ -15,8 +20,8 @@
             "scale": 0.25,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 16982,
-                "y": -1234
+                "x": 902,
+                "y": 634
             }
         },
         "essentials.tsx": {
@@ -24,18 +29,18 @@
             "scaleInEditor": 1
         },
         "hallogue_town.tmx": {
-            "scale": 0.5,
-            "selectedLayer": 3,
+            "scale": 0.0625,
+            "selectedLayer": 1,
             "viewCenter": {
-                "x": 233,
-                "y": 625
+                "x": 512,
+                "y": 504
             }
         },
         "harmony_complex.tmx": {
             "scale": 0.5430338541666667,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 768.8286776165928,
+                "x": 768.8286776165926,
                 "y": 768.8286776165927
             }
         },
@@ -43,72 +48,396 @@
             "scale": 0.40727539062499996,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 1025.1049034887906,
-                "y": 1025.1049034887903
+                "x": 1022.6495624025896,
+                "y": 1022.6495624025897
             }
         },
         "incisiona.tmx": {
             "scale": 0.5430338541666667,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 768.8286776165928,
+                "x": 768.8286776165926,
                 "y": 768.8286776165927
             }
         },
+        "interiors.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1.5
+        },
         "methanopolis.tmx": {
-            "scale": 0.5,
+            "scale": 3,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 2487,
-                "y": 1027
+                "x": 558.6666666666666,
+                "y": 705.5
+            }
+        },
+        "methanopolis__apartment1_f1.tmx": {
+            "scale": 2,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 224,
+                "y": 176
+            }
+        },
+        "methanopolis__apartment1_f2.tmx": {
+            "scale": 2.172135416666667,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 224.203332933701,
+                "y": 175.8638052991248
+            }
+        },
+        "methanopolis__apartment1_f3.tmx": {
+            "scale": 2,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 224,
+                "y": 176
+            }
+        },
+        "methanopolis__apartment2_f1.tmx": {
+            "scale": 2.172135416666667,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 224.203332933701,
+                "y": 175.8638052991248
+            }
+        },
+        "methanopolis__apartment2_f2.tmx": {
+            "scale": 2.172135416666667,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 224.203332933701,
+                "y": 175.8638052991248
+            }
+        },
+        "methanopolis__apartment2_f3.tmx": {
+            "scale": 2.172135416666667,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 224.203332933701,
+                "y": 175.8638052991248
+            }
+        },
+        "methanopolis__apartment2_f4.tmx": {
+            "scale": 2.3696022727272723,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 224.08823882028537,
+                "y": 175.9788994125405
+            }
+        },
+        "methanopolis__apartment2_f5.tmx": {
+            "scale": 2.3696022727272723,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 224.08823882028537,
+                "y": 175.9788994125405
+            }
+        },
+        "methanopolis__botanist.tmx": {
+            "scale": 2,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 224,
+                "y": 192
+            }
+        },
+        "methanopolis__house1.tmx": {
+            "scale": 2,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 224,
+                "y": 192
+            }
+        },
+        "methanopolis__house2.tmx": {
+            "scale": 2.172135416666667,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 226.50521520201409,
+                "y": 192.20716940414817
+            }
+        },
+        "methanopolis__pokecenter.tmx": {
+            "scale": 2,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 262.5,
+                "y": 204.25
+            }
+        },
+        "methanopolis__pokecenter_f1.tmx": {
+            "scale": 2.172135416666667,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 271.8522958877832,
+                "y": 191.97698117731687
+            }
+        },
+        "methanopolis__pokecenter_f2.tmx": {
+            "scale": 2.172135416666667,
+            "selectedLayer": 3,
+            "viewCenter": {
+                "x": 271.8522958877832,
+                "y": 191.97698117731687
+            }
+        },
+        "methanopolis__pokemart.tmx": {
+            "scale": 1.5,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 490.66666666666663,
+                "y": 281.6666666666667
+            }
+        },
+        "methanopolis__townhall_f1 - Copy.tmx": {
+            "scale": 2.172135416666667,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 272.0824841146145,
+                "y": 192.20716940414817
+            }
+        },
+        "methanopolis__townhall_f1.tmx": {
+            "scale": 2,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 242,
+                "y": 178.75
+            }
+        },
+        "methanopolis__townhall_f2.tmx": {
+            "scale": 2.172135416666667,
+            "selectedLayer": 3,
+            "viewCenter": {
+                "x": 226.9655916556768,
+                "y": 192.20716940414817
+            }
+        },
+        "methanopolis__workshop1.tmx": {
+            "scale": 2,
+            "selectedLayer": 3,
+            "viewCenter": {
+                "x": 320,
+                "y": 159.75
+            }
+        },
+        "methanopolis__workshop2.tmx": {
+            "scale": 2,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 192,
+                "y": 159.75
+            }
+        },
+        "methanopolis__workshop3.tmx": {
+            "scale": 1.972734375,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 319.8605995802147,
+                "y": 159.93029979010734
+            }
+        },
+        "methanopolis__workshop4.tmx": {
+            "scale": 1.972734375,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 319.8605995802147,
+                "y": 159.93029979010734
             }
         },
         "phenol_falls.tmx": {
             "scale": 0.75,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 9887.333333333332,
-                "y": 9824.666666666666
+                "x": 1024.6666666666667,
+                "y": 768.6666666666665
+            }
+        },
+        "pokecenters.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "pokemarts.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "porbital_town.tmx": {
+            "scale": 1,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 866,
+                "y": 576
+            }
+        },
+        "porbital_town__house1_f1.tmx": {
+            "scale": 2.172135416666667,
+            "selectedLayer": 3,
+            "viewCenter": {
+                "x": 226.9655916556768,
+                "y": 192.20716940414817
+            }
+        },
+        "porbital_town__house1_f2.tmx": {
+            "scale": 2.172135416666667,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 224.203332933701,
+                "y": 191.97698117731687
+            }
+        },
+        "porbital_town__house2_f1.tmx": {
+            "scale": 2.172135416666667,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 224.203332933701,
+                "y": 191.97698117731687
+            }
+        },
+        "porbital_town__house2_f2.tmx": {
+            "scale": 2.172135416666667,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 224.203332933701,
+                "y": 191.97698117731687
+            }
+        },
+        "porbital_town__room.tmx": {
+            "scale": 2.172135416666667,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 224.203332933701,
+                "y": 191.97698117731687
+            }
+        },
+        "porbital_town__townhall.tmx": {
+            "scale": 2.172135416666667,
+            "selectedLayer": 3,
+            "viewCenter": {
+                "x": 239.8561323582304,
+                "y": 191.97698117731687
+            }
+        },
+        "porbital_town__workspace.tmx": {
+            "scale": 2.1737847222222224,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 287.976998642281,
+                "y": 159.85943614727256
+            }
+        },
+        "porbital_town_house1.tmx": {
+            "scale": 2,
+            "selectedLayer": 3,
+            "viewCenter": {
+                "x": 198.75,
+                "y": 226.75
+            }
+        },
+        "porbital_town_house2_bottom.tmx": {
+            "scale": 1.5,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 101.66666666666663,
+                "y": 179.66666666666669
+            }
+        },
+        "porbital_town_house2_top.tmx": {
+            "scale": 2,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 158.25,
+                "y": 174.25
+            }
+        },
+        "porbital_town_house3.tmx": {
+            "scale": 2.172135416666667,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 223.97314470686968,
+                "y": 182.3090756504016
+            }
+        },
+        "porbital_town_house3_bottom.tmx": {
+            "scale": 2,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 178.75,
+                "y": 202.25
+            }
+        },
+        "porbital_town_house3_top.tmx": {
+            "scale": 2.172135416666667,
+            "selectedLayer": 3,
+            "viewCenter": {
+                "x": 224.89389761419494,
+                "y": 192.20716940414817
+            }
+        },
+        "porbital_town_house4.tmx": {
+            "scale": 2.172135416666667,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 224.89389761419494,
+                "y": 192.20716940414817
+            }
+        },
+        "porbital_town_house5.tmx": {
+            "scale": 2,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 206.75,
+                "y": 232.25
+            }
+        },
+        "port_oxton.tmx": {
+            "scale": 0.3873291015625,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 897.1698707847463,
+                "y": 1080.4765206429245
             }
         },
         "pyrrole_town.tmx": {
-            "scale": 0.5,
-            "selectedLayer": 0,
-            "viewCenter": {
-                "x": 985,
-                "y": 767
-            }
-        },
-        "route1.tmx": {
-            "scale": 1,
-            "selectedLayer": 3,
-            "viewCenter": {
-                "x": 486.5,
-                "y": -58.5
-            }
-        },
-        "route2.tmx": {
             "scale": 0.33,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 1125.757575757576,
-                "y": 565.1515151515151
+                "x": 639.3939393939393,
+                "y": 640.9090909090909
+            }
+        },
+        "route1.tmx": {
+            "scale": 0.5,
+            "selectedLayer": 3,
+            "viewCenter": {
+                "x": 448,
+                "y": 1089
+            }
+        },
+        "route2.tmx": {
+            "scale": 0.25,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 1068,
+                "y": 606
             }
         },
         "route3.tmx": {
             "scale": 0.33,
-            "selectedLayer": 2,
+            "selectedLayer": 1,
             "viewCenter": {
-                "x": 2907.5757575757575,
-                "y": 3822.7272727272725
+                "x": 512.1212121212122,
+                "y": 1153.030303030303
             }
         },
         "tree-rule.tmx": {
-            "scale": 0.8145507812499999,
-            "selectedLayer": 0,
+            "scale": 1.5,
+            "selectedLayer": 1,
             "viewCenter": {
-                "x": 512.5524517443953,
-                "y": 512.5524517443952
+                "x": 447,
+                "y": 512
             }
         },
         "tresyneca.tmx": {
@@ -125,17 +454,64 @@
     "loadedWorlds": [
         "C:/Users/PC/OneDrive/Documents/code/java/PokemonOrganicChem/res/data/maps/world.world"
     ],
+    "map.height": 10,
+    "map.lastUsedFormat": "tmx",
+    "map.width": 12,
     "openFiles": [
+        "porbital_town.tmx",
+        "methanopolis.tmx",
+        "porbital_town__room.tmx",
+        "porbital_town__house1_f1.tmx",
+        "porbital_town__house1_f2.tmx",
+        "porbital_town__house2_f1.tmx",
+        "porbital_town__house2_f2.tmx",
+        "porbital_town__townhall.tmx",
+        "porbital_town__workspace.tmx",
+        "methanopolis__apartment1_f1.tmx",
+        "methanopolis__apartment1_f2.tmx",
+        "methanopolis__apartment1_f3.tmx",
+        "methanopolis__apartment2_f1.tmx",
+        "methanopolis__apartment2_f2.tmx",
+        "methanopolis__apartment2_f3.tmx",
+        "methanopolis__apartment2_f4.tmx",
+        "methanopolis__apartment2_f5.tmx",
+        "methanopolis__botanist.tmx",
+        "methanopolis__house1.tmx",
+        "methanopolis__house2.tmx",
+        "pokecenters.tsx",
+        "pokemarts.tsx",
+        "tree-rule.tmx",
+        "methanopolis__pokecenter_f1.tmx",
+        "methanopolis__pokecenter_f2.tmx",
+        "methanopolis__pokemart.tmx",
+        "methanopolis__townhall_f1 - Copy.tmx",
+        "methanopolis__townhall_f1.tmx",
+        "methanopolis__townhall_f2.tmx",
+        "methanopolis__workshop1.tmx",
+        "interiors.tsx",
+        "methanopolis__workshop2.tmx",
+        "methanopolis__workshop3.tmx",
+        "methanopolis__workshop4.tmx",
+        "route1.tmx",
+        "route3.tmx",
+        "pyrrole_town.tmx",
+        "route2.tmx",
+        "hallogue_town.tmx"
     ],
     "project": "AtomiaRegion.tiled-project",
     "recentFiles": [
-        "tree-rule.tmx",
+        "porbital_town.tmx",
         "methanopolis.tmx",
-        "azo_village.tmx",
-        "tresyneca.tmx",
-        "phenol_falls.tmx",
-        "route1.tmx",
-        "essentials.tsx",
-        "Outside.tsx"
-    ]
+        "porbital_town__room.tmx",
+        "porbital_town__house1_f1.tmx",
+        "porbital_town__house1_f2.tmx",
+        "porbital_town__house2_f1.tmx",
+        "porbital_town__house2_f2.tmx",
+        "porbital_town__townhall.tmx",
+        "porbital_town__workspace.tmx",
+        "methanopolis__apartment1_f1.tmx",
+        "methanopolis__apartment1_f2.tmx",
+        "methanopolis__apartment1_f3.tmx"
+    ],
+    "tileset.lastUsedFormat": "tsx"
 }

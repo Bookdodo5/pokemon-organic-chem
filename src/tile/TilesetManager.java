@@ -67,13 +67,14 @@ public class TilesetManager {
 		for (int y = 0; y < tilesPerCol; y++) {
 			for (int x = 0; x < tilesPerRow; x++) {
 				int tileID = y * tilesPerRow + x;
-
+				String tileKey = tilesetName + "_" + tileID;
+				
 				if (tileID == 0) {
 					tiles[tileID] = new Tile(null, tileID);
+					tiles[tileID].addCollisionType(CollisionTypes.WALKABLE);
 					continue;
 				}
 				
-				String tileKey = tilesetName + "_" + tileID;
 				BufferedImage tileImage = AssetManager.getSprite(spriteSheet, x * ORIGINAL_TILE_SIZE,
 						y * ORIGINAL_TILE_SIZE, ORIGINAL_TILE_SIZE, ORIGINAL_TILE_SIZE);
 				
@@ -82,9 +83,9 @@ public class TilesetManager {
 					tileImage = AssetManager.loadImage(animatedTilePath[0]);
 					int totalFrame = Integer.parseInt(animatedTilePath[1]);
 					tiles[tileID] = new TileAnimated(tileImage, tileID, totalFrame);
-					continue;
+				} else {
+					tiles[tileID] = new Tile(tileImage, tileID);
 				}
-				tiles[tileID] = new Tile(tileImage, tileID);
 
 				if (GRASS_TILE_PATHS.contains(tileKey)) {
 					tiles[tileID].setIsGrass(true);

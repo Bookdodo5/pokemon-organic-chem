@@ -8,6 +8,7 @@ import java.util.Set;
 import static main.Constants.MAX_SCREEN_COL;
 import static main.Constants.MAX_SCREEN_ROW;
 import static main.Constants.ORIGINAL_TILE_SIZE;
+import main.D;
 
 public class MapManager {
 
@@ -18,178 +19,38 @@ public class MapManager {
     private final Object visibleMapsLock = new Object();
 
     public MapManager() {
+        D.d("Creating MapManager...");
         maps = new HashMap<>();
         transitions = new HashMap<>();
         visibleMaps = new HashSet<>();
 
-        // Starting towns and routes
-        initializeMap(
-            "porbitalTown", 
-            "essentials", 
-            "Motorcycle", 
-            0, 0
-        );
-        initializeMap(
-            "route1",
-            "essentials",
-            "Bicycle",
-            1664, -1024
-        );
-        initializeMap(
-            "methanopolis",
-            "essentials",
-            "BattleTrainer",
-            1344, -2816
-        );
-        initializeMap(
-            "route2",
-            "essentials",
-            "Bicycle",
-            3136, -2496
-        );
-        initializeMap(
-            "hallogue_town",
-            "essentials",
-            "Motorcycle",
-            5440, -2496
-        );
-        initializeMap(
-            "route3",
-            "essentials",
-            "Bicycle",
-            1344, -5120
-        );
-        initializeMap(
-            "pyrrole_town",
-            "essentials",
-            "Motorcycle",
-            64, -5728
-        );
-        
-        /* Major cities and locations
-        initializeMap(
-            "alkenystra",
-            "essentials",
-            "BattleGymLeader",
-            -4032, -5920
-        );
-        initializeMap(
-            "cyclenchyma",
-            "essentials",
-            "BattleGymLeader",
-            -4112, -1840
-        );
-        initializeMap(
-            "hydroziva",
-            "essentials",
-            "BattleGymLeader",
-            -7776, -8032
-        );
-        initializeMap(
-            "incisiona",
-            "essentials",
-            "BattleTrainer",
-            -7440, -112
-        );
-        initializeMap(
-            "tresyneca",
-            "essentials",
-            "BattleGymLeader",
-            -10992, -2384
-        );
-        initializeMap(
-            "x-liminera",
-            "essentials",
-            "BattleTrainer",
-            -10960, -5712
-        );
-        initializeMap(
-            "azo_village",
-            "essentials",
-            "Motorcycle",
-            -14224, -240
-        );
-        
-        // Coastal and special areas
-        initializeMap(
-            "saponis_anomalocaris",
-            "essentials",
-            "BattleTrainer",
-            -8080, 3184
-        );
-        initializeMap(
-            "fisher_fjord",
-            "essentials",
-            "Bicycle",
-            -4672, 5248
-        );
-        initializeMap(
-            "port_oxton",
-            "essentials",
-            "Motorcycle",
-            -1872, 3056
-        );
-        initializeMap(
-            "oxidation_observatory",
-            "essentials",
-            "BattleTrainer",
-            1840, 2736
-        );
-        initializeMap(
-            "the_crucible",
-            "essentials",
-            "BattleGymLeader",
-            656, 6096
-        );
-        
-        // Northern regions
-        initializeMap(
-            "phenol_falls",
-            "essentials",
-            "Bicycle",
-            -7856, -11440
-        );
-        initializeMap(
-            "harmony_complex",
-            "essentials",
-            "BattleTrainer",
-            -11056, -13072
-        );
-        initializeMap(
-            "the_six_rings",
-            "essentials",
-            "BattleGymLeader",
-            -11280, -16496
-        );
-        initializeMap(
-            "polymer_research_institute",
-            "essentials",
-            "BattleTrainer",
-            -8112, -18256
-        );
-        initializeMap(
-            "nose_town",
-            "essentials",
-            "Motorcycle",
-            -13424, -19984
-        );
-        */
+        initializeAll();
 
-        currentMap = maps.get("methanopolis");
-        initializeTransition(8, 10, "porbitalTown", 9, 9, "route1");
-		updateVisibleMaps(10, 12);
+        currentMap = maps.get("porbital_town__house1_f2");
+        D.d("Initial current map set to:", currentMap != null ? currentMap.getMapName() : "null");
+        updateVisibleMaps(0, 0);
 	}
 
-    private void initializeTransition(int fromX, int fromY, String mapFrom, int toX, int toY, String mapTo) {
-        transitions.put(getTransitionKey(fromX, fromY, mapFrom),
-                new TransitionPoint(fromX, fromY, mapFrom, toX, toY, mapTo));
+    private void initializeAll() {
+        D.d("Initializing all maps and transitions...");
+        MapInitializer.initializeMaps(this);
+        TransitionInitializer.initializeTransitions(this);
+        D.d("Total maps loaded:", maps.size());
+        D.d("Total transitions loaded:", transitions.size());
+    }
+
+    protected void initializeTransition(int x1, int y1, String map1, int x2, int y2, String map2) {
+        String transitionKey = getTransitionKey(x1, y1, map1);
+        D.d("Adding transition:", transitionKey, "->", map2 + "(" + x2 + "," + y2 + ")");
+        transitions.put(transitionKey, new TransitionPoint(x1, y1, map1, x2, y2, map2));
     }
 
     private String getTransitionKey(int x, int y, String mapFrom) {
         return x + " " + y + " " + mapFrom;
     }
 
-    private void initializeMap(String mapName, String tilesetName, String music, int globalX, int globalY) {
+    protected void initializeMap(String mapName, String tilesetName, String music, int globalX, int globalY) {
+        D.d("Initializing map:", mapName, "with tileset:", tilesetName);
         TileManager ground = new TileManager(
             "/data/maps/" + mapName + "/ground.txt", tilesetName
         );
@@ -210,6 +71,7 @@ public class MapManager {
                 ground.getMaxLayerCol(), ground.getMaxLayerRow()
         );
         maps.put(mapName, mapData);
+        D.d("Map initialized successfully:", mapName, "size:", ground.getMaxLayerCol() + "x" + ground.getMaxLayerRow());
     }
 
     public TileManager[] getCurrentLayers() {
@@ -253,10 +115,16 @@ public class MapManager {
     public void setCurrentMap(String newMap) {
         if (maps.containsKey(newMap)) {
             MapData newMapData = maps.get(newMap);
+            String oldMapName = currentMap != null ? currentMap.getMapName() : "null";
+            D.d("Map transition:", oldMapName, "->", newMap, "music:", newMapData.getMusic());
+            
             if(!newMapData.getMusic().equals(currentMap.getMusic())) {
+                D.d("Music change detected, playing:", newMapData.getMusic());
                 SoundManager.getMusicplayer().play(newMapData.getMusic());
             }
             currentMap = newMapData;
+        } else {
+            D.d("WARNING: Attempted to set map to unknown map:", newMap);
         }
     }
 
@@ -289,7 +157,9 @@ public class MapManager {
         if (!transitions.containsKey(transitionKey)) {
             return null;
         }
-        return transitions.get(transitionKey);
+        TransitionPoint transition = transitions.get(transitionKey);
+        D.d("Transition found at", playerX + "," + playerY, "in", getCurrentMapID(), "->", transition.getMapTo());
+        return transition;
     }
 
     public MapData findMap(int globalX, int globalY) {
