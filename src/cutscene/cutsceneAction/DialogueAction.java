@@ -3,6 +3,7 @@ package cutscene.cutsceneAction;
 import assets.SoundManager;
 import cutscene.InputCutsceneAction;
 import dialogue.Dialogue;
+import dialogue.DialogueOption;
 import dialogue.DialogueRenderer;
 import input.KeyBindingHandler;
 import input.Keys;
@@ -79,10 +80,12 @@ public class DialogueAction implements InputCutsceneAction {
 			}
 			case INTERACT -> {
 				if (dialogue.canShowOptions()) {
-					dialogue.resetPage();
-					dialogue.getCurrentOption().execute();
-					setDialogue(dialogue.getCurrentOption().getNextDialogue());
+					DialogueOption option = dialogue.getCurrentOption();
+					Dialogue nextDialogue = option == null ? null : option.getNextDialogue();
+					setDialogue(nextDialogue);
 					dialogueRenderer.setRenderingDialogue(dialogue);
+					if (option != null) option.execute();
+					dialogue.resetPage();
 				}
 				else if (dialogue.isFinalPage()) {
 					dialogue.resetPage();

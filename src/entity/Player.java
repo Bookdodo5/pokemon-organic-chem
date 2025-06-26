@@ -12,10 +12,10 @@ public class Player extends Human {
 
 	private boolean acceptInput;
 
-	public Player(int positionX, int positionY, KeyBindingHandler keyHandler) {
-		super(positionX, positionY);
+	public Player(KeyBindingHandler keyHandler) {
+		super(0, 0);
 		this.keyHandler = keyHandler;
-		this.spriteSheet = AssetManager.loadImage("/player/trainer_SUPERNERD.png");
+		this.spriteSheet = AssetManager.loadImage("/player/trainer_COOL_M.png");
 		this.acceptInput = true;
 	}
 

@@ -1,5 +1,5 @@
 package entity;
 
 public enum AIMode {
-	WANDER, STILL
+	CIRCLE_WANDER, STILL, RECTANGULAR_WANDER, PATH_FOLLOWING
 }

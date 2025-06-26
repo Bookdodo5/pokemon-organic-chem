@@ -3,7 +3,6 @@ package main;
 import battle.BattleDataManager;
 import battle.molecules.Molecule;
 import cutscene.CutsceneManager;
-import dialogue.DialogueManager;
 import entity.NPCManager;
 import entity.Player;
 import gamestates.CameraManager;
@@ -11,6 +10,7 @@ import gamestates.FlagManager;
 import gamestates.GameStates;
 import gamestates.StateManager;
 import gamestates.states.BattleState;
+import gamestates.states.CreditState;
 import gamestates.states.CutsceneState;
 import gamestates.states.OverworldState;
 import gamestates.states.PausingState;
@@ -24,7 +24,6 @@ import pokedex.ReactionRecord;
 import tile.MapManager;
 
 public class GameContentManager {
-	private final DialogueManager dialogueManager;
 	private final CutsceneManager cutsceneManager;
 	private final MapManager mapManager;
 	private final NPCManager npcManager;
@@ -42,14 +41,13 @@ public class GameContentManager {
 		this.stateManager = new StateManager();
 		this.keyHandler = new KeyBindingHandler(stateManager);
 		
-		this.dialogueManager = new DialogueManager();
-		this.mapManager = new MapManager();
-		this.npcManager = new NPCManager();
-		this.player = new Player(7, 6, keyHandler);
-		this.cameraManager = new CameraManager(player);
 		this.flagManager = new FlagManager();
+		this.npcManager = new NPCManager();
+		this.mapManager = new MapManager();
 		this.playerDeckManager = new PlayerDeckManager();
 		this.battleDataManager = new BattleDataManager();
+		this.player = new Player(keyHandler);
+		this.cameraManager = new CameraManager(player);
 		this.reactionRecord = new ReactionRecord(flagManager);
 		this.moleculeRecord = new MoleculeRecord();
 		Molecule.setReactionAvailabilityManager(reactionRecord);
@@ -62,10 +60,23 @@ public class GameContentManager {
 			stateManager
 			);
 		initializeGameStates();
+		initializePlayerAndMap();
 		
 		this.cutsceneManager.setOverworldState(
 			(OverworldState) StateManager.states.get(GameStates.OVERWORLD)
 		);
+	}
+
+	private void initializePlayerAndMap() {
+		String startingMap = "route1";
+		int startingX = 13;
+		int startingY = 6;
+		
+		player.setMapX(startingX);
+		player.setMapY(startingY);
+		mapManager.setCurrentMap(startingMap);
+		mapManager.updateVisibleMaps(startingX, startingY);
+		cameraManager.update();
 	}
 
 	private void initializeGameStates() {
@@ -76,9 +87,10 @@ public class GameContentManager {
 		StateManager.states.put(GameStates.BATTLE, new BattleState(stateManager, keyHandler, this));
 		StateManager.states.put(GameStates.POKEDEX, new PokedexState(stateManager, keyHandler, this));
 		StateManager.states.put(GameStates.SETTINGS, new SettingsState(stateManager, keyHandler, this));
+		StateManager.states.put(GameStates.CREDIT, new CreditState(stateManager, keyHandler, this));
+		
+		StateManager.states.get(GameStates.TITLE).onEnter(null);
 	}
-
-	public DialogueManager getDialogueManager() { return dialogueManager; }
 
 	public CutsceneManager getCutsceneManager() { return cutsceneManager; }
 

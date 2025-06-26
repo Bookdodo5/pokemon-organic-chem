@@ -99,13 +99,13 @@ public abstract class Human extends Entity {
 		int checkY = getMapY() + currentDirection.getY();
 
 		CollisionTypes tileResult = collisionChecker.checkCollision(checkX, checkY, mapManager, currentDirection);
-		boolean humanResult = humans.stream()
-				.allMatch(human -> (human.getMapX() != checkX) || (human.getMapY() != checkY));
+		boolean humanCollision = humans.stream()
+				.anyMatch(human -> (human.getMapX() == checkX) && (human.getMapY() == checkY));
 
-		if(humanResult) setIdleWalking();
+		if(humanCollision) setIdleWalking();
 		if (tileResult == CollisionTypes.BLOCKED) setIdleWalking();
 		if(tileResult == CollisionTypes.CAN_JUMP) setJumping();
-		return tileResult == CollisionTypes.WALKABLE;
+		return tileResult == CollisionTypes.WALKABLE && !humanCollision;
 	}
 
 	public void setIdle() {

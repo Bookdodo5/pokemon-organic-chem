@@ -60,13 +60,29 @@ public class OverworldState extends GameState {
 			String nextMusic = nextMapData != null ? nextMapData.getMusic() : "";
 			boolean shouldFadeMusic = !currentMusic.equals(nextMusic);
 			
-			stateManager.transitionToState(GameStates.OVERWORLD, shouldFadeMusic, currentMusic, () -> {
-				int toX = mapTransition.getToX();
-				int toY = mapTransition.getToY();
-				setMap(toX, toY, nextMap);
-				update();
-			});
+			int toX = mapTransition.getToX();
+			int toY = mapTransition.getToY();
+
+			if(shouldFadeMusic) {
+				transitionToMap(toX, toY, nextMap, currentMusic);
+			} else {
+				transitionToMap(toX, toY, nextMap);
+			}
 		}
+	}
+
+	public void transitionToMap(int toX, int toY, String nextMap) {
+		stateManager.transitionToState(GameStates.OVERWORLD, false, "", () -> {
+			setMap(toX, toY, nextMap);
+			update();
+		});
+	}
+
+	public void transitionToMap(int toX, int toY, String nextMap, String currentMusic) {
+		stateManager.transitionToState(GameStates.OVERWORLD, true, currentMusic, () -> {
+			setMap(toX, toY, nextMap);
+			update();
+		});
 	}
 
 	public void setMap(int nextX, int nextY, String nextMap) {

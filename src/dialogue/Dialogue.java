@@ -4,20 +4,25 @@ public class Dialogue {
 	private int currentPage;
 	private final String[] pages;
 	private DialogueOption[] options;
-	private boolean hasOptions = false;
 
 	private int selectionIndex = 0;
 
 	public Dialogue(String[] pages) {
-		currentPage = 0;
-		this.pages = pages;
+		this(pages, new DialogueOption[0]);
+	}
+
+	public Dialogue(String page) {
+		this(new String[] { page });
+	}
+
+	public Dialogue(String page, DialogueOption[] options) {
+		this(new String[] { page }, options);
 	}
 
 	public Dialogue(String[] pages, DialogueOption[] options) {
 		currentPage = 0;
 		this.pages = pages;
 		this.options = options;
-		this.hasOptions = true;
 	}
 
 	public String getCurrentPage() {
@@ -28,12 +33,12 @@ public class Dialogue {
 	public int getSelectionIndex() { return selectionIndex; }
 
 	public void nextSelectionIndex() {
-		if (!hasOptions) return;
+		if (!hasOption()) return;
 		selectionIndex = (selectionIndex + 1) % options.length;
 	}
 
 	public void previousSelectionIndex() {
-		if (!hasOptions) return;
+		if (!hasOption()) return;
 		selectionIndex = (selectionIndex + options.length - 1) % options.length;
 	}
 
@@ -41,9 +46,9 @@ public class Dialogue {
 
 	public void nextPage() { currentPage++; }
 
-	public void resetPage() { currentPage = 0; }
+	public void resetPage() { currentPage = 0; selectionIndex = 0; }
 
-	public boolean hasOption() { return hasOptions; }
+	public boolean hasOption() { return options.length > 0; }
 
 	public DialogueOption[] getOptions() { return options; }
 

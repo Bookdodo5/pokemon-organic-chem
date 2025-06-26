@@ -8,9 +8,8 @@ public class NPCManager {
 	
 	public NPCManager() {
 		npcs = new ArrayList<>();
-		npcs.add(new NPC("test", 10, 13, 2, "porbitalTown", "trainer_CAMPER", AIMode.WANDER));
 	}
-	
+
 	public List<NPC> getNPCs() {
 		return npcs;
 	}

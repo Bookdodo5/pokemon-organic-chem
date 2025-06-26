@@ -8,7 +8,6 @@ import java.util.Set;
 import static main.Constants.MAX_SCREEN_COL;
 import static main.Constants.MAX_SCREEN_ROW;
 import static main.Constants.ORIGINAL_TILE_SIZE;
-import main.D;
 
 public class MapManager {
 
@@ -19,29 +18,19 @@ public class MapManager {
     private final Object visibleMapsLock = new Object();
 
     public MapManager() {
-        D.d("Creating MapManager...");
         maps = new HashMap<>();
         transitions = new HashMap<>();
         visibleMaps = new HashSet<>();
-
         initializeAll();
-
-        currentMap = maps.get("porbital_town__house1_f2");
-        D.d("Initial current map set to:", currentMap != null ? currentMap.getMapName() : "null");
-        updateVisibleMaps(0, 0);
 	}
 
     private void initializeAll() {
-        D.d("Initializing all maps and transitions...");
         MapInitializer.initializeMaps(this);
         TransitionInitializer.initializeTransitions(this);
-        D.d("Total maps loaded:", maps.size());
-        D.d("Total transitions loaded:", transitions.size());
     }
 
     protected void initializeTransition(int x1, int y1, String map1, int x2, int y2, String map2) {
         String transitionKey = getTransitionKey(x1, y1, map1);
-        D.d("Adding transition:", transitionKey, "->", map2 + "(" + x2 + "," + y2 + ")");
         transitions.put(transitionKey, new TransitionPoint(x1, y1, map1, x2, y2, map2));
     }
 
@@ -50,7 +39,6 @@ public class MapManager {
     }
 
     protected void initializeMap(String mapName, String tilesetName, String music, int globalX, int globalY) {
-        D.d("Initializing map:", mapName, "with tileset:", tilesetName);
         TileManager ground = new TileManager(
             "/data/maps/" + mapName + "/ground.txt", tilesetName
         );
@@ -71,7 +59,6 @@ public class MapManager {
                 ground.getMaxLayerCol(), ground.getMaxLayerRow()
         );
         maps.put(mapName, mapData);
-        D.d("Map initialized successfully:", mapName, "size:", ground.getMaxLayerCol() + "x" + ground.getMaxLayerRow());
     }
 
     public TileManager[] getCurrentLayers() {
@@ -115,16 +102,12 @@ public class MapManager {
     public void setCurrentMap(String newMap) {
         if (maps.containsKey(newMap)) {
             MapData newMapData = maps.get(newMap);
-            String oldMapName = currentMap != null ? currentMap.getMapName() : "null";
-            D.d("Map transition:", oldMapName, "->", newMap, "music:", newMapData.getMusic());
+            String currentMusic = currentMap == null ? "" : currentMap.getMusic();
             
-            if(!newMapData.getMusic().equals(currentMap.getMusic())) {
-                D.d("Music change detected, playing:", newMapData.getMusic());
+            if(!newMapData.getMusic().equals(currentMusic)) {
                 SoundManager.getMusicplayer().play(newMapData.getMusic());
             }
             currentMap = newMapData;
-        } else {
-            D.d("WARNING: Attempted to set map to unknown map:", newMap);
         }
     }
 
@@ -158,7 +141,6 @@ public class MapManager {
             return null;
         }
         TransitionPoint transition = transitions.get(transitionKey);
-        D.d("Transition found at", playerX + "," + playerY, "in", getCurrentMapID(), "->", transition.getMapTo());
         return transition;
     }
 
