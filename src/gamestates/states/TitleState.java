@@ -195,8 +195,8 @@ public class TitleState extends GameState {
 				}
 			}
 			
-			velocityX = (random.nextDouble() * 0.8 - 0.4) * 2;
-			velocityY = (random.nextDouble() * 0.8 - 0.4) * 2;
+			velocityX = (random.nextDouble() * 0.8 - 0.4) * 8;
+			velocityY = (random.nextDouble() * 0.8 - 0.4) * 8;
 			if(Math.abs(velocityX) < 0.1) velocityX = 0.1;
 			if(Math.abs(velocityY) < 0.1) velocityY = 0.1;
 			angle = random.nextDouble() * 2 * Math.PI;
@@ -209,9 +209,9 @@ public class TitleState extends GameState {
 			int height = original.getHeight();
 			BufferedImage greenImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 			
-			int red = random.nextInt(50) + 10;
-			int green = random.nextInt(70) + 60;
-			int blue = random.nextInt(50) + 10;
+			int red = random.nextInt(50);
+			int green = random.nextInt(60) + 40;
+			int blue = random.nextInt(50);
 
 			for (int pixelY = 0; pixelY < height; pixelY++) {
 				for (int pixelX = 0; pixelX < width; pixelX++) {

@@ -12,10 +12,10 @@ public class Player extends Human {
 
 	private boolean acceptInput;
 
-	public Player(KeyBindingHandler keyHandler) {
-		super(0, 0);
+	public Player(KeyBindingHandler keyHandler, MapManager mapManager) {
+		super(0, 0, mapManager.getCurrentMapID());
 		this.keyHandler = keyHandler;
-		this.spriteSheet = AssetManager.loadImage("/player/trainer_COOL_M.png");
+		this.spriteSheet = AssetManager.loadImage("/player/trainer_RED.png");
 		this.acceptInput = true;
 	}
 
@@ -58,6 +58,7 @@ public class Player extends Human {
 		mapManager.setCurrentMap(nextMap.getMapName());
 		setMapX(nextMapX);
 		setMapY(nextMapY);
+		setMap(nextMap.getMapName());
 	}
 	
 	@Override

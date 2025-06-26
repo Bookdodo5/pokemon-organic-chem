@@ -41,22 +41,24 @@ public class MovementAction implements CutsceneAction {
 			return;
 		}
 
-		if(targetHuman.isIdle()) {
-			if(currentX < targetX) {
-				targetHuman.setFacingDirection(FacingDirections.RIGHT);
-				targetHuman.setMoving();
-			} else if(currentX > targetX) {
-				targetHuman.setFacingDirection(FacingDirections.LEFT);
-				targetHuman.setMoving();
-			} else if(currentY < targetY) {
-				targetHuman.setFacingDirection(FacingDirections.DOWN);
-				targetHuman.setMoving();
-			} else if(currentY > targetY) {
-				targetHuman.setFacingDirection(FacingDirections.UP);
-				targetHuman.setMoving();
-			}
+		FacingDirections direction = determineDirectionTowardsTarget(targetX, targetY);
+
+		if(targetHuman.isIdle() && !(currentX == targetX && currentY == targetY)) {
+			targetHuman.setFacingDirection(direction);
+			targetHuman.setMoving();
 		}
 	}
+
+	private FacingDirections determineDirectionTowardsTarget(int x, int y) {
+        int deltaX = targetHuman.getMapX() - x;
+        int deltaY = targetHuman.getMapY() - y;
+        
+        if (Math.abs(deltaX) > Math.abs(deltaY)) {
+            return deltaX > 0 ? FacingDirections.LEFT : FacingDirections.RIGHT;
+        } else {
+            return deltaY > 0 ? FacingDirections.UP : FacingDirections.DOWN;
+        }
+    }
 
 	@Override
 	public void end() {

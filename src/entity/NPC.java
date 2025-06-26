@@ -9,7 +9,6 @@ import tile.MapManager;
 public class NPC extends Human {
 	private final String id;
 	private final Random random;
-	private String map;
 	private int moveCounter;
 	private int movementInterval;
 
@@ -20,12 +19,11 @@ public class NPC extends Human {
 
 	private AIMode aiMode;
 
-	private NPC(String id, int positionX, int positionY, String map, NPCSprites sprite, AIMode aiMode, NPCPath path, int dx, int dy, int range) {
-		super(positionX, positionY);
+	private NPC(String id, int positionX, int positionY, String map, NPCSprites sprite, FacingDirections facing, AIMode aiMode, NPCPath path, int dx, int dy, int range) {
+		super(positionX, positionY, map);
 		this.id = id;
 		this.originalX = positionX;
 		this.originalY = positionY;
-		this.map = map;
 		this.random = new Random();
 		this.moveCounter = 0;
 		this.movementInterval = 60;
@@ -35,6 +33,7 @@ public class NPC extends Human {
 		this.dx = dx;
 		this.dy = dy;
 		this.range = range;
+		setFacingDirection(facing);
 	}
 
 	public static class Builder {
@@ -42,6 +41,7 @@ public class NPC extends Human {
 		private int positionX = 0;
 		private int positionY = 0;
 		private String map = null;
+		private FacingDirections facing = FacingDirections.UP;
 		private final NPCSprites sprite;
 
 		private int range = 0;
@@ -59,6 +59,11 @@ public class NPC extends Human {
 			this.positionX = x;
 			this.positionY = y;
 			this.map = map;
+			return this;
+		}
+
+		public Builder facing(FacingDirections facing) {
+			this.facing = facing;
 			return this;
 		}
 
@@ -86,7 +91,7 @@ public class NPC extends Human {
 				System.err.println("Map must be set");
 				return null;
 			}
-			NPC npc = new NPC(id, positionX, positionY, map, sprite, aiMode, path, dx, dy, range);
+			NPC npc = new NPC(id, positionX, positionY, map, sprite, facing, aiMode, path, dx, dy, range);
 			return npc;
 		}
 	}
@@ -175,15 +180,11 @@ public class NPC extends Human {
 		}
 	}
 
-	public String getMap() { return map; }
-
 	public AIMode getAIMode() { return aiMode; }
 
 	public void setAIMode(AIMode mode) { this.aiMode = mode; }
 
 	public String getId() { return id; }
-
-	public void setMap(String map) { this.map = map; }
 
 	public void setOriginalPosition(int x, int y) {
 		originalX = x;

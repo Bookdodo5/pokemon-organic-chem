@@ -1,5 +1,5 @@
 package input;
 
 public enum Keys {
-	NONE, UP, DOWN, LEFT, RIGHT, ESCAPE, P, INTERACT
+	NONE, UP, DOWN, LEFT, RIGHT, ESCAPE, P, INTERACT, RUN
 }

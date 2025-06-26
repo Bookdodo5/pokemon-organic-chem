@@ -13,8 +13,8 @@ public class TeleportAction implements CutsceneAction {
     private final int targetY;
     private final String targetMap;
     private final boolean isNPC;
-    private boolean isFinished;
     private final OverworldState overworldState;
+    private boolean isFinished;
 
     public TeleportAction(Human targetHuman, int targetX, int targetY, String targetMap, OverworldState overworldState) {
         this.targetHuman = targetHuman;

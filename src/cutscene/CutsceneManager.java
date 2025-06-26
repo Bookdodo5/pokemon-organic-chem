@@ -46,15 +46,19 @@ public class CutsceneManager {
 	private void initializeCutscenes() {
 		if (overworldState == null) return;
 		MethanopolisCutscenes.initialize(cutscenes, overworldState);
-		PorbitalTownCutscenes.initialize(cutscenes, overworldState);
+		PorbitalTownCutscenes.initialize(cutscenes, overworldState, npcManager, cameraManager, player, flagManager);
 		Route1Cutscenes.initialize(cutscenes, overworldState);
 	}
 
-	private String getCutsceneKey(int x, int y, String map, boolean interact, FacingDirections facing) {
+	private String getKeyLocation(int x, int y, String map, boolean interact, FacingDirections facing) {
 		return x + " " + y + " " + map + " " + interact + " " + facing;
 	}
 
-	private String getCutsceneKey(NPC npc) {
+	private String getKeyLook(int x, int y, String map) {
+		return x + " " + y + " " + map + " looking";
+	}
+
+	private String getKeyNPC(NPC npc) {
 		if(npc == null) return "null";
 		return npc.getId();
 	}
@@ -75,7 +79,9 @@ public class CutsceneManager {
 
 		Cutscene cutsceneDirection = getLocationCutscene(x, y, map, interact, facing);
 		Cutscene cutsceneNoDirection = getLocationCutscene(x, y, map, interact, null);
+		Cutscene cutsceneLooking = interact ? getLookingCutscene(facingX, facingY, map) : null;
 		if(cutsceneDirection != null) return cutsceneDirection;
+		if(cutsceneLooking != null) return cutsceneLooking;
 		if(cutsceneNoDirection != null) return cutsceneNoDirection;
 
 		if (!interact || facingNPC == null) return null;
@@ -84,9 +90,22 @@ public class CutsceneManager {
 		return null;
 	}
 
+	private Cutscene getLookingCutscene(int facingX, int facingY, String map) {
+		List<Cutscene> lookingCutscenes = cutscenes.get(
+			getKeyLook(facingX, facingY, map)
+		);
+		if(lookingCutscenes == null) return null;
+		for (Cutscene cutscene : lookingCutscenes) {
+			if (flagManager.matchFlags(cutscene.getYesFlags(), cutscene.getNoFlags())) {
+				return cutscene;
+			}
+		}
+		return null;
+	}
+
 	private Cutscene getLocationCutscene(int x, int y, String map, boolean interact, FacingDirections facing) {
 		List<Cutscene> locationCutscenes = cutscenes.get(
-			getCutsceneKey(x, y, map, interact, facing)
+			getKeyLocation(x, y, map, interact, facing)
 		);
 		if(locationCutscenes == null) return null;
 		for (Cutscene cutscene : locationCutscenes) {
@@ -98,7 +117,9 @@ public class CutsceneManager {
 	}
 
 	private Cutscene getNPCCutscene(NPC npc) {
-		List<Cutscene> npcCutscenes = cutscenes.get(getCutsceneKey(npc));
+		List<Cutscene> npcCutscenes = cutscenes.get(
+			getKeyNPC(npc)
+		);
 		if(npcCutscenes == null) return null;
 		for (Cutscene cutscene : npcCutscenes) {
 			if (flagManager.matchFlags(cutscene.getYesFlags(), cutscene.getNoFlags())) {

@@ -8,7 +8,6 @@ public class FlagManager {
 
    public FlagManager() {
          this.flags = new HashMap<>();
-         flags.put("ozonolysis_intro", 1);
    }
 
    public void addFlag(String flag) {
@@ -37,6 +36,10 @@ public class FlagManager {
 
    public int getFlag(String flag) {
       return flags.getOrDefault(flag, 0);
+   }
+   
+   public Map<String, Integer> getFlags() {
+       return flags;
    }
 
    public void setFlag(String flag, int value) {

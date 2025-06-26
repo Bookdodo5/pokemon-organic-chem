@@ -21,6 +21,7 @@ public class MapManager {
         maps = new HashMap<>();
         transitions = new HashMap<>();
         visibleMaps = new HashSet<>();
+        currentMap = new MapData("", "", new TileManager[0], 0, 0, 0, 0);
         initializeAll();
 	}
 
@@ -104,7 +105,7 @@ public class MapManager {
             MapData newMapData = maps.get(newMap);
             String currentMusic = currentMap == null ? "" : currentMap.getMusic();
             
-            if(!newMapData.getMusic().equals(currentMusic)) {
+            if(!currentMusic.equals("") && !newMapData.getMusic().equals(currentMusic)) {
                 SoundManager.getMusicplayer().play(newMapData.getMusic());
             }
             currentMap = newMapData;
@@ -155,4 +156,12 @@ public class MapManager {
 		}
 		return null;
 	}
+
+    public double findGlobalX(String mapName, double x) { 
+        return maps.get(mapName).getGlobalX() + x;
+    }
+
+    public double findGlobalY(String mapName, double y) { 
+        return maps.get(mapName).getGlobalY() + y;
+    }
 }

@@ -67,6 +67,9 @@ public class KeyBindingHandler {
 		inputMap.put(KeyStroke.getKeyStroke("Z"), "zPressed");
 		inputMap.put(KeyStroke.getKeyStroke("released Z"), "zReleased");
 
+		inputMap.put(KeyStroke.getKeyStroke("SPACE"), "runPressed");
+		inputMap.put(KeyStroke.getKeyStroke("released SPACE"), "runReleased");
+
 		// Set up actions
 		actionMap.put("upPressed", new KeyAction(Keys.UP, true));
 		actionMap.put("upReleased", new KeyAction(Keys.UP, false));
@@ -82,7 +85,8 @@ public class KeyBindingHandler {
 		actionMap.put("pReleased", new KeyAction(Keys.P, false));
 		actionMap.put("zPressed", new KeyAction(Keys.INTERACT, true));
 		actionMap.put("zReleased", new KeyAction(Keys.INTERACT, false));
-
+		actionMap.put("runPressed", new KeyAction(Keys.RUN, true));
+		actionMap.put("runReleased", new KeyAction(Keys.RUN, false));
 	}
 
 	private class KeyAction extends AbstractAction {
@@ -97,7 +101,9 @@ public class KeyBindingHandler {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (isPressing) {
-				currentKey = key;
+				if (key != Keys.RUN) {
+					currentKey = key;
+				}
 				if (!keyStack.contains(key)) stateManager.keyTapped();
 				keyStack.remove(key);
 				keyStack.push(key);
@@ -106,11 +112,20 @@ public class KeyBindingHandler {
 			else {
 				keyStack.remove(key);
 				stateManager.keyReleased(key);
-				if (keyStack.empty()) currentKey = Keys.NONE;
-				else if (key == currentKey) {
-					currentKey = keyStack.peek();
+				if (keyStack.empty()) {
+					currentKey = Keys.NONE;
+				} else if (key == currentKey) {
+					currentKey = findNextKey();
 				}
 			}
+		}
+		
+		private Keys findNextKey() {
+			for (int i = keyStack.size() - 1; i >= 0; i--) {
+				Keys k = keyStack.get(i);
+				if (k != Keys.RUN) return k;
+			}
+			return Keys.NONE;
 		}
 	}
 }

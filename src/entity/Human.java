@@ -33,7 +33,7 @@ public abstract class Human extends Entity {
 	private double jumpStartX, jumpStartY;
 	private double jumpTargetX, jumpTargetY;
 
-	public Human(int positionX, int positionY) {
+	public Human(int positionX, int positionY, String map) {
 
 		this.spriteWidth = ORIGINAL_TILE_SIZE;
 		this.spriteHeight = (int) (ORIGINAL_TILE_SIZE * 1.5);
@@ -41,10 +41,15 @@ public abstract class Human extends Entity {
 		this.y = positionY * Constants.ORIGINAL_TILE_SIZE;
 		this.targetX = (int) x;
 		this.targetY = (int) y;
+		this.map = map;
 		this.currentMovementState = MovementStates.IDLE;
 		this.currentDirection = FacingDirections.DOWN;
 
 		this.grassAnimationManager = new AnimationManager();
+	}
+
+	public void setSpriteSheet(NPCSprites sprite) {
+		this.spriteSheet = AssetManager.loadImage("/player/" + sprite.getSpriteFileName());
 	}
 
 	public FacingDirections getCurrentDirection() {
@@ -74,7 +79,7 @@ public abstract class Human extends Entity {
 
 	protected void updateAnimation() {
 		animationCounter++;
-		if (animationCounter >= ANIMATION_SPEED) {
+		if (animationCounter >= animationSpeed) {
 			spriteIndex = (spriteIndex + 1) % 4;
 			animationCounter = 0;
 		}
@@ -139,8 +144,8 @@ public abstract class Human extends Entity {
 	protected abstract void handleIdle(List<Entity> humans, MapManager mapManager);
 
 	private void handleMoving() {
-		x += currentDirection.getX() * SPEED;
-		y += currentDirection.getY() * SPEED;
+		x += currentDirection.getX() * speed;
+		y += currentDirection.getY() * speed;
 
 		if ((currentDirection == FacingDirections.UP && y <= targetY)
 				|| (currentDirection == FacingDirections.DOWN && y >= targetY)
@@ -232,8 +237,15 @@ public abstract class Human extends Entity {
 	@Override
 	public void draw(Graphics2D g2, int cameraX, int cameraY, MapManager mapManager) {
 		boolean isOnGrass = isOnGrass(mapManager);
-		int drawX = (int) (x - cameraX);
-		int drawY = (int) (y - cameraY - (int) ((getSpriteHeight() * SCALE) / 6));
+		boolean inCurrentMap = mapManager.getCurrentMapID().equals(getMap());
+		double newX = x;
+		double newY = y;
+		if(!inCurrentMap) {
+			newX = mapManager.findGlobalX(getMap(), x) - mapManager.getGlobalX();
+			newY = mapManager.findGlobalY(getMap(), y) - mapManager.getGlobalY();
+		}
+		int drawX = (int) (newX - cameraX);
+		int drawY = (int) (newY - cameraY - (int) ((getSpriteHeight() * SCALE) / 6));
 		
 		java.awt.Shape originalClip = g2.getClip();
 		if (isOnGrass && Math.abs(x-targetX) < 20 && Math.abs(y-targetY) < 20) {

@@ -14,14 +14,14 @@ import java.util.stream.IntStream;
 
 public class ElevatorTemplate extends CutsceneTemplate {
 
-    public static void addElevator(Map<String, List<Cutscene>> cutscenes, String mapName, String buildingName, int x,
-            int y, int floors, OverworldState overworldState) {
+    public static void addElevator(OverworldState overworldState, Map<String, List<Cutscene>> cutscenes, String mapName, String buildingName, int x,
+            int y, int floors) {
 
         String buildingPath = mapName + "__" + buildingName + "_f";
 
         IntStream.rangeClosed(1, floors).forEach(currentFloor -> {
             String floorPath = buildingPath + currentFloor;
-            String key = getCutsceneKey(x, y, floorPath, true, FacingDirections.UP);
+            String key = getKeyLocation(x, y, floorPath, true, FacingDirections.UP);
 
             List<DialogueOption> optionsList = new ArrayList<>();
             
@@ -46,7 +46,7 @@ public class ElevatorTemplate extends CutsceneTemplate {
                 )
             );
 
-            cutscenes.put(key, List.of(cutscene));
+            addCutscene(cutscenes, key, cutscene);
         });
     }
 

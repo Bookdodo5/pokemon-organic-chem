@@ -84,8 +84,8 @@
             "scale": 2.172135416666667,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 224.203332933701,
-                "y": 176.0939935259561
+                "x": 224.20333293370098,
+                "y": 175.8638052991248
             }
         },
         "methanopolis__apartment1_f3.tmx": {
@@ -93,31 +93,31 @@
             "selectedLayer": 2,
             "viewCenter": {
                 "x": 224,
-                "y": 175.75
+                "y": 176
             }
         },
         "methanopolis__apartment2_f1.tmx": {
             "scale": 2.172135416666667,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 224.203332933701,
-                "y": 176.0939935259561
+                "x": 224.20333293370098,
+                "y": 175.8638052991248
             }
         },
         "methanopolis__apartment2_f2.tmx": {
             "scale": 2.172135416666667,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 224.203332933701,
-                "y": 176.0939935259561
+                "x": 224.20333293370098,
+                "y": 175.8638052991248
             }
         },
         "methanopolis__apartment2_f3.tmx": {
             "scale": 2.172135416666667,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 224.203332933701,
-                "y": 176.0939935259561
+                "x": 224.20333293370098,
+                "y": 175.8638052991248
             }
         },
         "methanopolis__apartment2_f4.tmx": {
@@ -125,7 +125,7 @@
             "selectedLayer": 1,
             "viewCenter": {
                 "x": 224.08823882028537,
-                "y": 175.76789353794513
+                "y": 175.9788994125405
             }
         },
         "methanopolis__apartment2_f5.tmx": {
@@ -133,7 +133,7 @@
             "selectedLayer": 0,
             "viewCenter": {
                 "x": 224.08823882028537,
-                "y": 175.76789353794513
+                "y": 175.9788994125405
             }
         },
         "methanopolis__botanist.tmx": {
@@ -149,15 +149,15 @@
             "selectedLayer": 2,
             "viewCenter": {
                 "x": 224,
-                "y": 191.75
+                "y": 192
             }
         },
         "methanopolis__house2.tmx": {
             "scale": 2.172135416666667,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 226.50521520201409,
-                "y": 192.20716940414817
+                "x": 224.20333293370098,
+                "y": 191.97698117731687
             }
         },
         "methanopolis__pokecenter.tmx": {
@@ -268,8 +268,8 @@
             "scale": 0.75,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 848,
-                "y": 598
+                "x": 832,
+                "y": 576
             }
         },
         "porbital_town__house1_f1.tmx": {
@@ -292,24 +292,24 @@
             "scale": 2.172135416666667,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 224.203332933701,
-                "y": 192.20716940414817
+                "x": 224.20333293370098,
+                "y": 191.97698117731687
             }
         },
         "porbital_town__house2_f2.tmx": {
             "scale": 2.172135416666667,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 224.203332933701,
-                "y": 192.20716940414817
+                "x": 224.20333293370098,
+                "y": 191.97698117731687
             }
         },
         "porbital_town__room.tmx": {
             "scale": 2.172135416666667,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 224.203332933701,
-                "y": 192.20716940414817
+                "x": 224.20333293370098,
+                "y": 191.97698117731687
             }
         },
         "porbital_town__townhall.tmx": {
@@ -324,8 +324,8 @@
             "scale": 2.1737847222222224,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 287.976998642281,
-                "y": 159.85943614727256
+                "x": 287.97699864228093,
+                "y": 160.0894497244629
             }
         },
         "porbital_town_house1.tmx": {
@@ -436,7 +436,7 @@
             "scale": 1.5,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 447,
+                "x": 469.66666666666663,
                 "y": 512
             }
         },

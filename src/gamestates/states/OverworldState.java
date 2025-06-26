@@ -7,6 +7,7 @@ import entity.Entity;
 import entity.MovementStates;
 import entity.NPC;
 import entity.NPCManager;
+import entity.NPCSprites;
 import entity.Player;
 import gamestates.CameraManager;
 import gamestates.GameState;
@@ -88,6 +89,7 @@ public class OverworldState extends GameState {
 	public void setMap(int nextX, int nextY, String nextMap) {
 		player.setMapX(nextX);
 		player.setMapY(nextY);
+		player.setMap(nextMap);
 		mapManager.setCurrentMap(nextMap);
 		cameraManager.update();
 		initializeEntities();
@@ -107,12 +109,13 @@ public class OverworldState extends GameState {
 		entities = new ArrayList<>();
 		entities.add(player);
 		entities.addAll(npcManager.getNPCs().stream()
-				.filter(npc -> npc.getMap().equals(mapManager.getCurrentMapID()))
+				.filter(npc -> mapManager.getVisibleMaps().contains(mapManager.getMap(npc.getMap())))
 				.collect(Collectors.toList()));
 	}
 
 	@Override
 	public void update() {
+
 		player.update(entities, mapManager);
 		
 		for (NPC npc : npcManager.getNPCs()) {
@@ -197,11 +200,24 @@ public class OverworldState extends GameState {
 
 	@Override
 	public void keyPressed() {
-
+		if(keyHandler.pressingKey(Keys.RUN)) {
+			player.setSpeed(2.4 * 2.5);
+			player.setAnimationSpeed(5);
+			player.setSpriteSheet(NPCSprites.RED_RUN);
+		} else {
+			player.setSpeed(2.4);
+			player.setAnimationSpeed(8);
+			player.setSpriteSheet(NPCSprites.RED);
+		}
 	}
 
 	@Override
 	public void keyReleased(Keys key) {
+		if(key == Keys.RUN) {
+			player.setSpeed(2.4);
+			player.setAnimationSpeed(8);
+			player.setSpriteSheet(NPCSprites.RED);
+		}
 	}
 
 	@Override

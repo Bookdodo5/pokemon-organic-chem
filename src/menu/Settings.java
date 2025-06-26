@@ -5,7 +5,7 @@ public class Settings {
 	private float sfxVolume = 0.5f;
 	private float musicVolume = 0.5f;
 	private TextSpeed textSpeed = TextSpeed.FAST;
-	private int FPS = 240;
+	private int FPS = 60;
 
 	public enum TextSpeed {
 		FAST(2, 1), MEDIUM(3, 1), SLOW(4, 2);

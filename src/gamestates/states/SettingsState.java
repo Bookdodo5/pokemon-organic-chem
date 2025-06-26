@@ -140,6 +140,9 @@ public class SettingsState extends GameState {
 
 	@Override
 	public void update() {
+		if (titleState != null && prevState == GameStates.TITLE) {
+			titleState.update();
+		}
 	}
 
 	@Override

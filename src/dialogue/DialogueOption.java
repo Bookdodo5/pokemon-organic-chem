@@ -15,7 +15,11 @@ public class DialogueOption extends Option {
 	}
 
 	public DialogueOption(String text, String nextDialogueText) {
-		this(text, new Dialogue(new String[] { nextDialogueText }));
+		this(text, new Dialogue(nextDialogueText));
+	}
+
+	public DialogueOption(String text, String... nextDialoguePages) {
+		this(text, new Dialogue(nextDialoguePages));
 	}
 
 	public DialogueOption(String text, Dialogue nextDialogue) {

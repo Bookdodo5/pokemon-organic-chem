@@ -24,8 +24,7 @@ public enum NPCSprites {
     SWIMMER_F("trainer_SWIMMER_F"),
     GIRL_GREEN("trainer_GIRLGREEN"),
     SUPER_NERD("trainer_SUPERNERD"),
-    PSYCHIC_M("trainer_PSYCHIC_M"),
-    PSYCHIC_F("trainer_PSYCHIC_F"),
+    PSYCHIC("trainer_PSYCHIC"),
     MANIAC("trainer_MANIAC"),
     COOL_M("trainer_COOL_M"),
     COOL_F("trainer_COOL_F"),
@@ -41,7 +40,8 @@ public enum NPCSprites {
     GREEN("trainer_GREEN"),
     BLUE("trainer_BLUE"),
     PURPLE("trainer_PURPLE"),
-    MAGENTA("trainer_MAGENTA");
+    MAGENTA("trainer_MAGENTA"),
+    RED_RUN("trainer_RED_RUN");
 
     private final String spriteName;
 

@@ -33,15 +33,15 @@ public class MapInitializer {
     }
 
     private static void initializePorbitalTown() {
-        initMap("porbital_town", "essentials", "Motorcycle", 0, 0);
+        initMap("porbital_town", "essentials", "Lappet", 0, 0);
         
-        initInterior("room", "Motorcycle");
-        initInterior("house1_f1", "Motorcycle");
-        initInterior("house1_f2", "Motorcycle");
-        initInterior("house2_f1", "Motorcycle");
-        initInterior("house2_f2", "Motorcycle");
-        initInterior("townhall", "Motorcycle");
-        initInterior("workspace", "Motorcycle");
+        initInterior("room", "Lappet");
+        initInterior("house1_f1", "Lappet");
+        initInterior("house1_f2", "Lappet");
+        initInterior("house2_f1", "Lappet");
+        initInterior("house2_f2", "Lappet");
+        initInterior("townhall", "Tiall");
+        initInterior("workspace", "Lappet");
     }
 
     private static void initializeRoute1() {
@@ -62,7 +62,7 @@ public class MapInitializer {
         initInterior("house1", "interiors", "Motorcycle");
         initInterior("house2", "interiors", "Motorcycle");
         
-        initInterior("botanist", "interiors", "Lab");
+        initInterior("botanist", "interiors", "Safari");
         
         initInterior("workshop1", "interiors", "Lab");
         initInterior("workshop2", "interiors", "Lab");

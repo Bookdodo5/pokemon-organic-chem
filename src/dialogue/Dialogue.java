@@ -15,11 +15,11 @@ public class Dialogue {
 		this(new String[] { page });
 	}
 
-	public Dialogue(String page, DialogueOption[] options) {
+	public Dialogue(String page, DialogueOption... options) {
 		this(new String[] { page }, options);
 	}
 
-	public Dialogue(String[] pages, DialogueOption[] options) {
+	public Dialogue(String[] pages, DialogueOption... options) {
 		currentPage = 0;
 		this.pages = pages;
 		this.options = options;

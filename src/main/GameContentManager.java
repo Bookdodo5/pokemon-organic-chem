@@ -36,6 +36,7 @@ public class GameContentManager {
 	private final MoleculeRecord moleculeRecord;
 	private final StateManager stateManager;
 	private final KeyBindingHandler keyHandler;
+	private final DeveloperMode developerMode;
 
 	public GameContentManager() {
 		this.stateManager = new StateManager();
@@ -46,7 +47,7 @@ public class GameContentManager {
 		this.mapManager = new MapManager();
 		this.playerDeckManager = new PlayerDeckManager();
 		this.battleDataManager = new BattleDataManager();
-		this.player = new Player(keyHandler);
+		this.player = new Player(keyHandler, mapManager);
 		this.cameraManager = new CameraManager(player);
 		this.reactionRecord = new ReactionRecord(flagManager);
 		this.moleculeRecord = new MoleculeRecord();
@@ -59,21 +60,25 @@ public class GameContentManager {
 			flagManager, 
 			stateManager
 			);
-		initializeGameStates();
 		initializePlayerAndMap();
+		initializeGameStates();
 		
 		this.cutsceneManager.setOverworldState(
 			(OverworldState) StateManager.states.get(GameStates.OVERWORLD)
 		);
+		
+		// Initialize developer mode (always active)
+		this.developerMode = new DeveloperMode(this);
 	}
 
 	private void initializePlayerAndMap() {
-		String startingMap = "route1";
-		int startingX = 13;
+		String startingMap = "porbital_town__house1_f2";
+		int startingX = 7;
 		int startingY = 6;
 		
 		player.setMapX(startingX);
 		player.setMapY(startingY);
+		player.setMap(startingMap);
 		mapManager.setCurrentMap(startingMap);
 		mapManager.updateVisibleMaps(startingX, startingY);
 		cameraManager.update();
@@ -115,5 +120,7 @@ public class GameContentManager {
 	public StateManager getStateManager() { return stateManager; }
 
 	public KeyBindingHandler getKeyHandler() { return keyHandler; }
+
+	public DeveloperMode getDeveloperMode() { return developerMode; }
 
 }
