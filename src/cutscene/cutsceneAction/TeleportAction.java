@@ -32,6 +32,7 @@ public class TeleportAction implements CutsceneAction {
             ((NPC) targetHuman).setMap(targetMap);
             targetHuman.setMapX(targetX);
             targetHuman.setMapY(targetY);
+            overworldState.initializeEntities();
         } else {
             overworldState.setMap(targetX, targetY, targetMap);
         }

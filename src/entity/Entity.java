@@ -8,7 +8,7 @@ public abstract class Entity {
 	protected double x, y;
 	protected String map;
 	protected int spriteWidth, spriteHeight;
-	protected double speed = 2.4;
+	protected double speed = 2.25;
 	protected int animationCounter = 0;
 	protected int animationSpeed = 8;
 	protected int spriteIndex = 0;

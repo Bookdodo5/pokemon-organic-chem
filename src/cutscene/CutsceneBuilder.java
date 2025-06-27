@@ -53,6 +53,11 @@ public class CutsceneBuilder {
         actions.add(new PlaysoundAction(musicName, true));
         return this;
     }
+
+    public CutsceneBuilder musicStop() {
+        actions.add(new PlaysoundAction("Stop", true));
+        return this;
+    }
     
     // ============================================================================
     // CHARACTER MOVEMENT ACTIONS
@@ -64,17 +69,12 @@ public class CutsceneBuilder {
     }
 
     public CutsceneBuilder moveYthenX(Human character, int x, int y) {
-        int startX = character.getMapX();
-        System.out.println("Moving " + character + " from " + startX + "," + y + " to " + x + "," + y);
-        actions.add(new MovementAction(character, startX, y));
-        actions.add(new MovementAction(character, x, y));
+        actions.add(new MovementAction(character, x, y, false));
         return this;
     }
 
     public CutsceneBuilder moveXthenY(Human character, int x, int y) {
-        int startY = character.getMapY();
-        actions.add(new MovementAction(character, x, startY));
-        actions.add(new MovementAction(character, x, y));
+        actions.add(new MovementAction(character, x, y, true));
         return this;
     }
     
@@ -93,10 +93,12 @@ public class CutsceneBuilder {
         return this;
     }
 
-    public CutsceneBuilder waitEmote(Human character, CameraManager camera) {
-        actions.add(new EmoteAction(character, 60, Emotes.WAIT1, camera));
-        actions.add(new EmoteAction(character, 60, Emotes.WAIT2, camera));
-        actions.add(new EmoteAction(character, 60, Emotes.WAIT3, camera));
+    public CutsceneBuilder waitEmote(Human character, CameraManager camera, int duration) {
+        actions.add(new SequentialAction(
+            new EmoteAction(character, duration, Emotes.WAIT1, camera),
+            new EmoteAction(character, duration, Emotes.WAIT2, camera),
+            new EmoteAction(character, duration, Emotes.WAIT3, camera)
+        ));
         return this;
     }
     
@@ -138,6 +140,19 @@ public class CutsceneBuilder {
         return this;
     }
     
+    public CutsceneBuilder camMoveToHuman(CameraManager camera, Human target, int time) {
+        actions.add(new CameraAction(camera, target, time));
+        return this;
+    }
+
+    public CutsceneBuilder camChangeFocus(CameraManager camera, Human target, int time) {
+        actions.add(new SequentialAction(
+            new CameraAction(camera, target, time),
+            new CameraAction(camera, target)
+        ));
+        return this;
+    }
+    
     public CutsceneBuilder camSet(CameraManager camera, int x, int y) {
         actions.add(new CameraAction(camera, x, y));
         return this;
@@ -164,6 +179,11 @@ public class CutsceneBuilder {
     
     public CutsceneBuilder animation(String name, int x, int y, double scale) {
         actions.add(new AnimationAction(name, x, y, scale));
+        return this;
+    }
+
+    public CutsceneBuilder animation(String name, int x, int y, double scale, CameraManager cameraManager) {
+        actions.add(new AnimationAction(name, x, y, scale, cameraManager));
         return this;
     }
     
@@ -232,6 +252,18 @@ public class CutsceneBuilder {
             .sfx("GameCursor")
             .say(dialogue);
     }
+
+    public CutsceneBuilder shout(String text, CameraManager camera) {
+        return this
+            .sfx("GameCursor")
+            .parallel(
+                new CutsceneBuilder()
+                    .say(text)
+                    .sfx("BattleDamageWeak")
+                    .camShake(camera, 10)
+                    .buildActions()
+            );
+    }
     
     // ============================================================================
     // CONTROL ACTIONS
@@ -241,13 +273,22 @@ public class CutsceneBuilder {
         actions.add(new ParallelAction(parallelActions));
         return this;
     }
+
+    public CutsceneBuilder sequential(CutsceneAction... sequentialActions) {
+        actions.add(new SequentialAction(sequentialActions));
+        return this;
+    }
     
     public CutsceneBuilder action(CutsceneAction action) {
         actions.add(action);
         return this;
     }
+
+    public CutsceneAction[] buildActions() {
+        return actions.toArray(CutsceneAction[]::new);
+    }
     
-    public Cutscene build() {
+    public Cutscene buildCutscene() {
         return new Cutscene(
             yesFlags.toArray(String[]::new),
             noFlags.toArray(String[]::new),

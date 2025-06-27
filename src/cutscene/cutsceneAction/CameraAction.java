@@ -4,12 +4,14 @@ import cutscene.CutsceneAction;
 import entity.Human;
 import gamestates.CameraManager;
 import java.awt.Graphics2D;
+import static main.Constants.*;
 
 public class CameraAction implements CutsceneAction {
 
 	enum CameraMode {
 		FOLLOW_HUMAN,
 		MOVE,
+		MOVE_TO_HUMAN,
 		SET,
 		SHAKE
 	}
@@ -17,12 +19,14 @@ public class CameraAction implements CutsceneAction {
 	private final CameraManager cameraManager;
 	private final CameraMode cameraMode;
 	private int moveX, moveY, setX, setY;
+	private int targetX, targetY;
 	private int originalX, originalY;
 	private int time;
 	private int timeCounter;
 	private int shakeIntensity;
 	private boolean isFinished;
 	private Human focusPoint = null;
+	private Human moveTarget = null;
 
 	public CameraAction(CameraManager cameraManager, int moveX, int moveY, int time) {
 		this.cameraManager = cameraManager;
@@ -39,6 +43,15 @@ public class CameraAction implements CutsceneAction {
 		this.focusPoint = focusPoint;
 		this.cameraMode = CameraMode.FOLLOW_HUMAN;
 		this.isFinished = false;
+	}
+
+	public CameraAction(CameraManager cameraManager, Human target, int time) {
+		this.cameraManager = cameraManager;
+		this.moveTarget = target;
+		this.time = time;
+		this.cameraMode = CameraMode.MOVE_TO_HUMAN;
+		this.isFinished = false;
+		this.timeCounter = 0;
 	}
 
 	public CameraAction(CameraManager cameraManager, int setX, int setY) {
@@ -75,6 +88,18 @@ public class CameraAction implements CutsceneAction {
 				cameraManager.update(nextX, nextY);
 				timeCounter++;
 			}
+			case MOVE_TO_HUMAN -> {
+				if (timeCounter >= time) {
+					cameraManager.update(targetX, targetY);
+					end();
+					return;
+				}
+				double progress = (double) timeCounter / time;
+				int nextX = (int)(originalX + (targetX - originalX) * progress);
+				int nextY = (int)(originalY + (targetY - originalY) * progress);
+				cameraManager.update(nextX, nextY);
+				timeCounter++;
+			}
 			case SET -> {
 				cameraManager.update(setX, setY);
 				end();
@@ -108,6 +133,14 @@ public class CameraAction implements CutsceneAction {
 				originalX = cameraManager.getCameraX();
 				originalY = cameraManager.getCameraY();
 				cameraManager.resetFocusPoint();
+			}
+			case MOVE_TO_HUMAN -> {
+				originalX = cameraManager.getCameraX();
+				originalY = cameraManager.getCameraY();
+				targetX = (int) moveTarget.getX() - ((int) ((double) SCREEN_WIDTH / SCALE) - moveTarget.getSpriteWidth()) / 2;
+				targetY = (int) moveTarget.getY() - ((int) ((double) SCREEN_HEIGHT / SCALE) - moveTarget.getSpriteHeight()) / 2;
+				cameraManager.resetFocusPoint();
+				update();
 			}
 			case SET -> {
 				cameraManager.resetFocusPoint();

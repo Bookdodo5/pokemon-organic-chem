@@ -245,8 +245,8 @@ public abstract class Human extends Entity {
 			newY = mapManager.findGlobalY(getMap(), y) - mapManager.getGlobalY();
 		}
 		int drawX = (int) (newX - cameraX);
-		int drawY = (int) (newY - cameraY - (int) ((getSpriteHeight() * SCALE) / 6));
-		
+		int drawY = (int) (newY - cameraY - (int) ((getSpriteHeight()) / 3));
+
 		java.awt.Shape originalClip = g2.getClip();
 		if (isOnGrass && Math.abs(x-targetX) < 20 && Math.abs(y-targetY) < 20) {
 			g2.setClip(drawX, drawY, getSpriteWidth(), getSpriteHeight() - 10);

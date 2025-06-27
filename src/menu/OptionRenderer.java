@@ -42,8 +42,8 @@ public class OptionRenderer {
 		int boxHeight = options.length * textStyle.getLineHeight() + textStyle.getTextMarginY() * 2
 				+ boxStyle.getBorderThickness() * 2
 				+ boxStyle.getInnerHighlightStrokeWidth() * 2;
-		int boxX = SCREEN_WIDTH / (int) (2 * SCALE) - boxWidth / 2;
-		int boxY = SCREEN_HEIGHT / (int) (2 * SCALE) + boxHeight / 2 + offsetY;
+		int boxX = (int) (SCREEN_WIDTH / (2 * SCALE)) - boxWidth / 2;
+		int boxY = (int) (SCREEN_HEIGHT / (2 * SCALE)) + boxHeight / 2 + offsetY;
 		renderOptions(g2, boxX, boxY, boxWidth);
 	}
 

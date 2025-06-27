@@ -7,6 +7,7 @@ import gamestates.StateManager;
 import java.util.Arrays;
 import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicBoolean;
+import menu.Settings;
 import tile.MapManager;
 
 public class DeveloperMode {
@@ -14,6 +15,7 @@ public class DeveloperMode {
     private final Scanner scanner;
     private final AtomicBoolean isRunning;
     private Thread consoleThread;
+    private boolean isHyperSpeed = false;
     
     public DeveloperMode(GameContentManager gameContentManager) {
         this.gameContentManager = gameContentManager;
@@ -87,6 +89,12 @@ public class DeveloperMode {
             case "cutscene":
                 handleCutscene(args);
                 break;
+            case "fps":
+                handleFPS(args);
+                break;
+            case "hyperspeed":
+                toggleHyperSpeed();
+                break;
             default:
                 System.out.println("Unknown command: " + command);
                 System.out.println("Type 'help' for available commands");
@@ -114,12 +122,16 @@ public class DeveloperMode {
         System.out.println("  npc <id>                - Show specific NPC info");
         System.out.println("  npc move <id> <x> <y>   - Move NPC to position");
         System.out.println("  cutscene                - Show available cutscenes");
+        System.out.println("  fps                     - Show current FPS");
+        System.out.println("  fps <value>             - Set FPS (e.g., 30, 60, 120)");
+        System.out.println("  hyperspeed              - Toggle cutscene fast forward");
         System.out.println("\nExample:");
         System.out.println("  flags add test_flag");
         System.out.println("  position 10 5");
         System.out.println("  map methanopolis 15 20");
         System.out.println("  state overworld");
         System.out.println("  npc move ProfDecane 5 5");
+        System.out.println("  fps 30");
     }
     
     private void handleFlags(String[] args) {
@@ -315,15 +327,45 @@ public class DeveloperMode {
         System.out.println("Cutscene commands not implemented yet");
     }
     
+    private void handleFPS(String[] args) {
+        Settings settings = Settings.getInstance();
+        
+        if (args.length == 0) {
+            System.out.println("Current FPS: " + settings.getFPS());
+            return;
+        }
+        
+        try {
+            int fps = Integer.parseInt(args[0]);
+            if (fps < 1 || fps > 240) {
+                System.out.println("FPS must be between 1 and 240");
+                return;
+            }
+            settings.setFPS(fps);
+            System.out.println("FPS set to: " + fps);
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid number for FPS: " + args[0]);
+        }
+    }
+    
+    private void toggleHyperSpeed() {
+        isHyperSpeed = !isHyperSpeed;
+        if (isHyperSpeed) {
+            System.out.println("Hyper speed enabled!");
+        } else {
+            System.out.println("Hyper speed disabled!");
+        }
+    }
+    
     private void showInfo() {
         Player player = gameContentManager.getPlayer();
         MapManager mapManager = gameContentManager.getMapManager();
         StateManager stateManager = gameContentManager.getStateManager();
         FlagManager flagManager = gameContentManager.getFlagManager();
         
-        System.out.println("\n=== GAME STATE INFO ===");
+        System.out.println("\n=== CURRENT GAME INFO ===");
+        System.out.println("Map: " + mapManager.getCurrentMapID());
         System.out.println("Current state: " + stateManager.getState());
-        System.out.println("Current map: " + mapManager.getCurrentMapID());
         System.out.println("Player position: (" + player.getMapX() + ", " + player.getMapY() + ")");
         System.out.println("Player direction: " + player.getCurrentDirection());
         System.out.println("Active flags: " + flagManager.getFlags().size());
@@ -343,5 +385,9 @@ public class DeveloperMode {
             consoleThread.interrupt();
         }
         scanner.close();
+    }
+    
+    public boolean isHyperSpeed() {
+        return isHyperSpeed;
     }
 }

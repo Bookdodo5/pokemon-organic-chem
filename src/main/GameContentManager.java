@@ -62,6 +62,7 @@ public class GameContentManager {
 			);
 		initializePlayerAndMap();
 		initializeGameStates();
+		initializeFlags();
 		
 		this.cutsceneManager.setOverworldState(
 			(OverworldState) StateManager.states.get(GameStates.OVERWORLD)
@@ -82,6 +83,11 @@ public class GameContentManager {
 		mapManager.setCurrentMap(startingMap);
 		mapManager.updateVisibleMaps(startingX, startingY);
 		cameraManager.update();
+	}
+
+	private void initializeFlags() {
+		//flagManager.addFlag("ADOPTED_CHILD_1");
+		//flagManager.addFlag("PROF_DECANE_1");
 	}
 
 	private void initializeGameStates() {

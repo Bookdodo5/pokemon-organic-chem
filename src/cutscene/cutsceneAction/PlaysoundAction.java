@@ -18,7 +18,12 @@ public class PlaysoundAction implements CutsceneAction {
 	@Override
 	public void start() {
 		if (isMusic) {
-			SoundManager.getMusicplayer().play(sound);
+			if(sound.equals("Stop")) {
+				SoundManager.getMusicplayer().stop(false);
+			}
+			else {
+				SoundManager.getMusicplayer().play(sound);
+			}
 		}
 		else {
 			SoundManager.getSfxplayer().playSE(sound);

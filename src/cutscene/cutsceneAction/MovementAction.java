@@ -13,14 +13,20 @@ public class MovementAction implements CutsceneAction {
 	private final int targetX;
 	private final int targetY;
 	private final boolean isNPC;
+	private final Boolean isXfirst;
 	private boolean isFinished;
 
-	public MovementAction(Human targetHuman, int targetX, int targetY) {
+	public MovementAction(Human targetHuman, int targetX, int targetY, Boolean isXfirst) {
 		this.targetHuman = targetHuman;
 		this.targetX = targetX;
 		this.targetY = targetY;
 		this.isNPC = targetHuman instanceof NPC;
 		this.isFinished = false;
+		this.isXfirst = isXfirst;
+	}
+
+	public MovementAction(Human targetHuman, int targetX, int targetY) {
+		this(targetHuman, targetX, targetY, null);
 	}
 
 	@Override
@@ -37,12 +43,10 @@ public class MovementAction implements CutsceneAction {
 		int currentY = targetHuman.getMapY();
 
 		if(targetHuman.isIdle() && currentX == targetX && currentY == targetY) {
-			end();
-			return;
+			end(); return;
 		}
 
 		FacingDirections direction = determineDirectionTowardsTarget(targetX, targetY);
-
 		if(targetHuman.isIdle() && !(currentX == targetX && currentY == targetY)) {
 			targetHuman.setFacingDirection(direction);
 			targetHuman.setMoving();
@@ -52,7 +56,20 @@ public class MovementAction implements CutsceneAction {
 	private FacingDirections determineDirectionTowardsTarget(int x, int y) {
         int deltaX = targetHuman.getMapX() - x;
         int deltaY = targetHuman.getMapY() - y;
-        
+        if(isXfirst != null) {
+			if(isXfirst && deltaX > 0) {
+				return FacingDirections.LEFT;
+			}
+			if(isXfirst && deltaX < 0) {
+				return FacingDirections.RIGHT;
+			}
+			if(!isXfirst && deltaY > 0) {
+				return FacingDirections.UP;
+			}
+			if(!isXfirst && deltaY < 0) {
+				return FacingDirections.DOWN;
+			}
+        }
         if (Math.abs(deltaX) > Math.abs(deltaY)) {
             return deltaX > 0 ? FacingDirections.LEFT : FacingDirections.RIGHT;
         } else {

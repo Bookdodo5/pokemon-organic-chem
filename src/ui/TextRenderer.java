@@ -22,6 +22,9 @@ public class TextRenderer {
 
 	public TextRenderResult renderText(Graphics2D g2, int innerBoxX, int innerBoxY, int maxWidth, String currentText,
 			String fullText) {
+		if (fullText == null || currentText == null) {
+			return new TextRenderResult(innerBoxX, innerBoxY);
+		}
 		String[] fullParagraphs = fullText.split("\n");
 		String[] paragraphs = currentText.split("\n");
 

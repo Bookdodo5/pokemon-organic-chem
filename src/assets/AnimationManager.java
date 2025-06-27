@@ -108,7 +108,6 @@ public class AnimationManager {
         if (currentFrame >= totalFrames) return;
 
         int newSize = (int) (frameSize * scale * scaleFactor);
-        g2.drawRect(x, y, newSize, newSize);
         g2.drawImage(frames[currentFrame], x, y, newSize, newSize, null);
     }
 

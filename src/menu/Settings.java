@@ -32,7 +32,7 @@ public class Settings {
 
 	public int getFPS() { return FPS; }
 	
-	public void setFPS(int fPS) { FPS = fPS; }
+	public void setFPS(int fps) { FPS = fps; }
 	
 	private static Settings instance;
 

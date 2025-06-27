@@ -89,6 +89,13 @@ public class KeyBindingHandler {
 		actionMap.put("runReleased", new KeyAction(Keys.RUN, false));
 	}
 
+	public void simulateInteractPress() {
+		if (keyStack.contains(Keys.INTERACT)) {
+			new KeyAction(Keys.INTERACT, true).actionPerformed(null);
+			new KeyAction(Keys.INTERACT, false).actionPerformed(null);
+		}
+	}
+
 	private class KeyAction extends AbstractAction {
 		private final Keys key;
 		private final boolean isPressing;

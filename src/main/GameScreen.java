@@ -14,9 +14,6 @@ import menu.Settings;
 
 public class GameScreen extends JPanel implements Runnable {
 
-	final long FPS = Settings.getInstance().getFPS();
-	final double targetTimePerFrame = 1000000000.0 / FPS;
-
 	Thread gameThread;
 	GameContentManager gameContentManager;
 	StateManager stateManager;
@@ -64,6 +61,13 @@ public class GameScreen extends JPanel implements Runnable {
 		while (gameThread != null) {
 			long currentTime = System.nanoTime();
 			long elapseTime = currentTime - lastTime;
+
+			long FPS = Settings.getInstance().getFPS();
+			if (gameContentManager.getDeveloperMode().isHyperSpeed()) {
+				FPS = 3000;
+				keyHandler.simulateInteractPress();
+			}
+			double targetTimePerFrame = 1000000000.0 / FPS;
 
 			delta += elapseTime / targetTimePerFrame;
 			lastTime = currentTime;

@@ -92,6 +92,7 @@ public class OverworldState extends GameState {
 		player.setMap(nextMap);
 		mapManager.setCurrentMap(nextMap);
 		cameraManager.update();
+		mapManager.updateVisibleMaps(player.getMapX(), player.getMapY());
 		initializeEntities();
 	}
 
@@ -105,12 +106,16 @@ public class OverworldState extends GameState {
 		}
 	}
 
-	private void initializeEntities() {
+	public final void initializeEntities() {
 		entities = new ArrayList<>();
 		entities.add(player);
 		entities.addAll(npcManager.getNPCs().stream()
 				.filter(npc -> mapManager.getVisibleMaps().contains(mapManager.getMap(npc.getMap())))
 				.collect(Collectors.toList()));
+
+		for(NPC npc : npcManager.getNPCs()) {
+			System.out.println("NPC: " + npc.getClass().getSimpleName() + " Map Position: " + npc.getMapX() + ", " + npc.getMapY());
+		}
 	}
 
 	@Override
@@ -201,11 +206,11 @@ public class OverworldState extends GameState {
 	@Override
 	public void keyPressed() {
 		if(keyHandler.pressingKey(Keys.RUN)) {
-			player.setSpeed(2.4 * 2.5);
+			player.setSpeed(2.25 * 2.25);
 			player.setAnimationSpeed(5);
 			player.setSpriteSheet(NPCSprites.RED_RUN);
 		} else {
-			player.setSpeed(2.4);
+			player.setSpeed(2.25);
 			player.setAnimationSpeed(8);
 			player.setSpriteSheet(NPCSprites.RED);
 		}
@@ -214,7 +219,7 @@ public class OverworldState extends GameState {
 	@Override
 	public void keyReleased(Keys key) {
 		if(key == Keys.RUN) {
-			player.setSpeed(2.4);
+			player.setSpeed(2.25);
 			player.setAnimationSpeed(8);
 			player.setSpriteSheet(NPCSprites.RED);
 		}

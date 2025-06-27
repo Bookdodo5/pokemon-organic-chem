@@ -9,8 +9,10 @@ import java.util.Map;
 
 public abstract class CutsceneTemplate {
 
-    public static void addCutscene(Map<String, List<Cutscene>> cutscenes, String key, Cutscene cutscene) {
-        cutscenes.computeIfAbsent(key, k -> new ArrayList<>()).add(cutscene);
+    public static void addCutscene(Map<String, List<Cutscene>> cutscenes, Cutscene cutscene, String... keys) {
+        for(String key : keys) {
+            cutscenes.computeIfAbsent(key, k -> new ArrayList<>()).add(cutscene);
+        }
     }
 
     public static String getKeyLocation(int x, int y, String map, boolean interact, FacingDirections facing) {

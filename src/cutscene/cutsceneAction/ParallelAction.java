@@ -43,7 +43,7 @@ public class ParallelAction implements InputCutsceneAction {
     public void reset() {
         isFinished = false;
         for (CutsceneAction action : actions) {
-            if (!action.isFinished()) action.reset();
+            action.reset();
         }
     }
 
@@ -61,6 +61,7 @@ public class ParallelAction implements InputCutsceneAction {
 
     @Override
     public void keyTapped(KeyBindingHandler keyHandler) {
+        if(isFinished) return;
         for (CutsceneAction action : actions) {
             boolean canAcceptInput = action instanceof InputCutsceneAction;
             if (canAcceptInput) {
@@ -71,6 +72,7 @@ public class ParallelAction implements InputCutsceneAction {
 
     @Override
     public void keyPressed(KeyBindingHandler keyHandler) {
+        if(isFinished) return;
         for (CutsceneAction action : actions) {
             boolean canAcceptInput = action instanceof InputCutsceneAction;
             if (canAcceptInput) {
@@ -81,6 +83,7 @@ public class ParallelAction implements InputCutsceneAction {
 
     @Override
     public void keyReleased(Keys key) {
+        if(isFinished) return;
         for (CutsceneAction action : actions) {
             boolean canAcceptInput = action instanceof InputCutsceneAction;
             if (canAcceptInput) {

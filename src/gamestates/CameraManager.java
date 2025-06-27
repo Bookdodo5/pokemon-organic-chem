@@ -19,7 +19,7 @@ public class CameraManager {
 
 	public CameraManager(Human focusPoint) {
 		this.cameraX = (int) focusPoint.getX() - ((int) ((double) SCREEN_WIDTH / SCALE) - focusPoint.getSpriteWidth()) / 2;
-		this.cameraY = (int) focusPoint.getY() - ((int) ((double) SCREEN_HEIGHT / SCALE) - focusPoint.getSpriteHeight()) / 2 - 16;
+		this.cameraY = (int) focusPoint.getY() - ((int) ((double) SCREEN_HEIGHT / SCALE) - focusPoint.getSpriteHeight()) / 2;
 		this.focusPoint = focusPoint;
 		this.isFollowingHuman = true;
 	}
@@ -36,7 +36,7 @@ public class CameraManager {
 	public void update() {
 		if (isFollowingHuman) {
 			cameraX = (int) focusPoint.getX() - ((int) ((double) SCREEN_WIDTH / SCALE) - focusPoint.getSpriteWidth()) / 2;
-			cameraY = (int) focusPoint.getY() - ((int) ((double) SCREEN_HEIGHT / SCALE) - focusPoint.getSpriteHeight()) / 2 - 16;
+			cameraY = (int) focusPoint.getY() - ((int) ((double) SCREEN_HEIGHT / SCALE) - focusPoint.getSpriteHeight()) / 2;
 		}
 	}
 

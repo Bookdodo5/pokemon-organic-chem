@@ -46,7 +46,9 @@ public class CutsceneState extends GameState {
     @Override
     public void draw(Graphics2D g2) {
         overworldState.draw(g2);
-        currentCutscene.draw(g2);
+        if (currentCutscene != null) {
+            currentCutscene.draw(g2);
+        }
     }
 
     @Override

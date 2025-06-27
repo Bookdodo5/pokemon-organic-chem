@@ -46,7 +46,7 @@ public class ElevatorTemplate extends CutsceneTemplate {
                 )
             );
 
-            addCutscene(cutscenes, key, cutscene);
+            addCutscene(cutscenes, cutscene, key);
         });
     }
 
