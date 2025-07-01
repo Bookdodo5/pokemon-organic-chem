@@ -15,7 +15,7 @@ public class DialogueBattleEvent extends BattleEvent {
 
     public DialogueBattleEvent(Dialogue dialogue) {
 	this.dialogue = dialogue;
-	this.dialogueRenderer = new DialogueRenderer();
+	this.dialogueRenderer = new DialogueRenderer(true);
     }
     
     public Dialogue getDialogue() {
@@ -23,7 +23,7 @@ public class DialogueBattleEvent extends BattleEvent {
     }
     
     public DialogueRenderer getDialogueRenderer() {
-	return dialogueRenderer;
+	    return dialogueRenderer;
     }
 
     @Override

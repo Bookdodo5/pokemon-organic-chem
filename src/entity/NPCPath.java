@@ -24,9 +24,12 @@ public class NPCPath {
     public List<Point> getPoints() {
         return points;
     }
-    
-    public Point getNextPoint() {
+
+    public void nextPoint() {
         currentPointIndex = (currentPointIndex + 1) % points.size();
+    }
+    
+    public Point getPoint() {
         return points.get(currentPointIndex);
     }
 

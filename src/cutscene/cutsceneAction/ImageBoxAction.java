@@ -5,6 +5,7 @@ import assets.SoundManager;
 import cutscene.InputCutsceneAction;
 import input.KeyBindingHandler;
 import input.Keys;
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import main.Constants;
@@ -25,7 +26,15 @@ public class ImageBoxAction implements InputCutsceneAction {
 	BufferedImage image;
 
 	public ImageBoxAction(String imagePath) {
-		this.boxStyle = BoxStyle.getDialogueStyle().build();
+		this.boxStyle = BoxStyle.getDialogueStyle()
+			.cornerArc(0)
+			.topBorderColor(new Color(200, 200, 200, 70))
+			.bottomBorderColor(new Color(200, 200, 200, 90))
+			.topFillColor(new Color(240, 240, 240))
+			.bottomFillColor(new Color(230, 230, 230))
+			.shadowOffset(0)
+			.shadowColor(new Color(0, 0, 0, 0))
+			.build();
 		this.boxRenderer = new BoxRenderer(boxStyle);
 		this.isFinished = false;
 		this.image = AssetManager.loadImage(imagePath);

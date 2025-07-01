@@ -6,7 +6,6 @@ import cutscene.CutsceneManager;
 import entity.NPCManager;
 import entity.Player;
 import gamestates.CameraManager;
-import gamestates.FlagManager;
 import gamestates.GameStates;
 import gamestates.StateManager;
 import gamestates.states.BattleState;
@@ -29,7 +28,6 @@ public class GameContentManager {
 	private final NPCManager npcManager;
 	private final Player player;
 	private final CameraManager cameraManager;
-	private final FlagManager flagManager;
 	private final PlayerDeckManager playerDeckManager;
 	private final BattleDataManager battleDataManager;
 	private final ReactionRecord reactionRecord;
@@ -42,14 +40,13 @@ public class GameContentManager {
 		this.stateManager = new StateManager();
 		this.keyHandler = new KeyBindingHandler(stateManager);
 		
-		this.flagManager = new FlagManager();
 		this.npcManager = new NPCManager();
 		this.mapManager = new MapManager();
 		this.playerDeckManager = new PlayerDeckManager();
 		this.battleDataManager = new BattleDataManager();
 		this.player = new Player(keyHandler, mapManager);
 		this.cameraManager = new CameraManager(player);
-		this.reactionRecord = new ReactionRecord(flagManager);
+		this.reactionRecord = new ReactionRecord();
 		this.moleculeRecord = new MoleculeRecord();
 		Molecule.setReactionAvailabilityManager(reactionRecord);
 		
@@ -57,7 +54,6 @@ public class GameContentManager {
 			npcManager, 
 			player, 
 			cameraManager, 
-			flagManager, 
 			stateManager
 			);
 		initializePlayerAndMap();
@@ -86,7 +82,7 @@ public class GameContentManager {
 	}
 
 	private void initializeFlags() {
-		//flagManager.addFlag("ADOPTED_CHILD_1");
+		//flagManager.addFlag("YUUKI_1");
 		//flagManager.addFlag("PROF_DECANE_1");
 	}
 
@@ -112,8 +108,6 @@ public class GameContentManager {
 	public Player getPlayer() { return player; }
 
 	public CameraManager getCameraManager() { return cameraManager; }
-
-	public FlagManager getFlagManager() { return flagManager; }
 
 	public PlayerDeckManager getPlayerDeckManager() { return playerDeckManager; }
 

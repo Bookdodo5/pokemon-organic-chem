@@ -82,7 +82,7 @@ public class BattleInputRenderer {
     
     public void renderActionSelection(Graphics2D g2, ActionPages currentPage, int selectionIndex, int focusIndex) {
         
-        DialogueRenderer dialogueRenderer = new DialogueRenderer();
+        DialogueRenderer dialogueRenderer = new DialogueRenderer(true);
         BoxDimensions dims = dialogueRenderer.calculateDimensions(actionBoxStyle, disabledWhiteTextStyle);
         
         switch (currentPage) {

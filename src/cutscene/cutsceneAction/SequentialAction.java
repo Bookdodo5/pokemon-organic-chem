@@ -14,8 +14,10 @@ public class SequentialAction implements InputCutsceneAction {
 
     public SequentialAction(CutsceneAction... actions) {
         this.actions = actions;
+        this.currentActionIndex = 0;
+        this.isFinished = false;
     }
-
+    
     @Override
     public void start() {
         isFinished = false;

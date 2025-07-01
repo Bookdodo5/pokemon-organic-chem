@@ -20,7 +20,7 @@ public class DialogueAction implements InputCutsceneAction {
 	public DialogueAction(Dialogue dialogue) {
 		this.originalDialogue = dialogue;
 		this.dialogue = dialogue;
-		this.dialogueRenderer = new DialogueRenderer();
+		this.dialogueRenderer = new DialogueRenderer(false);
 		isFinished = false;
 	}
 

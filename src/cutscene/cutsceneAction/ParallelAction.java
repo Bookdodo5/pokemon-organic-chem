@@ -13,6 +13,7 @@ public class ParallelAction implements InputCutsceneAction {
 
     public ParallelAction(CutsceneAction... actions) {
         this.actions = actions;
+        this.isFinished = false;
     }
 
     @Override

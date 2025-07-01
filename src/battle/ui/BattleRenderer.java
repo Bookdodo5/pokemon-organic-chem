@@ -276,7 +276,7 @@ public class BattleRenderer {
         g2.setColor(new Color(50, 50, 50));
         g2.fillRect(0, screenHeight - rectHeight, screenWidth, rectHeight);
 
-        DialogueRenderer dialogueRenderer = new DialogueRenderer();
+        DialogueRenderer dialogueRenderer = new DialogueRenderer(true);
         BoxDimensions dims = dialogueRenderer.calculateDimensions(battleBoxStyle, whiteTextStyle);
 
         dialogueRenderer.drawBox(g2, dims, battleBoxStyle);

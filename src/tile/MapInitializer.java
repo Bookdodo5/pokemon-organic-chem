@@ -35,7 +35,7 @@ public class MapInitializer {
     private static void initializePorbitalTown() {
         initMap("porbital_town", "essentials", "Lappet", 0, 0);
         
-        initInterior("room", "Lappet");
+        initInterior("room", "Safari");
         initInterior("house1_f1", "Lappet");
         initInterior("house1_f2", "Lappet");
         initInterior("house2_f1", "Lappet");

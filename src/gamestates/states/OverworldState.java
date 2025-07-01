@@ -112,10 +112,6 @@ public class OverworldState extends GameState {
 		entities.addAll(npcManager.getNPCs().stream()
 				.filter(npc -> mapManager.getVisibleMaps().contains(mapManager.getMap(npc.getMap())))
 				.collect(Collectors.toList()));
-
-		for(NPC npc : npcManager.getNPCs()) {
-			System.out.println("NPC: " + npc.getClass().getSimpleName() + " Map Position: " + npc.getMapX() + ", " + npc.getMapY());
-		}
 	}
 
 	@Override
@@ -227,7 +223,9 @@ public class OverworldState extends GameState {
 
 	@Override
 	public void onExit(GameStates nextState) {
-
+		player.setSpeed(2.25);
+		player.setAnimationSpeed(8);
+		player.setSpriteSheet(NPCSprites.RED);
 	}
 
 	public String getCurrentMapID() { return mapManager.getCurrentMapID(); }

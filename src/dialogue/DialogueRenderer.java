@@ -1,8 +1,11 @@
 package dialogue;
 
+import gamestates.FlagManager;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.util.HashMap;
+import java.util.Map;
 import static main.Constants.*;
 import menu.OptionRenderer;
 import menu.Settings;
@@ -27,12 +30,14 @@ public class DialogueRenderer {
 	private String page;
 
 	private TextStyle dialogueTextStyle = TextStyle.getDialogueStyle().build();
-	private BoxStyle dialogueBoxStyle = BoxStyle.getDialogueStyle().build();
+	private BoxStyle dialogueBoxStyle = getDialogueBoxStyleBuilder(Color.WHITE, false).build();
 
 	private final TextStyle optionTextStyle = TextStyle.getOptionStyle().build();
-	private final BoxStyle optionBoxStyle = BoxStyle.getOptionStyle().build();
+	private final BoxStyle optionBoxStyle = BoxStyle.getOptionStyle()
+		.shadowColor(new Color(80, 80, 80, 100))
+		.build();
 
-	private static final int DIALOGUE_BOX_MARGIN = 5;
+	private final int DIALOGUE_BOX_MARGIN;
 	private static final int DIALOGUE_BOX_HEIGHT = 100;
 	private static final int OPTION_BOX_MARGIN = 10;
 
@@ -40,6 +45,46 @@ public class DialogueRenderer {
 	private static final int INDICATOR_STROKE_WIDTH = 2;
 	private static final Color INDICATOR_COLOR = new Color(210, 60, 60);
 	private static final Color INDICATOR_STROKE_COLOR = new Color(100, 50, 50);
+
+	private Color speakerColor;
+
+	private static final Map<String, Color> SPEAKER_COLORS = new HashMap<>();
+
+	public DialogueRenderer(boolean isBattle) {
+		this.DIALOGUE_BOX_MARGIN = isBattle ? 5 : 20;
+	}
+
+	static {
+		SPEAKER_COLORS.put("", new Color(255, 255, 255));
+		SPEAKER_COLORS.put("THINKING", new Color(255, 255, 255));
+		SPEAKER_COLORS.put("YUUKI", new Color(190, 50, 230));
+		SPEAKER_COLORS.put("DECANE", new Color(70, 130, 170));
+		SPEAKER_COLORS.put("CELLULOSE", new Color(100, 255, 100));
+		SPEAKER_COLORS.put("DIRECTOR", new Color(255, 100, 100));
+		SPEAKER_COLORS.put("MOLECULAR GASTRONOMIST", new Color(210, 150, 70));
+		SPEAKER_COLORS.put("PSYCHIC", new Color(100, 70, 150));
+		SPEAKER_COLORS.put("PORBITAL COP", new Color(60, 120, 200));
+		SPEAKER_COLORS.put("DISGUISED COP", new Color(80, 150, 180));
+		SPEAKER_COLORS.put("CHLOROPHYLL", new Color(100, 250, 150));
+	}
+
+	private Color tintWith(Color color, double weight, Color tintColor) {
+		double r = color.getRed() * weight + tintColor.getRed() * (1.0 - weight);
+		double g = color.getGreen() * weight + tintColor.getGreen() * (1.0 - weight);
+		double b = color.getBlue() * weight + tintColor.getBlue() * (1.0 - weight);
+		return new Color((int) r, (int) g, (int) b);
+	}
+
+	private BoxStyle.Builder getDialogueBoxStyleBuilder(Color color, boolean black) {
+		return BoxStyle.getDialogueStyle()
+			.cornerArc(0)
+			.topBorderColor(new Color(color.getRed(), color.getGreen(), color.getBlue(), 70).brighter())
+			.bottomBorderColor(new Color(color.getRed(), color.getGreen(), color.getBlue(), 90).brighter())
+			.topFillColor(tintWith(color, black ? 0.2 : 0.05, black ? new Color(0, 0, 0) : new Color(255, 255, 255)))
+			.bottomFillColor(tintWith(color, black ? 0.3 : 0.1, black ? new Color(0, 0, 0) : new Color(255, 255, 255)))
+			.shadowOffset(0)
+			.shadowColor(new Color(0, 0, 0, 0));
+	}
 
 	public void setTextAnimationSpeed(int textAnimationSpeed) { this.textAnimationSpeed = textAnimationSpeed; }
 
@@ -57,6 +102,11 @@ public class DialogueRenderer {
 	
 	public void setRenderingDialogue(Dialogue dialogue) {
 	    setRenderingDialogue(dialogue, dialogueBoxStyle, dialogueTextStyle);
+		if(dialogue.getSpeaker() == null) return;
+		this.speakerColor = SPEAKER_COLORS.getOrDefault(
+			dialogue.getSpeaker(), new Color(255, 255, 255)
+		);
+		this.dialogueBoxStyle = getDialogueBoxStyleBuilder(speakerColor, false).build();
 	}
 
 	public void update() {
@@ -93,8 +143,46 @@ public class DialogueRenderer {
 		BoxDimensions dims = calculateDimensions(dialogueBoxStyle, dialogueTextStyle);
 
 		drawBox(g2, dims, dialogueBoxStyle);
+		drawSpeaker(g2, dims);
 		TextRenderResult textRenderResult = drawText(g2, dims);
 		if (animationFinished) drawPostAnimationDetail(g2, dims, textRenderResult);
+	}
+
+	private void drawSpeaker(Graphics2D g2, BoxDimensions dims) {
+		if (dialogue == null || dialogue.getSpeaker() == null || dialogue.getSpeaker().equals("") || dialogue.getSpeaker().equals("THINKING")) return;
+		
+		TextStyle speakerTextStyle = TextStyle.getOptionStyle()
+				.fontSize(16 ,"powerclearbold")
+				.textColor(Color.WHITE)
+				.textMarginX(10)
+				.textMarginY(3)
+				.build();
+		TextRenderer speakerRenderer = new TextRenderer(speakerTextStyle);
+		boolean knowSpeaker = FlagManager.getInstance().hasFlag(dialogue.getSpeaker().toUpperCase()+"_KNOW");
+		String speakerText = knowSpeaker ? dialogue.getSpeaker().toUpperCase() : "???";
+
+		int textWidth = speakerRenderer.getTextWidth(g2, speakerText);
+		int textHeight = speakerRenderer.getTextHeight(g2) * 2;
+		int boxBorders = dialogueBoxStyle.getBorderThickness() + dialogueBoxStyle.getInnerHighlightStrokeWidth();
+		int boxWidth = Math.max(120, textWidth + 2 * speakerTextStyle.getTextMarginX() + 2 * boxBorders);
+		int boxHeight = textHeight + 2 * speakerTextStyle.getTextMarginY() + 2 * boxBorders;
+		int boxX = dims.boxX() - boxBorders;
+		int boxY = dims.boxY() - boxHeight + boxBorders;
+
+		BoxRenderer speakerBoxRenderer = new BoxRenderer(
+			getDialogueBoxStyleBuilder(speakerColor, true)
+			.innerHighlightStrokeWidth(0)
+			.borderThickness(0)
+			.cornerArc(5)
+			.shadowOffset(1)
+			.shadowColor(new Color(0, 0, 0, 50))
+			.build()
+		);
+		speakerBoxRenderer.renderBox(g2, boxX, boxY, boxWidth, boxHeight);
+
+		int textX = boxX + boxWidth/2 - textWidth/2;
+		int textY = boxY + boxBorders + speakerTextStyle.getTextMarginY();
+		speakerRenderer.renderLine(g2, textX, textY, speakerText);
 	}
 
 	private TextRenderResult drawText(Graphics2D g2, BoxDimensions dims) {

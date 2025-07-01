@@ -1,6 +1,7 @@
 package entity;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class NPCManager {
@@ -8,9 +9,12 @@ public class NPCManager {
 	
 	public NPCManager() {
 		npcs = new ArrayList<>();
+		initializePorbitalTownNPCs();
+	}
 
-		npcs.add(new NPC.Builder("AdoptedChild", NPCSprites.PSYCHIC)
-			.position(10, 3, "porbital_town__house1_f2")
+	private void initializePorbitalTownNPCs() {
+		npcs.add(new NPC.Builder("Yuuki", NPCSprites.COOL_F)
+			.position(10, 3, "porbital_town__house1_f1")
 			.facing(FacingDirections.DOWN)
 			.build()
 		);
@@ -20,6 +24,74 @@ public class NPCManager {
 			.facing(FacingDirections.UP)
 			.build()
 		);
+
+		npcs.add(new NPC.Builder("ProfCellulose", NPCSprites.SUPER_NERD)
+			.position(9, 8, "porbital_town__house2_f1")
+			.facing(FacingDirections.LEFT)
+			.rect(3, 2)
+			.build()
+		);
+
+		npcs.add(new NPC.Builder("MolecularGastronomist", NPCSprites.CHEF)
+			.position(16, 11, "porbital_town")
+			.facing(FacingDirections.UP)
+			.rect(1, 2)
+			.build()
+		);
+
+		npcs.add(new NPC.Builder("PorbitalCop1", NPCSprites.COP)
+			.position(38, 16, "porbital_town")
+			.facing(FacingDirections.UP)
+			.path(new NPCPath(new ArrayList<>(Arrays.asList(
+				new NPCPath.Point(38, 16),
+				new NPCPath.Point(38, 20),
+				new NPCPath.Point(32, 20),
+				new NPCPath.Point(32, 22),
+				new NPCPath.Point(24, 22),
+				new NPCPath.Point(24, 18),
+				new NPCPath.Point(31, 18),
+				new NPCPath.Point(31, 16)
+			))))
+			.build()
+		);
+
+		npcs.add(new NPC.Builder("PorbitalCop2", NPCSprites.COP)
+			.position(9, 18, "porbital_town")
+			.facing(FacingDirections.UP)
+			.path(new NPCPath(new ArrayList<>(Arrays.asList(
+				new NPCPath.Point(9, 18),
+				new NPCPath.Point(9, 23),
+				new NPCPath.Point(12, 23),
+				new NPCPath.Point(12, 18)
+			))))
+			.build()
+		);
+
+		npcs.add(new NPC.Builder("PorbitalCop3", NPCSprites.COP)
+			.position(36, 11, "porbital_town")
+			.facing(FacingDirections.UP)
+			.rect(1, 1)
+			.build()
+		);
+
+		npcs.add(new NPC.Builder("Psychic", NPCSprites.PSYCHIC)
+			.position(18, 22, "porbital_town")
+			.facing(FacingDirections.DOWN)
+			.build()
+		);
+
+		npcs.add(new NPC.Builder("ChlorophyllGirl", NPCSprites.GIRL_GREEN)
+			.position(24, 16, "porbital_town")
+			.facing(FacingDirections.UP)
+			.build()
+		);
+
+		npcs.add(new NPC.Builder("Director", NPCSprites.DIRECTOR)
+			.position(4, 5, "porbital_town__room")
+			.facing(FacingDirections.DOWN)
+			.build()
+		);
+
 	}
 
 	public List<NPC> getNPCs() {

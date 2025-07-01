@@ -14,8 +14,8 @@ public class ReactionRecord {
     private final FlagManager flagManager;
     private final Map<String, Set<String>> battleReactionMap;
     
-    public ReactionRecord(FlagManager flagManager) {
-        this.flagManager = flagManager;
+    public ReactionRecord() {
+        this.flagManager = FlagManager.getInstance();
         battleReactionMap = new HashMap<>();
         initializeBattleReactionMap();
         unlockBattle(1);

@@ -14,10 +14,6 @@ public class DialogueOption extends Option {
 		this(text, new Dialogue(""), customExecution);
 	}
 
-	public DialogueOption(String text, String nextDialogueText) {
-		this(text, new Dialogue(nextDialogueText));
-	}
-
 	public DialogueOption(String text, String... nextDialoguePages) {
 		this(text, new Dialogue(nextDialoguePages));
 	}

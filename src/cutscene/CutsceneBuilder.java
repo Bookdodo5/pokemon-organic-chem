@@ -9,20 +9,23 @@ import gamestates.FlagManager;
 import gamestates.StateManager;
 import gamestates.states.OverworldState;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.function.BooleanSupplier;
 
 public class CutsceneBuilder {
     private final List<CutsceneAction> actions = new ArrayList<>();
     private final List<String> yesFlags = new ArrayList<>();
     private final List<String> noFlags = new ArrayList<>();
 
-    public CutsceneBuilder require(String flag) {
-        yesFlags.add(flag);
+    public CutsceneBuilder require(String... flag) {
+        yesFlags.addAll(Arrays.asList(flag));
         return this;
     }
 
-    public CutsceneBuilder forbid(String flag) {
-        noFlags.add(flag);
+    public CutsceneBuilder forbid(String... flag) {
+        noFlags.addAll(Arrays.asList(flag));
         return this;
     }
     
@@ -186,6 +189,11 @@ public class CutsceneBuilder {
         actions.add(new AnimationAction(name, x, y, scale, cameraManager));
         return this;
     }
+
+    public CutsceneBuilder animation(String name, Callable<Integer> getX, Callable<Integer> getY, double scale, CameraManager cameraManager) {
+        actions.add(new AnimationAction(name, getX, getY, scale, cameraManager));
+        return this;
+    }
     
     public CutsceneBuilder showImage(String imagePath) {
         actions.add(new ImageBoxAction(imagePath));
@@ -235,30 +243,30 @@ public class CutsceneBuilder {
             .wait(10);
     }
 
-    public CutsceneBuilder speak(String text) {
-        return this
-            .sfx("GameCursor")
-            .say(text);
-    }
-
-    public CutsceneBuilder speak(String... pages) {
-        return this
-            .sfx("GameCursor")
-            .say(pages);
-    }
-
     public CutsceneBuilder speak(Dialogue dialogue) {
         return this
             .sfx("GameCursor")
             .say(dialogue);
     }
 
-    public CutsceneBuilder shout(String text, CameraManager camera) {
+    public CutsceneBuilder speak(String speaker, String... pages) {
+        return this
+            .sfx("GameCursor")
+            .say(new Dialogue(pages, speaker));
+    }
+
+    public CutsceneBuilder think(String... pages) {
+        return this
+            .sfx("GameCursor")
+            .say(new Dialogue(pages, ""));
+    }
+
+    public CutsceneBuilder shout(String speaker, String text, CameraManager camera) {
         return this
             .sfx("GameCursor")
             .parallel(
                 new CutsceneBuilder()
-                    .say(text)
+                    .speak(speaker, text)
                     .sfx("BattleDamageWeak")
                     .camShake(camera, 10)
                     .buildActions()
@@ -281,6 +289,32 @@ public class CutsceneBuilder {
     
     public CutsceneBuilder action(CutsceneAction action) {
         actions.add(action);
+        return this;
+    }
+
+    public CutsceneBuilder actions(CutsceneAction... actions) {
+        this.actions.addAll(Arrays.asList(actions));
+        return this;
+    }
+
+    public CutsceneBuilder condition(BooleanSupplier condition, CutsceneAction... trueAction) {
+        actions.add(new ConditionAction(
+            condition, new SequentialAction(trueAction)
+        ));
+        return this;
+    }
+
+    public CutsceneBuilder condition(String flag, CutsceneAction... trueAction) {
+        actions.add(new ConditionAction(
+            FlagManager.getInstance(), flag, new SequentialAction(trueAction)
+        ));
+        return this;
+    }
+
+    public CutsceneBuilder condition(String flag, int expectedValue, CutsceneAction... trueAction) {
+        actions.add(new ConditionAction(
+            FlagManager.getInstance(), flag, expectedValue, new SequentialAction(trueAction)
+        ));
         return this;
     }
 

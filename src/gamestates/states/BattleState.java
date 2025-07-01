@@ -42,7 +42,7 @@ public class BattleState extends GameState {
     public BattleState(StateManager stateManager, KeyBindingHandler keyHandler, GameContentManager gameContentManager) {
         super(stateManager, keyHandler, gameContentManager);
         this.playerDeckManager = gameContentManager.getPlayerDeckManager();
-        this.flagManager = gameContentManager.getFlagManager();
+        this.flagManager = FlagManager.getInstance();
         this.battleDataManager = gameContentManager.getBattleDataManager();
         this.reactionRecord = gameContentManager.getReactionRecord();
         this.moleculeRecord = gameContentManager.getMoleculeRecord();

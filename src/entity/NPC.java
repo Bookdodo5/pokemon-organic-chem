@@ -134,10 +134,15 @@ public class NPC extends Human {
 	private void handlePathFollowing(MapManager mapManager, List<Entity> humans) {
 		canMove = false;
 
-		NPCPath.Point targetPoint = path.getNextPoint();
+		NPCPath.Point targetPoint = path.getPoint();
 		
 		int deltaX = targetPoint.x - getMapX();
 		int deltaY = targetPoint.y - getMapY();
+
+		if(deltaX == 0 && deltaY == 0) {
+			path.nextPoint();
+			return;
+		}
 		
 		if (Math.abs(deltaX) > Math.abs(deltaY)) {
 			setFacingDirection(deltaX > 0 ? FacingDirections.RIGHT : FacingDirections.LEFT);

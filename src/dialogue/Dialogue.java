@@ -4,8 +4,14 @@ public class Dialogue {
 	private int currentPage;
 	private final String[] pages;
 	private DialogueOption[] options;
+	private String speaker = null;
 
 	private int selectionIndex = 0;
+
+	public Dialogue(String[] pages, String speaker) {
+		this(pages);
+		this.speaker = speaker;
+	}
 
 	public Dialogue(String[] pages) {
 		this(pages, new DialogueOption[0]);
@@ -15,8 +21,21 @@ public class Dialogue {
 		this(new String[] { page });
 	}
 
+	public Dialogue(String page, String speaker) {
+		this(new String[] { page }, speaker);
+	}
+
+	public Dialogue(String page, String speaker, DialogueOption... options) {
+		this(new String[] { page }, speaker, options);
+	}
+
 	public Dialogue(String page, DialogueOption... options) {
 		this(new String[] { page }, options);
+	}
+
+	public Dialogue(String[] pages, String speaker, DialogueOption... options) {
+		this(pages, options);
+		this.speaker = speaker;
 	}
 
 	public Dialogue(String[] pages, DialogueOption... options) {
@@ -36,6 +55,8 @@ public class Dialogue {
 		if (!hasOption()) return;
 		selectionIndex = (selectionIndex + 1) % options.length;
 	}
+
+	public String getSpeaker() { return speaker; }
 
 	public void previousSelectionIndex() {
 		if (!hasOption()) return;

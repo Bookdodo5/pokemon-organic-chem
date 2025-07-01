@@ -135,7 +135,7 @@ public class DeveloperMode {
     }
     
     private void handleFlags(String[] args) {
-        FlagManager flagManager = gameContentManager.getFlagManager();
+        FlagManager flagManager = FlagManager.getInstance();
         
         if (args.length == 0) {
             System.out.println("Current flags:");
@@ -361,7 +361,7 @@ public class DeveloperMode {
         Player player = gameContentManager.getPlayer();
         MapManager mapManager = gameContentManager.getMapManager();
         StateManager stateManager = gameContentManager.getStateManager();
-        FlagManager flagManager = gameContentManager.getFlagManager();
+        FlagManager flagManager = FlagManager.getInstance();
         
         System.out.println("\n=== CURRENT GAME INFO ===");
         System.out.println("Map: " + mapManager.getCurrentMapID());

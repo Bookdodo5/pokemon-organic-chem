@@ -4,14 +4,17 @@ import assets.AnimationManager;
 import cutscene.CutsceneAction;
 import gamestates.CameraManager;
 import java.awt.Graphics2D;
+import java.util.concurrent.Callable;
 import static main.Constants.ORIGINAL_TILE_SIZE;
 
 public class AnimationAction implements CutsceneAction {
 
     private final AnimationManager animationManager;
     private final String animation;
-    private final int x;
-    private final int y;
+    private int x;
+    private int y;
+    private Callable<Integer> getX;
+    private Callable<Integer> getY;
     private final double scale;
     private final int animationSpeed;
     private final CameraManager cameraManager;
@@ -19,15 +22,7 @@ public class AnimationAction implements CutsceneAction {
     private int animationCounter;
 
     public AnimationAction(String animation, int x, int y, double scale) {
-        this.animationManager = new AnimationManager();
-        this.animation = animation;
-        this.x = x;
-        this.y = y;
-        this.scale = scale;
-        this.cameraManager = null;
-        this.isFinished = false;
-        this.animationCounter = 0;
-        this.animationSpeed = 4;
+        this(animation, x, y, scale, null);
     }
 
     public AnimationAction(String animation, int x, int y, double scale, CameraManager cameraManager) {
@@ -42,9 +37,23 @@ public class AnimationAction implements CutsceneAction {
         this.animationSpeed = 4;
     }
 
+    public AnimationAction(String animation, Callable<Integer> getX, Callable<Integer> getY, double scale, CameraManager cameraManager) {
+        this(animation, 0, 0, scale, cameraManager);
+        this.getX = getX;
+        this.getY = getY;
+    }
+
     @Override
     public void start() {
-        animationManager.loadAnimation(animation);
+        try {
+            if (getX != null) x = getX.call();
+            if (getY != null) y = getY.call();
+        } catch (Exception e) {
+            System.err.println("Error getting x or y for animation: " + animation);
+        }
+        finally {
+            animationManager.loadAnimation(animation);
+        }
     }
 
     @Override

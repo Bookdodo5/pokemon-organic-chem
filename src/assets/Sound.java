@@ -91,6 +91,7 @@ public class Sound implements Runnable {
 		loadSound("Safari", "/music/Safari.wav");
 		loadSound("Tiall", "/music/Tiall.wav");
 		loadSound("Underwater", "/music/Underwater.wav");
+		loadSound("Rickroll", "/music/Rickroll.wav");
 	}
 
 	public void setFile(String file) {

@@ -19,6 +19,10 @@ public class Cutscene {
 
 	public void start() {
 		actionIndex = 0;
+		if(cutsceneActions.length == 0) {
+			isFinished = true;
+			return;
+		}
 		cutsceneActions[actionIndex].start();
 	}
 

@@ -4,10 +4,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class FlagManager {
+   private static final FlagManager INSTANCE = new FlagManager();
    private final Map<String, Integer> flags;
 
-   public FlagManager() {
+   private FlagManager() {
          this.flags = new HashMap<>();
+   }
+
+   public static FlagManager getInstance() {
+      return INSTANCE;
    }
 
    public void addFlag(String flag) {

@@ -64,7 +64,7 @@ public class GameScreen extends JPanel implements Runnable {
 
 			long FPS = Settings.getInstance().getFPS();
 			if (gameContentManager.getDeveloperMode().isHyperSpeed()) {
-				FPS = 3000;
+				FPS = 10000;
 				keyHandler.simulateInteractPress();
 			}
 			double targetTimePerFrame = 1000000000.0 / FPS;

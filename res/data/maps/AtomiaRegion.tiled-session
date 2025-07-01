@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "porbital_town__house1_f1.tmx",
+    "activeFile": "porbital_town.tmx",
     "automapping.whileDrawing": true,
     "expandedProjectPaths": [
         "."
@@ -65,8 +65,8 @@
             "scaleInEditor": 1.5
         },
         "methanopolis.tmx": {
-            "scale": 3,
-            "selectedLayer": 1,
+            "scale": 0.75,
+            "selectedLayer": 2,
             "viewCenter": {
                 "x": 896,
                 "y": 896
@@ -180,8 +180,8 @@
             "scale": 2.172135416666667,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 271.62210766095194,
-                "y": 192.20716940414817
+                "x": 271.8522958877832,
+                "y": 191.97698117731687
             }
         },
         "methanopolis__pokemart.tmx": {
@@ -212,8 +212,8 @@
             "scale": 2.172135416666667,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 271.62210766095194,
-                "y": 192.20716940414817
+                "x": 271.8522958877832,
+                "y": 191.97698117731687
             }
         },
         "methanopolis__workshop1.tmx": {
@@ -265,27 +265,27 @@
             "scaleInEditor": 1
         },
         "porbital_town.tmx": {
-            "scale": 0.75,
+            "scale": 1.5,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 832,
-                "y": 576
+                "x": 734,
+                "y": 647.6666666666666
             }
         },
         "porbital_town__house1_f1.tmx": {
             "scale": 2.172135416666667,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 226.9655916556768,
-                "y": 192.20716940414817
+                "x": 224.20333293370098,
+                "y": 191.97698117731687
             }
         },
         "porbital_town__house1_f2.tmx": {
             "scale": 2.172135416666667,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 224.203332933701,
-                "y": 192.20716940414817
+                "x": 224.20333293370098,
+                "y": 191.97698117731687
             }
         },
         "porbital_town__house2_f1.tmx": {
@@ -300,16 +300,16 @@
             "scale": 2.172135416666667,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 224.203332933701,
-                "y": 192.20716940414817
+                "x": 224.20333293370098,
+                "y": 191.97698117731687
             }
         },
         "porbital_town__room.tmx": {
             "scale": 2.172135416666667,
-            "selectedLayer": 2,
+            "selectedLayer": 3,
             "viewCenter": {
-                "x": 224.20333293370098,
-                "y": 191.97698117731687
+                "x": 224.203332933701,
+                "y": 192.20716940414817
             }
         },
         "porbital_town__townhall.tmx": {
@@ -433,10 +433,10 @@
             }
         },
         "tree-rule.tmx": {
-            "scale": 1.5,
-            "selectedLayer": 1,
+            "scale": 0.75,
+            "selectedLayer": 0,
             "viewCenter": {
-                "x": 469.66666666666663,
+                "x": 427.3333333333333,
                 "y": 512
             }
         },
@@ -499,9 +499,6 @@
     ],
     "project": "AtomiaRegion.tiled-project",
     "recentFiles": [
-        "porbital_town.tmx",
-        "methanopolis.tmx",
-        "porbital_town__room.tmx",
         "hallogue_town.tmx",
         "route2.tmx",
         "pyrrole_town.tmx",
@@ -510,7 +507,10 @@
         "methanopolis__workshop4.tmx",
         "methanopolis__workshop3.tmx",
         "methanopolis__workshop2.tmx",
-        "interiors.tsx"
+        "interiors.tsx",
+        "methanopolis__workshop1.tmx",
+        "methanopolis__townhall_f2.tmx",
+        "methanopolis__townhall_f1.tmx"
     ],
     "tileset.lastUsedFormat": "tsx"
 }
