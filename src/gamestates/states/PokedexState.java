@@ -114,7 +114,7 @@ public class PokedexState extends GameState {
             case TAB_SELECTION -> {}
             case SCROLL -> {
                 if (selection.getScrollIndex() > 0) {
-                    selection.setScrollIndex(selection.getScrollIndex() - 1);
+                    selection.setScrollIndex(Math.max(0, selection.getScrollIndex() - 1));
                     SoundManager.getSfxplayer().playSE("GameCursor");
                 }
                 else {
@@ -131,10 +131,14 @@ public class PokedexState extends GameState {
                     selection.setCardIndex(selection.getCardIndex() - 4);
                     SoundManager.getSfxplayer().playSE("GameCursor");
                 }
-                else {
+                else if(getMaxScrollIndex() > 0) {
                     selection.setArea(SelectionArea.SCROLL);
-                    selection.setScrollIndex(getMaxScrollIndex() - 1);
-                    selection.setFocusIndex(getMaxScrollIndex() - selection.getCurrentTab().getScrollDisplay());
+                    selection.setScrollIndex(Math.max(0, getMaxScrollIndex() - 1));
+                    selection.setFocusIndex(Math.max(0, getMaxScrollIndex() - selection.getCurrentTab().getScrollDisplay()));
+                    SoundManager.getSfxplayer().playSE("GameCursor");
+                }
+                else {
+                    selection.setArea(SelectionArea.TAB_SELECTION);
                     SoundManager.getSfxplayer().playSE("GameCursor");
                 }
             }
@@ -152,10 +156,17 @@ public class PokedexState extends GameState {
     private void handleDown() {
         switch (selection.getArea()) {
             case TAB_SELECTION -> {
-                selection.setArea(SelectionArea.SCROLL);
-                selection.setScrollIndex(0);
-                selection.setFocusIndex(0);
-                SoundManager.getSfxplayer().playSE("GameCursor");
+                if (getMaxScrollIndex() > 0) {
+                    selection.setArea(SelectionArea.SCROLL);
+                    selection.setScrollIndex(0);
+                    selection.setFocusIndex(0);
+                    SoundManager.getSfxplayer().playSE("GameCursor");
+                }
+                else if(selection.getCurrentTab() == PokedexTab.DECK) {
+                    selection.setArea(SelectionArea.PLAYER_DECK);
+                    selection.setCardIndex(0);
+                    SoundManager.getSfxplayer().playSE("GameCursor");
+                }
             }
             case SCROLL -> {
                 int maxScrollIndex = getMaxScrollIndex();
@@ -251,7 +262,11 @@ public class PokedexState extends GameState {
                     SoundManager.getSfxplayer().playSE("BattleDamageWeak");
                 }
                 if(selection.getScrollIndex() >= playerDeckManager.getAvailableCardTypes()) {
-                    selection.setScrollIndex(playerDeckManager.getAvailableCardTypes() - 1);
+                    selection.setScrollIndex(Math.max(0, playerDeckManager.getAvailableCardTypes() - 1));
+                }
+                if(playerDeckManager.getAvailableCardTypes() == 0) {
+                    selection.setArea(SelectionArea.PLAYER_DECK);
+                    selection.setCardIndex(0);
                 }
             }
             case REACTION -> {
@@ -280,8 +295,8 @@ public class PokedexState extends GameState {
         }
         if(playerDeckManager.getDeckSize() == 0) {
             selection.setArea(SelectionArea.SCROLL);
-            selection.setScrollIndex(getMaxScrollIndex() - 1);
-            selection.setFocusIndex(getMaxScrollIndex() - selection.getCurrentTab().getScrollDisplay());
+            selection.setScrollIndex(Math.max(0, getMaxScrollIndex() - 1));
+            selection.setFocusIndex(Math.max(0, getMaxScrollIndex() - selection.getCurrentTab().getScrollDisplay()));
         }
     }
 }

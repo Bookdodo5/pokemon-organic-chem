@@ -25,6 +25,15 @@ public class MapManager {
         initializeAll();
 	}
 
+    public void changeMapMusic(String map, String music) {
+        if(maps.containsKey(map)) {
+            MapData newMapData = maps.get(map);
+            if(newMapData == null) return;
+            newMapData.setMusic(music);
+            maps.put(map, newMapData);
+        }
+    }
+
     private void initializeAll() {
         MapInitializer.initializeMaps(this);
         TransitionInitializer.initializeTransitions(this);

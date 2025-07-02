@@ -54,7 +54,8 @@ public class GameContentManager {
 			npcManager, 
 			player, 
 			cameraManager, 
-			stateManager
+			stateManager,
+			mapManager
 			);
 		initializePlayerAndMap();
 		initializeGameStates();

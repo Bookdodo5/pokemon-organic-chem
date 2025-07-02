@@ -1,7 +1,6 @@
 package pokedex;
 
 import battle.molecules.Molecule;
-import battle.molecules.MoleculeFactory;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashSet;
@@ -14,9 +13,6 @@ public class MoleculeRecord {
 
     public MoleculeRecord() {
         this.moleculeRecord = new HashSet<>();
-        addMolecule(MoleculeFactory.create("Hexanedial"));
-        addMolecule(MoleculeFactory.create("Hexanedioic acid"));
-        addMolecule(MoleculeFactory.create("Cyclohexene"));
     }
 
     public final void addMolecule(Molecule molecule) {

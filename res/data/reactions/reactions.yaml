@@ -7,6 +7,12 @@ AnimationPath: electric1
 
 # Ozonolysis
 Name: Ozonolysis
-Cost: 0
+Cost: 1
 Description: Breaks alkenes using ozone to form aldehydes or ketones
+AnimationPath: electric1
+
+# Hydrohalogenation
+Name: Hydrohalogenation
+Cost: 1
+Description: Adds hydrogen halide to alkenes or alkynes
 AnimationPath: electric1

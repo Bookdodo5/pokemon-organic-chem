@@ -28,7 +28,12 @@ public class NPCManager {
 		npcs.add(new NPC.Builder("ProfCellulose", NPCSprites.SUPER_NERD)
 			.position(9, 8, "porbital_town__house2_f1")
 			.facing(FacingDirections.LEFT)
-			.rect(3, 2)
+			.build()
+		);
+
+		npcs.add(new NPC.Builder("Kusari", NPCSprites.COOL_M)
+			.position(6, 4, "porbital_town__house2_f2")
+			.facing(FacingDirections.LEFT)
 			.build()
 		);
 

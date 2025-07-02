@@ -6,7 +6,6 @@ import battle.cards.CardFactory;
 import battle.cards.Deck;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -19,33 +18,12 @@ public class PlayerDeckManager {
 		availableCards = new HashMap<>();
 		customDeck = new ArrayList<>();
 		initializeAvailableCards();
-		initializeDefaultDeck();
 	}
 
 	private void initializeAvailableCards() {
-		addToCollection("Fish", 1);
-		addToCollection("Weather Report", 1);
-		addToCollection("Cl2", 3);
-		addToCollection("Br2", 3);
+		addToCollection("Cl2", 2);
+		addToCollection("Br2", 2);
 		addToCollection("Sunny Day", 2);
-		addToCollection("Rain Dance", 2);
-		addToCollection("Soap", 1);
-		addToCollection("Lemonade", 1);
-		addToCollection("Alpha", 1);
-		addToCollection("Beta", 10);
-	}
-
-	private void initializeDefaultDeck() {
-		Iterator<String> iterator = availableCards.keySet().iterator();
-		int count = 0;
-		while (iterator.hasNext() && count < 16) {
-			String card = iterator.next();
-			for(int i = 0; i < availableCards.get(card); i++) {
-				customDeck.add(card);
-				count++;
-				if (count >= 16) break;
-			}
-		}
 	}
 
 	public int getDeckSize() { return customDeck.size(); }

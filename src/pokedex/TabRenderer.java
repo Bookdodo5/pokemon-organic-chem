@@ -157,26 +157,30 @@ public abstract class TabRenderer {
 
         String name = switch (selectionState.getCurrentTab()) {
             case DECK -> {
-                var selectedCard = CardFactory.create(playerDeckManager.getAvailableCards().get(selectionState.getScrollIndex()));
-                if (selectedCard == null) {
-                    yield "";
+                if (selectionState.getArea() == SelectionArea.PLAYER_DECK) {
+                    if (playerDeckManager.getDeckSize() == 0) yield "";
+                    int cardIndex = selectionState.getCardIndex();
+                    if (cardIndex >= playerDeckManager.getDeckSize()) yield "";
+                    String cardName = playerDeckManager.getCustomDeck().get(cardIndex);
+                    var selectedCard = CardFactory.create(cardName);
+                    if (selectedCard == null) yield "";
+                    yield selectedCard.getName().toUpperCase() + " (" + selectedCard.getOriginalLP() + " LP)";
+                } else {
+                    if(playerDeckManager.getAvailableCards().isEmpty()) yield "";
+                    var selectedCard = CardFactory.create(playerDeckManager.getAvailableCards().get(selectionState.getScrollIndex()));
+                    if (selectedCard == null) yield "";
+                    yield selectedCard.getName().toUpperCase() + " (" + selectedCard.getOriginalLP() + " LP)";
                 }
-                yield selectedCard.getName().toUpperCase() + " (" + selectedCard.getOriginalLP() + " LP)";
             }
             case REACTION -> {
-                if (selectedReaction == null) {
-                    yield "";
-                }
+                if (selectedReaction == null) yield "";
                 yield selectedReaction.getName().toUpperCase();
             }
             case MOLECULE -> {
-                if (selectedMolecule == null) {
-                    yield "";
-                }
+                if (selectedMolecule == null) yield "";
                 yield selectedMolecule.getName().toUpperCase();
             }
-            default ->
-                "";
+            default -> "";
         };
 
         int nameStringWidth = textRenderer.getTextWidth(g2, name);

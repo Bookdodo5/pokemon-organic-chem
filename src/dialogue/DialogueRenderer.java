@@ -66,6 +66,7 @@ public class DialogueRenderer {
 		SPEAKER_COLORS.put("PORBITAL COP", new Color(60, 120, 200));
 		SPEAKER_COLORS.put("DISGUISED COP", new Color(80, 150, 180));
 		SPEAKER_COLORS.put("CHLOROPHYLL", new Color(100, 250, 150));
+		SPEAKER_COLORS.put("KUSARI", new Color(240, 50, 170));
 	}
 
 	private Color tintWith(Color color, double weight, Color tintColor) {

@@ -3,7 +3,7 @@ package tile;
 public class MapData {
 
     private final String mapName;
-    private final String music;
+    private String music;
     private final TileManager[] layers;
     private final int globalX;
     private final int globalY;
@@ -27,4 +27,8 @@ public class MapData {
     public int getGlobalY() { return globalY; }
     public int getWidth() { return width; }
     public int getHeight() { return height; }
+
+    public void setMusic(String music) {
+        this.music = music;
+    }
 }

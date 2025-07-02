@@ -38,8 +38,8 @@ public class MapInitializer {
         initInterior("room", "Safari");
         initInterior("house1_f1", "Lappet");
         initInterior("house1_f2", "Lappet");
-        initInterior("house2_f1", "Lappet");
-        initInterior("house2_f2", "Lappet");
+        initInterior("house2_f1", "Lab");
+        initInterior("house2_f2", "Lab");
         initInterior("townhall", "Tiall");
         initInterior("workspace", "Lappet");
     }

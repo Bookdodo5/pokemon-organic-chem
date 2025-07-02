@@ -1,6 +1,7 @@
 package cutscene.initialize;
 
 import cutscene.Cutscene;
+import cutscene.CutsceneAction;
 import cutscene.CutsceneBuilder;
 import cutscene.Emotes;
 import cutscene.initialize.porbital.PorbitalTownObjects;
@@ -19,20 +20,23 @@ import gamestates.StateManager;
 import gamestates.states.OverworldState;
 import java.util.List;
 import java.util.Map;
+import tile.MapManager;
 
 public class PorbitalTownCutscenes extends CutsceneTemplate {
 
-    public static void initialize(Map<String, List<Cutscene>> cutscenes, StateManager stateManager, OverworldState overworldState, NPCManager npcManager, CameraManager cameraManager, Player player, FlagManager flagManager) {
+    public static void initialize(Map<String, List<Cutscene>> cutscenes, StateManager stateManager, OverworldState overworldState, NPCManager npcManager, CameraManager cameraManager, Player player, FlagManager flagManager, MapManager mapManager) {
         NPC yuuki = npcManager.getNPC("Yuuki");
         NPC professorDecane = npcManager.getNPC("ProfDecane");
         NPC professorCellulose = npcManager.getNPC("ProfCellulose");
         NPC director = npcManager.getNPC("Director");
+        NPC kusari = npcManager.getNPC("Kusari");
+        NPC chlorophyll = npcManager.getNPC("ChlorophyllGirl");
 
         PorbitalTownObjects.initialize(cutscenes);
         PorbitalTownTalks.initialize(cutscenes, npcManager, cameraManager, player);
         yuuki1(cutscenes, yuuki, overworldState, cameraManager, player, flagManager);
         professorDecane1(cutscenes, professorDecane, yuuki, overworldState, cameraManager, player, flagManager);
-        professorCellulose1(cutscenes, professorCellulose, cameraManager, player, flagManager);
+        professorCellulose1(cutscenes, professorCellulose, kusari, chlorophyll, yuuki, professorDecane, stateManager, cameraManager, player, flagManager, overworldState, mapManager);
         director1(cutscenes, director, cameraManager, player, flagManager);
     }
 
@@ -591,30 +595,882 @@ public class PorbitalTownCutscenes extends CutsceneTemplate {
         );
     }
 
-    private static void professorCellulose1(Map<String, List<Cutscene>> cutscenes, NPC professorCellulose, CameraManager cameraManager, Player player, FlagManager flagManager) {
+    private static void professorCellulose1(Map<String, List<Cutscene>> cutscenes, NPC professorCellulose, NPC kusari, NPC chlorophyll, NPC yuuki, NPC professorDecane, StateManager stateManager, CameraManager cameraManager, Player player, FlagManager flagManager, OverworldState overworldState, MapManager mapManager) {
 /*
 * -----------------------------------------------------------------------------
 * CUTSCENE: Porbital Town - Professor Cellulose Introduction
-* Location: Porbital Town House 2, Floor 1
+* Location: Porbital Town House 2
 * -----------------------------------------------------------------------------
 ? FLAGS USED:
 ~   - PROF_DECANE_1: The professor has sent the player to get the chemical.
-~   - PROF_CELLULOSE_1: The player is told that the chemical is in Methanopolis.
+~   - PROF_CELLULOSE_1: The player meets the professor and notices his repetitive behavior.
+~   - KUSARI_1: The player has met Kusari and notices he's reciting Pokemon Emerald cutscenes.
+~   - CHLOROPHYLL_1: The player has defeated Chlorophyll.
+~   - CHLOROPHYLL_WAIT_FOR_REMATCH: The player has lost the battle.
+~   - DECK_FOUND: The player has found the Alchemist's Deck.
+~   - BATTLE_WIN: The player has won the battle.
+~   - BATTLE_LOSE: The player has lost the battle.
 * -----------------------------------------------------------------------------
 ! FLOW:
 ^   1. Only runs if PROF_DECANE_1 is set but PROF_CELLULOSE_1 is NOT set.
-^   2. Player enters floor 1 of the second house, professor notices and introduces himself.
-^   3. You explain your situation to the professor.
-^   4. Professor asks you to go to Methanopolis to get the chemical.
-^   5. After the scene, PROF_CELLULOSE_1 is set.
+^   2. Player enters floor 1 of the second house, professor notices and introduces himself with repetitive dialogue.
+^   3. Professor asks you to go upstairs and find his son.
+^   4. You go upstairs and find Kusari, who's acting out Pokemon Emerald cutscenes.
+^   5. You go downstairs and find Chlorophyll chasing Cellulose around, and you battle her.
+^   6. After the battle, Cellulose continues his acting of Pokemon cutscene, but Chlorophyll interrupts him and tell the player the whole situation.
+^   7. Chlorophyll explains that Kusari and Cellulose has condition causing them to act out video game scenes. Originally, it's only Kusari, but lately Cellulose is also affected.
+^   8. She also explained that the medication that helps Kusari is the same chemical Professor Decane needs for Yuuki, after the player explained his situation.
+^   9. Chlorophyll asks the player to go to Methanopolis Pharmacy to get the medication (Some actual molecule).
+^   10. After the scene, KUSARI_1 is set and both characters return to normal behavior. CHLOROPHYLL_1 is set.
 * -----------------------------------------------------------------------------
 */
         addCutscene(cutscenes, new CutsceneBuilder()
             .require("PROF_DECANE_1")
             .forbid("PROF_CELLULOSE_1")
+            .faceTowards(professorCellulose, player)
+            .react(professorCellulose, cameraManager, Emotes.SURPRISE)
+            .moveYthenX(professorCellulose, 5, 9)
+            .faceTowards(professorCellulose, player)
+            .wait(30)
+            .faceTowards(player, professorCellulose)
+            .speak("CELLULOSE",
+                "Oh, hello. And you are...?",
+                "... ... ... ... ...\n... ... ... ... ...",
+                "Oh, you're PLAYER, our new nextdoor neighbor! Hi!",
+                "I have a son about the same age as you.",
+                "My son was excited about making a new friend.",
+                "He's upstairs, I think.",
+                "..."
+            )
+            .wait(90)
+            .speak("CELLULOSE",
+                "My son was excited about making a new friend.",
+                "He's upstairs, I think.",
+                "..."
+            )
+            .wait(30)
+            .waitEmote(player, cameraManager, 60)
+            .speak("THINKING",
+                "...Why is he repeating himself?",
+                "And... Is this professor Cellulose?"
+            )
+            .wait(60)
+            .speak(new Dialogue(new String[]{
+                "My son was excited about making a new friend.",
+                "He's upstairs, I think.",
+                "..."
+            }, "CELLULOSE",
+            new DialogueOption("...", new Dialogue(new String[]{
+                "...",
+                "My son was excited about making a new friend.",
+                "He's upstairs, I think.",
+                "..."
+            }, "CELLULOSE")),
+            new DialogueOption("Why are you talking like that?", new Dialogue(new String[]{
+                "...",
+                "My son was excited about making a new friend.",
+                "He's upstairs, I think.",
+                "..."
+            }, "CELLULOSE")),
+            new DialogueOption("Give me the chemical!", new Dialogue(new String[]{
+                "...",
+                "My son was excited about making a new friend.",
+                "He's upstairs, I think.",
+                "..."
+            }, "CELLULOSE")),
+            new DialogueOption("You are CELLULOSE, right?", new Dialogue(new String[]{
+                "...",
+                "My son was excited about making a new friend.",
+                "He's upstairs, I think.", 
+                "..."
+            }, "CELLULOSE"))))
+            .setFlag(flagManager, "CELLULOSE_KNOW")
+            .setFlag(flagManager, "PROF_CELLULOSE_1")
             .buildCutscene(),
             getKeyLocation(4, 9, "porbital_town__house2_f1")
         );
+
+        addCutscene(cutscenes, new CutsceneBuilder()
+            .require("PROF_CELLULOSE_1")
+            .forbid("KUSARI_1")
+            .faceTowards(professorCellulose, player)
+            .speak("CELLULOSE",
+                "...",
+                "My son was excited about making a new friend.",
+                "He's upstairs, I think.",
+                "..."
+            )
+            .buildCutscene(),
+            getKeyNPC(professorCellulose)
+        );
+
+        addCutscene(cutscenes, new CutsceneBuilder()
+            .require("PROF_CELLULOSE_1")
+            .forbid("KUSARI_1")
+            .faceTowards(kusari, player)
+            .faceTowards(player, kusari)
+            .react(kusari, cameraManager, Emotes.SURPRISE)
+            .wait(30)
+            .speak("KUSARI",
+                "Huh?\nWho... Who are you?",
+                "... ... ... ... ...\n... ... ... ... ...",
+                "Oh, you're that new person. So your move was today.",
+                "Um... I'm Kusari.\nGlad to meet you!"
+            )
+            .setFlag(flagManager, "KUSARI_KNOW")
+            .speak("KUSARI",
+                "I...\nI have this dream of becoming friends with chemicals all over the world.",
+                "I.. I heard about you, the PLAYER, from my dad, PROF. CELLULOSE.",
+                "I was hoping that you would be nice, PLAYER, and that we could be friends.",
+                "Oh, this is silly, isn't it?\nI... I've just met you, PLAYER.",
+                "Eheheh...",
+                "Teehee.",
+                "LOL",
+                "LMAO",
+                "wwwwwwwww",
+                "555555655656565566",
+                "...",
+                "...",
+                "Oh! I forgot!",
+                "I was supposed to go help dad catch some rare chemicals!",
+                "Player, I'll catch you later!"
+            )
+            .wait(30)
+            .move(kusari, 5, 4)
+            .sfx("PlayerBump")
+            .wait(200)
+            .parallel(new CutsceneBuilder()
+                .waitEmote(kusari, cameraManager, 60)
+                .waitEmote(player, cameraManager, 60)
+                .buildActions()
+            )
+            .wait(30)
+            .move(kusari, 6, 4)
+            .faceTowards(kusari, player)
+            .wait(60)
+            .move(kusari, 5, 4)
+            .sfx("PlayerBump")
+            .wait(30)
+            .move(kusari, 6, 4)
+            .faceTowards(kusari, player)
+            .wait(60)
+            .move(kusari, 5, 4)
+            .sfx("PlayerBump")
+            .wait(30)
+            .move(kusari, 6, 4)
+            .faceTowards(kusari, player)
+            .wait(60)
+            .move(kusari, 5, 4)
+            .sfx("PlayerBump")
+            .wait(30)
+            .move(kusari, 6, 4)
+            .faceTowards(kusari, player)
+            .wait(90)
+            .parallel(new CutsceneBuilder()
+                .react(kusari, cameraManager, Emotes.FRIENDLY)
+                .speak("KUSARI",
+                    "...",
+                    "Oh! I forgot!",
+                    "I was supposed to go help dad catch some rare chemicals!",
+                    "Player, I'll catch you later!",
+                    "..."
+                )
+                .buildActions()
+            )
+            .wait(60)
+            .move(kusari, 5, 4)
+            .sfx("PlayerBump")
+            .wait(120)
+            .waitEmote(player, cameraManager, 60)
+            .parallel(new CutsceneBuilder()
+                .emote(kusari, 150, Emotes.TERRIFIED, cameraManager)
+                .speak("KUSARI",
+                    "...",
+                    "Oh! I forgot!",
+                    "I was supposed to go help dad catch some rare chemicals!",
+                    "Player, I'll catch you later!",
+                    "..."
+                )
+                .buildActions()
+            )
+            .wait(60)
+            .speak("THINKING",
+                "You... have reached a disturbing conclusion.",
+                "Everyone in this town is completely insane.",
+                "And you need to spend the last days of your life with them.",
+                "..."
+            )
+            .wait(30)
+            .move(kusari, 6, 4)
+            .faceTowards(kusari, player)
+            .wait(60)
+            .move(kusari, 5, 4)
+            .sfx("PlayerBump")
+            .wait(30)
+            .parallel(new CutsceneBuilder()
+                .waitEmote(kusari, cameraManager, 60)
+                .waitEmote(player, cameraManager, 60)
+                .buildActions()
+            )
+            .speak("THINKING",
+                "These two people in this house are literally acting out Pokemon game cutscenes.",
+                "Word for word. Line for line. With no differences at all.",
+                "But Pokemon doesn't exist here. This isn't a game.",
+                "This is supposed to be reality.",
+                "What the hell is happening to this world??"
+            )
+            .wait(30)
+            .move(player, 4, 5)
+            .wait(20)
+            .face(player, FacingDirections.UP)
+            .wait(30)
+            .react(kusari, cameraManager, Emotes.SMILE)
+            .speak("KUSARI",
+                "Oh! I forgot!",
+                "I was supposed to go help dad catch some rare chemicals!",
+                "Player, I'll catch you later!"
+            )
+            .wait(30)
+            .moveXthenY(kusari, 3, 6)
+            .move(kusari, 1, 6)
+            .wait(20)
+            .face(kusari, FacingDirections.UP)
+            .setFlag(flagManager, "KUSARI_1")
+            .buildCutscene(),
+            getKeyLocation(4, 4, "porbital_town__house2_f2")
+        );
+
+        addCutscene(cutscenes, new CutsceneBuilder()
+            .require("KUSARI_1")
+            .forbid("PROF_CELLULOSE_2")
+            .face(kusari, FacingDirections.UP)
+            .speak("KUSARI",
+                "Chemicals fully restored!\nItems read, and..."
+            )
+            .buildCutscene(),
+            getKeyNPC(kusari)
+        );
+
+        addCutscene(cutscenes, new CutsceneBuilder()
+            .require("KUSARI_1")
+            .forbid("PROF_CELLULOSE_2")
+            .setFlag(flagManager, "CHLOROPHYLL_KNOW")
+            .music("BattleWild")
+            .execute(()->player.setRunning())
+            .execute(()->chlorophyll.setRunning())
+            .execute(()->professorCellulose.setRunning())
+            .execute(()->mapManager.changeMapMusic("porbital_town__house2_f1", "BattleWild"))
+            .tp(chlorophyll, 5, 10, "porbital_town__house2_f1", overworldState)
+            .faceTowards(chlorophyll, professorCellulose)
+            .shout("CELLULOSE", "H-Help me!", cameraManager)
+            .moveYthenX(player, 9, 9)
+            .parallel(new CutsceneBuilder()
+                .sequential(new CutsceneBuilder()
+                    .moveYthenX(professorCellulose, 7, 8)
+                    .moveYthenX(professorCellulose, 5, 10)
+                    .moveYthenX(professorCellulose, 7, 8)
+                    .moveYthenX(professorCellulose, 5, 10)
+                    .moveYthenX(professorCellulose, 7, 8)
+                    .moveYthenX(professorCellulose, 5, 10)
+                    .moveYthenX(professorCellulose, 7, 8)
+                    .moveYthenX(professorCellulose, 5, 10)
+                    .moveYthenX(professorCellulose, 7, 8)
+                    .buildActions()
+                )
+                .sequential(new CutsceneBuilder()
+                    .wait(10)
+                    .moveYthenX(chlorophyll, 7, 8)
+                    .moveYthenX(chlorophyll, 5, 10)
+                    .moveYthenX(chlorophyll, 7, 8)
+                    .moveYthenX(chlorophyll, 5, 10)
+                    .moveYthenX(chlorophyll, 7, 8)
+                    .moveYthenX(chlorophyll, 5, 10)
+                    .moveYthenX(chlorophyll, 7, 8)
+                    .moveYthenX(chlorophyll, 5, 10)
+                    .moveYthenX(chlorophyll, 6, 8)
+                    .faceTowards(kusari, player)
+                    .buildActions()
+                )
+                .buildActions()
+            )
+            .execute(()->player.setWalking())
+            .execute(()->chlorophyll.setWalking())
+            .execute(()->professorCellulose.setWalking())
+            .speak("CELLULOSE",
+                "Hello! You over there!\nPlease! Help!",
+                "In one of the OFFERING BINS TO THE DEAD, there's an ALCHEMIST'S DECK!"
+            )
+            .waitEmote(player, cameraManager, 60)
+            .speak("THINKING",
+                "...",
+                "They're still doing that...\nPokemon game cutscenes...",
+                "This one is when PROF. BIRCH is attacked by a wild Pokemon.",
+                "But well...",
+                "For your own benefits, you decided to help him.",
+                "At least, you'll get to learn the mechanics of this world's battle system."
+            )
+            .setFlag(flagManager, "PROF_CELLULOSE_2")
+            .buildCutscene(),
+            getKeyLocation(10, 3, "porbital_town__house2_f1")
+        );
+
+        addCutscene(cutscenes, new CutsceneBuilder()
+            .require("PROF_CELLULOSE_2")
+            .forbid("CHLOROPHYLL_2")
+            .faceTowards(professorCellulose, player)
+            .speak("CELLULOSE",
+                "Hello! You over there!\nPlease! Help!",
+                "In one of the OFFERING BINS TO THE DEAD, there's an ALCHEMIST'S DECK!"
+            )
+            .waitEmote(player, cameraManager, 60)
+            .speak("THINKING",
+                "...",
+                "This guy's sprite didn't even move.",
+                "I can't sense the panic at all.",
+                "Curse this world and its developers...\nIf they want to copy Pokemon, they should at least copy the details too..."
+            )
+            .buildCutscene(),
+            getKeyNPC(professorCellulose)
+        );
+        
+        addCutscene(cutscenes, new CutsceneBuilder()
+            .speak("THINKING",
+                "It's an empty offering bin.",
+                "The picture above is labeled \"Marie Curie\""
+            )
+            .buildCutscene(),
+            getKeyLook(5, 3, "porbital_town__house2_f1")
+        );
+
+        addCutscene(cutscenes, new CutsceneBuilder()
+            .speak("THINKING",
+                "It's an empty offering bin.",
+                "The picture above is labeled \"Alfred Nobel\""
+            )
+            .buildCutscene(),
+            getKeyLook(6, 3, "porbital_town__house2_f1")
+        );
+
+        addCutscene(cutscenes, new CutsceneBuilder()
+            .speak("THINKING",
+                "It's an empty offering bin.",
+                "The picture above is labeled \"John Dalton\""
+            )
+            .buildCutscene(),
+            getKeyLook(7, 3, "porbital_town__house2_f1")
+        );
+
+        addCutscene(cutscenes, new CutsceneBuilder()
+            .require("DECK_FOUND")
+            .speak("THINKING",
+                "It's an empty offering bin.",
+                "The picture above is labeled \"Dimitri Mendeleev\""
+            )
+            .buildCutscene(),
+            getKeyLook(8, 3, "porbital_town__house2_f1")
+        );
+
+        addCutscene(cutscenes, new CutsceneBuilder()
+            .speak("THINKING",
+                "It's an empty offering bin.",
+                "The picture above is labeled \"Niels Bohr\""
+            )
+            .buildCutscene(),
+            getKeyLook(9, 3, "porbital_town__house2_f1")
+        );
+
+        CutsceneAction[] chlorophyllBattle1 = new CutsceneBuilder()
+            .shout("CHLOROPHYLL", "Don't you think ETHYLENE is pure MAGIC???", cameraManager)
+            .battle(stateManager, flagManager, 1)
+            .condition("BATTLE_WIN", new CutsceneBuilder()
+                .faceTowards(chlorophyll, player)
+                .execute(()->mapManager.changeMapMusic("porbital_town__house2_f1", "Lab"))
+                .speak("CHLOROPHYLL",
+                    "See! This is the MAGIC of ETHYLENE!",
+                    "It can act as a ~HORMONEEEEE~ to make fruits ripe!",
+                    "But not only that, it's also a simple enough molecule to introduce you to basic organic chemistry!",
+                    "How is THAT!?"
+                )
+                .removeFlag(flagManager, "BATTLE_WIN")
+                .removeFlag(flagManager, "CHLOROPHYLL_WAIT_FOR_REMATCH")
+                .setFlag(flagManager, "CHLOROPHYLL_1")
+                .buildActions()
+            )
+            .condition("BATTLE_LOSE", new CutsceneBuilder()
+                .speak("CHLOROPHYLL",
+                    "You're not GREEEENNNN enough!",
+                    "Hmph!",
+                    "Come fight with me when you're ready!"
+                )
+                .wait(30)
+                .removeFlag(flagManager, "BATTLE_LOSE")
+                .setFlag(flagManager, "CHLOROPHYLL_WAIT_FOR_REMATCH")
+                .buildActions()
+            )
+            .buildActions();
+
+        addCutscene(cutscenes, new CutsceneBuilder()
+            .forbid("DECK_FOUND")
+            .speak("THINKING",
+                "It's an offering bin.",
+                "There's a deck of cards inside.",
+                "The picture above is labeled \"Dimitri Mendeleev\""
+            )
+            .condition("PROF_CELLULOSE_2", new CutsceneBuilder()
+                .setFlag(flagManager, "DECK_FOUND")
+                .sfx("PkmnGet")
+                .speak("THINKING", "You gained an ALCHEMIST'S DECK!")
+                .wait(120)
+                .speak("THINKING",
+                    "Hmm...",
+                    "The instruction says that you need to synthesize a target molecule before the opponent does.",
+                    "There are 2 phases, condition and reaction.",
+                    "You set the light, pH, temperature, and solvent in condition phase.",
+                    "And then you add the reactants and do the reaction in reaction phase.",
+                    "...",
+                    "Let's try it out!"
+                )
+                .wait(30)
+                .moveXthenY(player, 10, 9)
+                .move(player, 6, 9)
+                .wait(20)
+                .faceTowards(player, chlorophyll)
+                .wait(30)
+                .faceTowards(chlorophyll, player)
+                .wait(20)
+                .actions(chlorophyllBattle1)
+                .buildActions()
+            )
+            .buildCutscene(),
+            getKeyLook(8, 3, "porbital_town__house2_f1")
+        );
+
+        addCutscene(cutscenes, new CutsceneBuilder()
+            .require("DECK_FOUND", "PROF_CELLULOSE_2", "CHLOROPHYLL_WAIT_FOR_REMATCH")
+            .actions(chlorophyllBattle1)
+            .buildCutscene(),
+            getKeyNPC(chlorophyll)
+        );
+
+        addCutscene(cutscenes, new CutsceneBuilder()
+            .require("CHLOROPHYLL_1")
+            .forbid("CHLOROPHYLL_2")
+            .moveYthenX(player, 6, 9)
+            .faceTowards(chlorophyll, player)
+            .faceTowards(player, chlorophyll)
+            .react(chlorophyll, cameraManager, Emotes.FRIENDLY)
+            .speak("CHLOROPHYLL",
+                "Haha! That was FUN!",
+                "You're not bad at this alchemy thing, you know?"
+            )
+            .wait(30)
+            .speak("THINKING",
+                "She seems... normal...",
+                "Like, this dialogue wasn't in the game script.",
+                "After the first battle, the professor is supposed to say...",
+                "\"Whew...\"",
+                "\"I was in the tall grass studying wild Pokemon when I was jumped.\"",
+                "\"You saved me. Thanks a lot!\"",
+                "...",
+                "Or something like that."
+            )
+            .wait(60)
+            .moveYthenX(professorCellulose, 7, 9)
+            .wait(20)
+            .faceTowards(professorCellulose, player)
+            .wait(20)
+            .faceTowards(player, professorCellulose)
+            .wait(20)
+            .react(professorCellulose, cameraManager, Emotes.SMILE)
+            .speak("CELLULOSE",
+                "Whew...",
+                "I was in the room studying wild molecules when I was jumped.",
+                "You saved me. Thanks a lot!"
+            )
+            .wait(120)
+            .parallel(new CutsceneBuilder()
+                .waitEmote(player, cameraManager, 60)
+                .waitEmote(chlorophyll, cameraManager, 60)
+                .buildActions()
+            )
+            .wait(60)
+            .faceTowards(player, chlorophyll)
+            .wait(20)
+            .react(chlorophyll, cameraManager, Emotes.QUESTION)
+            .speak("CHLOROPHYLL",
+                "Hey... you look CONFUSED!",
+                "Is it because of what's happening right now?"
+            )
+            .sequential(new CutsceneBuilder()
+                .react(professorCellulose, cameraManager, Emotes.MUSIC)
+                .sfx("GUIConfirm")
+                .speak("CELLULOSE",
+                    "With Professor CELLULOSEEEEE and KUSARIRINNN~ acting all weird?"
+                )
+                .buildActions()
+            )
+            .wait(30)
+            .react(player, cameraManager, Emotes.SURPRISE)
+            .speak("THINKING",
+                "Wait... she noticed it too?",
+                "So this insanity isn't just in my head..."
+            )
+            .wait(30)
+            .react(chlorophyll, cameraManager, Emotes.FRIENDLY)
+            .speak("CHLOROPHYLL",
+                "Yeah, I can see it in your face.",
+                "Your face looks GREEENNNN enough to know that something's wrong.",
+                "You're probably thinking \"WHAT THE INFESTATION is wrong with these people?\"",
+                "And honestly? Your doubt is ROOTED in pure GLUCOSEEE!",
+                "Like, you're not flowing with the flow, but you're using your THICK CUTIN layer in critical thinking!"
+            )
+            .wait(60)
+            .waitEmote(player, cameraManager, 60)
+            .speak("THINKING",
+                "...",
+                "She's not WEIRD weird, but she's weird.",
+                "What's with the plant reference?",
+                "At least you can deal with her quirk better than the others."
+            )
+            .wait(50)
+            .move(chlorophyll, 7, 8)
+            .wait(20)
+            .faceTowards(chlorophyll, professorCellulose)
+            .wait(20)
+            .faceTowards(player, professorCellulose)
+            .speak("CHLOROPHYLL",
+                "Look at him. He's still doing his thing.",
+                "\"My son was excited about making a new friend.\"",
+                "\"He's upstairs, I think.\"",
+                "\"...\"",
+                "He's been saying that since this MORNING when the first light of the day hit my LEAVESSS."
+            )
+            .wait(30)
+            .move(chlorophyll, 6, 8)
+            .wait(20)
+            .faceTowards(chlorophyll, player)
+            .wait(20)
+            .faceTowards(player, chlorophyll)
+            .wait(20)
+            .speak("CHLOROPHYLL",
+            "That thing is actually..."
+            )
+            .wait(20)
+            .parallel(new CutsceneBuilder()
+                .react(chlorophyll, cameraManager, Emotes.MUSIC)
+                .speak("CHLOROPHYLL",
+                    "PURURURURURUURURURURURU... PING!",
+                    "A... CURSEEE!!!",
+                    "It's a curse that's been passed down for generations.",
+                    "Everyone who's been affected by it shows different symptoms.",
+                    "For this CELLULOSEEE and KUSARIRINNN~\nit's the weird pattern of speech they're doing right now.",
+                    "For YUUKII~\nit's the way she can't control her emotions.",
+                    "And for me... it's the way I can't\nPHOTOSYNTHESIZEEE\nas efficiently anymore!!!"
+                )
+                .buildActions()
+            )
+            .wait(60)
+            .react(chlorophyll, cameraManager, Emotes.SAD)
+            .wait(60)
+            .speak("CHLOROPHYLL",
+                "Weellll... I don't want it to be sad, but it's actually quite sad.",
+                "At first, it was just cute. Harmless.",
+                "I just needed to walk outside more to absorb more light.",
+                "YUUKII was just a little more chaotic, and cute.",
+                "KUSARIRIN was just a little more... weird...",
+                "And also cute.",
+                "But then it got worse. The symptoms multiplied ten folds, hundred folds."
+            )
+            .parallel(new CutsceneBuilder()
+                .react(chlorophyll, cameraManager, Emotes.MUSIC)
+                .speak("CHLOROPHYLL",
+                    "Just like plants releasing a bunch of SPOOOOREEESSS!",
+                    "A LOOOOTTT OF SPOOORREESSSS, filling in the land with FLOWERS!"
+                )
+                .buildActions()
+            )
+            .wait(60)
+            .parallel(new CutsceneBuilder()
+                .moveXthenY(player, 2, 5)
+                .sequential(new CutsceneBuilder()
+                    .wait(120)
+                    .moveXthenY(chlorophyll, 2, 6)
+                    .buildActions()
+                )
+                .buildActions()
+            )
+            .faceTowards(player, chlorophyll)
+            .wait(20)
+            .faceTowards(chlorophyll, player)
+            .wait(20)
+            .speak("CHLOROPHYLL",
+                "HEY! This disease is not contagious!",
+                "Don't be so scared!",
+                "I just like PLANTTSSS, okay?",
+                "...",
+                "So... Right now, KUSARIRIN and PROF. CELLULOSE is like this.",
+                "YUUKII now switches her emotions every 5 seconds.",
+                "And if I don't get at least 10 hours of sunlight, I'll die..."
+            )
+            .wait(60)
+            .move(player, 2, 4)
+            .faceTowards(player, chlorophyll)
+            .wait(20)
+            .react(player, cameraManager, Emotes.TERRIFIED)
+            .speak("THINKING",
+                "D-Die...?",
+                "What's this... curse...?"
+            )
+            .wait(30)
+            .react(chlorophyll, cameraManager, Emotes.FRIENDLY)
+            .speak("CHLOROPHYLL",
+                "Don't worry! We won't die easily!",
+                "We have our medication that can help us.",
+                "It doesn't cure them completely, but it makes them... more manageable?",
+                "Like, for KUSARIRIN, if he eats TETRAHYDROCANNABINOLLL, he'll be able to speak normally for a few hours."
+            )
+            .wait(30)
+            .speak("THINKING",
+                "TETRAHYDROCANNABINOL...?",
+                "What is thatttt...?",
+                "Cannabis?"
+            )
+            .wait(60)
+            .react(chlorophyll, cameraManager, Emotes.QUESTION)
+            .speak(new Dialogue(new String[]{
+                "Wait... why are you here anyway?",
+                "Did someone send you?"
+            }, "CHLOROPHYLL",
+            new DialogueOption("I need to get YUUKI's medication.", new Dialogue(new String[]{
+                "...",
+                "Wait, YUUKI? You mean my friend YUUKII with the weird hair?",
+                "Has her ETHYLENE ran out...?",
+                "Oh NOOOOO! That's terrible!",
+                "ETHYLENE is what keeps her emotions stable!",
+                "She's like an UNRIPE FRUIT that needs to complete its growth cycle every day!",
+                "I need to get more for her right away!",
+                "Please wait here, PLAYER!"
+            }, "CHLOROPHYLL")),
+            new DialogueOption("I'm on a crazy adventure right now.", new Dialogue(new String[]{
+                "Crazy adventure?",
+                "What's that?",
+                "I'm also on a crazy adventure right now.",
+                "...",
+                "...",
+                "...",
+                "Wait, you're here to help YUUKII?",
+                "Is her ETHYLENE medication out again?",
+                "That girl's beyond saving...",
+                "Please wait here, PLAYER!"
+            }, "CHLOROPHYLL")),
+            new DialogueOption("That psychopath PROF. DECANE.", new Dialogue(new String[]{
+                "Wait, PROF. DECANEE sent you?",
+                "Doesn't that mean YUUKII ran out of ETHYLENE?",
+                "That's BADDDD...",
+                "ETHYLENE is what keeps her emotions stable!",
+                "Please wait here, PLAYER!"
+            }, "CHLOROPHYLL"))))
+            .wait(30)
+            .face(chlorophyll, FacingDirections.LEFT)
+            .wait(20)
+            .waitEmote(chlorophyll, cameraManager, 60)
+            .wait(30)
+            .face(chlorophyll, FacingDirections.UP)
+            .wait(60)
+            .speak(new Dialogue(new String[]{
+                "Player, I have a good news and a bad news."
+            }, "CHLOROPHYLL",
+            new DialogueOption("Good news first.", new Dialogue(new String[]{
+                "The good news is...",
+                "A huge amount of ETHYLENE was just sent to the LAB in METHANOPOLIS!",
+                "For YUUKII's personal use, it can last for a few months if we ask the LAB for some!",
+                "I'm so happy for her!",
+                "But the bad news is...",
+                "You just converted the last molecule of ETHYLENE in this town into a CHLOROETHANE in the battle..."
+            }, "CHLOROPHYLL")),
+            new DialogueOption("Bad news first.", new Dialogue(new String[]{
+                "The bad news is...",
+                "I don't have any ETHYLENE left!",
+                "You just converted the last molecule of ETHYLENE in this town into a CHLOROETHANE in the battle...",
+                "Haha... I'm so sorry...",
+                "But there's a good news!",
+                "We're going to go get some ETHYLENE from the LAB in METHANOPOLIS!",
+                "They just sent a huge amount of ETHYLENE to the LAB!",
+            }, "CHLOROPHYLL"))))
+            .wait(30)
+            .react(chlorophyll, cameraManager, Emotes.FRIENDLY)
+            .speak("CHLOROPHYLL",
+                "Let's go get some ETHYLENE for YUUKIIII!"
+            )
+            .wait(30)
+            .parallel(new CutsceneBuilder()
+                .moveYthenX(chlorophyll, 4, 10)
+                .sequential(new CutsceneBuilder()
+                    .wait(30)
+                    .moveYthenX(player, 2, 9)
+                    .face(player, FacingDirections.RIGHT)
+                    .buildActions()
+                )
+                .buildActions()
+            )
+            .wait(20)
+            .tp(chlorophyll, 32, 16, "porbital_town", overworldState)
+            .wait(20)
+            .waitEmote(player, cameraManager, 60)
+            .wait(30)
+            .speak("THINKING",
+                "...",
+                "I guess I'll go with her..."
+            )
+            .wait(60)
+            .react(professorCellulose, cameraManager, Emotes.SURPRISE)
+            .move(professorCellulose, 3, 9)
+            .speak("THINKING",
+                "...",
+                "Oh, no...",
+                "I don't feel like this is the right time to talk to this guy---"
+            )
+            .music("Cave")
+            .speak("CELLULOSE",
+                "Oh!",
+                "Hi, You're PLAYER!",
+                "This is not the place to chat, so come by my alchemy lab later, okay?",
+                "(Teleporting...)",
+                "(Teleporting...)",
+                "(Teleporting...)"
+            )
+            .fadeIn(30)
+            .tp(professorCellulose, 7, 6, "porbital_town__house2_f2", overworldState)
+            .face(professorCellulose, FacingDirections.RIGHT)
+            .tp(player, 9, 6, "porbital_town__house2_f2", overworldState)
+            .face(player, FacingDirections.LEFT)
+            .fadeOut(30)
+            .wait(30)
+            .speak("CELLULOSE",
+                "So, PLAYER.",
+                "I've heard so much about you from DECANE.",
+                "I've heard that you don't even have your own deck yet.",
+                "But the way you battled earlier, you pulled it off with aplomb!",
+                "I guess you have DECANE's blood in your veins after all!",
+                "Oh, yes. As thanks for rescuing me, I'd like you to have the deck you used earlier."
+            )
+            .sfx("PkmnGet")
+            .speak("THINKING", "You gained an ALCHEMIST'S DECK!")
+            .wait(30)
+            .waitEmote(player, cameraManager, 60)
+            .speak("THINKING",
+                "You... You already have this message played when you took the deck from the offering bin...",
+                "You're not even related to DECANE by blood...\nYou having her blood in your veins doesn't make sense..."
+            )
+            .wait(30)
+            .speak("CELLULOSE",
+                "If you work at chemicals and gain experience, I think you'll make an extremely good alchemist!",
+                "My kid, KUSARI, is also studying chemicals while helping me out.",
+                "PLAYER, don't you think it's a good idea to go see---"
+            )
+            .wait(10)
+            .sfx("BattleDamageSuper")
+            .camShake(cameraManager, 60)
+            .tp(yuuki, 10, 3, "porbital_town__house2_f2", overworldState)
+            .face(yuuki, FacingDirections.DOWN)
+            .sfx("BattleDamageSuper")
+            .react(yuuki, cameraManager, Emotes.ANGRY)
+            .moveYthenX(yuuki, 7, 7)
+            .parallel(new CutsceneBuilder()
+                .react(professorCellulose, cameraManager, Emotes.SURPRISE)
+                .faceTowards(professorCellulose, yuuki)
+                .faceTowards(yuuki, professorCellulose)
+                .buildActions()
+            )
+            .music("BattleWild")
+            .shout("YUUKI", "CELLULOSE!!!", cameraManager)
+            .shout("YUUKI", "WHAT ARE YOU DOING TO MY FRIEND???", cameraManager)
+            .shout("YUUKI", "GO IN THAT CORNER AND STAY THERE!", cameraManager)
+            .shout("YUUKI", "NOW!!!", cameraManager)
+            .react(professorCellulose, cameraManager, Emotes.TERRIFIED)
+            .move(professorCellulose, 7, 5)
+            .wait(30)
+            .moveYthenX(yuuki, 8, 6)
+            .wait(20)
+            .react(yuuki, cameraManager, Emotes.FRIENDLY)
+            .speak("YUUKI",
+                "Hey! I beat up that pervert DECANE already! You're save!",
+                "Let's go sightseeing at METHANOPOLIS!"
+            )
+            .wait(30)
+            .sfx("BattleDamageSuper")
+            .camShake(cameraManager, 60)
+            .tp(chlorophyll, 10, 3, "porbital_town__house2_f2", overworldState)
+            .face(chlorophyll, FacingDirections.DOWN)
+            .sfx("BattleDamageSuper")
+            .wait(40)
+            .parallel(new CutsceneBuilder()
+                .react(chlorophyll, cameraManager, Emotes.MUSIC)
+                .speak("CHLOROPHYLL",
+                    "Hey! YUUKII! KUSARIRIN! PLAYER!",
+                    "Let's go now!"
+                )
+                .buildActions()
+            )
+            .wait(30)
+            .parallel(new CutsceneBuilder()
+                .react(yuuki, cameraManager, Emotes.FRIENDLY)
+                .speak("YUUKI",
+                    "Yeah! Let's go!"
+                )
+                .buildActions()
+            )
+            .wait(20)
+            .parallel(new CutsceneBuilder()
+                .sequential(new CutsceneBuilder()
+                    .move(chlorophyll, 9, 3)
+                    .wait(10)
+                    .sfx("DoorExit")
+                    .tp(chlorophyll, 49, 14, "porbital_town", overworldState)
+                    .face(chlorophyll, FacingDirections.RIGHT)
+                    .buildActions()
+                )
+                .sequential(new CutsceneBuilder()
+                    .wait(10)
+                    .moveYthenX(yuuki, 10, 7)
+                    .moveYthenX(yuuki, 9, 3)
+                    .sfx("DoorExit")
+                    .tp(yuuki, 47, 16, "porbital_town", overworldState)
+                    .face(yuuki, FacingDirections.RIGHT)
+                    .buildActions()
+                )
+                .sequential(new CutsceneBuilder()
+                    .wait(40)
+                    .moveYthenX(kusari, 10, 7)
+                    .moveYthenX(kusari, 9, 3)
+                    .sfx("DoorExit")
+                    .tp(kusari, 47, 17, "porbital_town", overworldState)
+                    .face(yuuki, FacingDirections.RIGHT)
+                    .buildActions()
+                )
+                .buildActions()
+            )
+            .setFlag(flagManager, "CHLOROPHYLL_2")
+            .buildCutscene(),
+            getKeyLocation(6, 9, "porbital_town__house2_f1"),
+            getKeyLocation(5, 8, "porbital_town__house2_f1")
+        );
+
+        addCutscene(cutscenes, new CutsceneBuilder()
+            .require("CHLOROPHYLL_2")
+            .faceTowards(professorCellulose, player)
+            .wait(30)
+            .waitEmote(professorCellulose, cameraManager, 60)
+            .wait(30)
+            .speak("CELLULOSE",
+                "... ... ... ... ...\n... ... ... ... ...",
+                "Great! KUSARI should be happy, too.",
+                "Get KUSARI to teach you what it means to be an ALCHEMIST."
+            )
+            .buildCutscene(),
+            getKeyNPC(professorCellulose)
+        );
+        
     }
 
     private static void director1(Map<String, List<Cutscene>> cutscenes, NPC director, CameraManager cameraManager, Player player, FlagManager flagManager) {
@@ -625,14 +1481,17 @@ public class PorbitalTownCutscenes extends CutsceneTemplate {
 * -----------------------------------------------------------------------------
 ? FLAGS USED:
 ~   - PROF_DECANE_1: The professor has sent the player to get the chemical.
-~   - DIRECTOR_1: The player has escaped the room.
+~   - DIRECTOR_1_START: The director's puzzle has begun.
+~   - DIRECTOR_1_GOT_KEY: The player has solved the numeric puzzle and obtained the key.
+~   - DIRECTOR_1_FINISH: The director's puzzle has been completed.
+~   - VIEW_BOX_1 through VIEW_BOX_5: Temporary flags for viewing PC boxes in Director's puzzle.
 * -----------------------------------------------------------------------------
 ! FLOW:
-^   1. Only runs if PROF_DECANE_1 is set but DIRECTOR_1 is NOT set.
+^   1. Only runs if PROF_DECANE_1 is set but DIRECTOR_1_START is NOT set.
 ^   2. Player enters the room, director is excited that someone finally fell into his trap.
 ^   3. Director explains that this room cannot be escaped unless the will of the director is satisfied.
 ^   4. Director asks you to solve a puzzle to escape the room.
-^   5. After the scene, DIRECTOR_1 is set.
+^   5. After the scene, DIRECTOR_1_START is set.
 * -----------------------------------------------------------------------------
 */
 

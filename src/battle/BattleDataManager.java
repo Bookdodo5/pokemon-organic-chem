@@ -46,10 +46,11 @@ public class BattleDataManager {
                     opponentDeck = new ArrayList<>();
                 }
                 if (line.startsWith("  - ")) {
-                    if (battleSpecificCards != null) {
-                        battleSpecificCards.add(line.split("-")[1].trim());
-                    } else if (opponentDeck != null) {
+                    if (opponentDeck != null) {
                         opponentDeck.add(line.split("-")[1].trim());
+                    }
+                    else if (battleSpecificCards != null) {
+                        battleSpecificCards.add(line.split("-")[1].trim());
                     }
                 }
                 if (line.startsWith("Player Molecule:")) {
@@ -89,9 +90,10 @@ public class BattleDataManager {
     }
 
     public BattleData getBattleData(int id) {
+        System.out.println(battleData);
         return battleData.stream()
-        .filter(battleDatum -> battleDatum.getId() == id)
-        .findFirst()
-        .orElse(null);
+            .filter(battleDatum -> battleDatum.getId() == id)
+            .findFirst()
+            .orElse(null);
     }
 }

@@ -18,13 +18,12 @@ public class ReactionRecord {
         this.flagManager = FlagManager.getInstance();
         battleReactionMap = new HashMap<>();
         initializeBattleReactionMap();
-        unlockBattle(1);
     }
     
     private void initializeBattleReactionMap() {
         battleReactionMap.put("BATTLE_1", Set.of(
             "Radical Halogenation",
-            "Ozonolysis"
+            "Hydrohalogenation"
         ));
         battleReactionMap.put("BATTLE_2", Set.of(
             "Alkene Hydrogenation",

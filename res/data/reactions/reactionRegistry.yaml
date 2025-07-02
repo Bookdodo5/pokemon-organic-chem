@@ -5,6 +5,7 @@ Sub Reactions:
     - Cl2
     Reactant Products:
       Methane: Chloromethane
+      Ethane: Chloroethane
 
 # Ozonolysis
 Name: Ozonolysis
@@ -19,3 +20,11 @@ Sub Reactions:
     - DMS
     Reactant Products:
       Cyclohexene: Hexanedial
+
+# Hydrohalogenation
+Name: Hydrohalogenation
+Sub Reactions:
+  - Required Reagents:
+    - HCl
+    Reactant Products:
+      Ethylene: Chloroethane

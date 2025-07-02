@@ -134,6 +134,7 @@ public class PorbitalTownTalks extends CutsceneTemplate {
 
         //* CUTSCENE: Porbital Town - Chlorophyll Girl
         addCutscene(cutscenes, new CutsceneBuilder()
+            .forbid("CHLOROPHYLL_WAIT_FOR_REMATCH")
             .setFlag(flagManager, "CHLOROPHYLL_KNOW")
             .faceTowards(chlorophyll, player)
             .speak("CHLOROPHYLL",
@@ -157,6 +158,7 @@ public class PorbitalTownTalks extends CutsceneTemplate {
             .buildCutscene(), getKeyNPC(chlorophyll));
         
         addCutscene(cutscenes, new CutsceneBuilder()
+            .forbid("CHLOROPHYLL_WAIT_FOR_REMATCH")
             .setFlag(flagManager, "CHLOROPHYLL_KNOW")
             .faceTowards(chlorophyll, player)
             .speak("CHLOROPHYLL",
@@ -181,6 +183,7 @@ public class PorbitalTownTalks extends CutsceneTemplate {
             .buildCutscene(), getKeyNPC(chlorophyll));
 
         addCutscene(cutscenes, new CutsceneBuilder()
+            .forbid("CHLOROPHYLL_WAIT_FOR_REMATCH")
             .setFlag(flagManager, "CHLOROPHYLL_KNOW")
             .faceTowards(chlorophyll, player)
             .speak("CHLOROPHYLL",
@@ -204,6 +207,7 @@ public class PorbitalTownTalks extends CutsceneTemplate {
             .buildCutscene(), getKeyNPC(chlorophyll));
         
         addCutscene(cutscenes, new CutsceneBuilder()
+            .forbid("CHLOROPHYLL_WAIT_FOR_REMATCH")
             .setFlag(flagManager, "CHLOROPHYLL_KNOW")
             .faceTowards(chlorophyll, player)
             .speak("CHLOROPHYLL",

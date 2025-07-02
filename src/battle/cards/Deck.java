@@ -25,6 +25,7 @@ public class Deck {
 	public void draw() {
 		if (hand.size() >= BattleConstants.HAND_SIZE) return;
 		if (drawPile.isEmpty()) shuffle();
+		if (drawPile.isEmpty()) return;
 		hand.add(drawPile.remove(0));
 	}
 

@@ -113,19 +113,36 @@ public class Sound implements Runnable {
 				clip.open(convertedStream);
 				currentTrackName = file;
 				
-				try {
-					gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-				} catch (IllegalArgumentException e) {
-					try {
-						gainControl = (FloatControl) clip.getControl(FloatControl.Type.VOLUME);
-					} catch (IllegalArgumentException e2) {						System.err.println("Warning: No volume control available for audio system");
-						gainControl = null;
-					}
-				}
+				// Try to get volume control with better error handling
+				gainControl = getVolumeControl();
 
 			}
 		} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
 			System.err.println("Error loading sound file: " + file);
+		}
+	}
+
+	/**
+	 * Attempts to get a volume control for the current clip.
+	 * Returns null if no volume control is available.
+	 */
+	private FloatControl getVolumeControl() {
+		if (clip == null) {
+			return null;
+		}
+		
+		try {
+			// Try MASTER_GAIN first (most common)
+			return (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+		} catch (IllegalArgumentException e) {
+			try {
+				// Fall back to VOLUME control
+				return (FloatControl) clip.getControl(FloatControl.Type.VOLUME);
+			} catch (IllegalArgumentException e2) {
+				// No volume control available - this is normal on some systems
+				//System.out.println("Info: Volume control not available for this audio system. Audio will play at full volume.");
+				return null;
+			}
 		}
 	}
 
@@ -195,7 +212,11 @@ public class Sound implements Runnable {
 	}
 
 	public void setVolume(float valueDB) { 
-		if(gainControl != null) gainControl.setValue(valueDB);
+		if (gainControl != null) {
+			gainControl.setValue(valueDB);
+		}
+		// If gainControl is null, volume control is not available
+		// Audio will play at the system's default volume
 	}
 
 	public void shiftVolume(double valueFrom, double valueTo) {

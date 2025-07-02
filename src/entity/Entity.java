@@ -13,9 +13,22 @@ public abstract class Entity {
 	protected int animationSpeed = 8;
 	protected int spriteIndex = 0;
 
+	private final int DEFAULT_ANIMATION_SPEED = 8;
+	private final double DEFAULT_SPEED = 2.25;
+
 	public void setAnimationSpeed(int animationSpeed) { this.animationSpeed = animationSpeed; }
 
 	public void setSpeed(double speed) { this.speed = speed; }
+
+	public void setRunning() {
+		speed = DEFAULT_SPEED * 2;
+		animationSpeed = DEFAULT_ANIMATION_SPEED * 3/4;
+	}
+
+	public void setWalking() {
+		speed = DEFAULT_SPEED;
+		animationSpeed = DEFAULT_ANIMATION_SPEED;
+	}
 
 	public int getMapX() { return (int) (x / Constants.ORIGINAL_TILE_SIZE); }
 

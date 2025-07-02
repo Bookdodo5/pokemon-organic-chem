@@ -173,6 +173,8 @@ public class BattleInputRenderer {
         TextRenderer whiteRenderer = new TextRenderer(whiteTextStyle);
         TextRenderer blackRenderer = new TextRenderer(blackTextStyle);
         TextRenderer disabledRenderer = new TextRenderer(disabledBlackTextStyle);
+        TextRenderer smallRenderer = new TextRenderer(smallWhiteTextStyle);
+        TextRenderer smallDisabledRenderer = new TextRenderer(smallDisabledWhiteTextStyle);
         
         List<Reaction> reactions = player.getMolecule().getReactions();
         int startY = dims.innerBoxY() + whiteTextStyle.getTextMarginY();
@@ -188,6 +190,13 @@ public class BattleInputRenderer {
             TextRenderer renderer = canPlay ? blackRenderer : disabledRenderer;
             
             renderLineWithPointer(g2, reactionX, reactionY, reactionName, renderer, selectionIndex, i);
+            
+            int costX = reactionX + renderer.getTextWidth(g2, reactionName) + 2;
+            int costY = reactionY + blackTextStyle.getLineHeight()/2;
+            String costString = "[" + reaction.getCurrentLP(player, battle.getBoard()) + "]";
+
+            TextRenderer costRenderer = canPlay ? smallDisabledRenderer : smallRenderer;
+            costRenderer.renderLine(g2, costX, costY, costString);
         }
 
         

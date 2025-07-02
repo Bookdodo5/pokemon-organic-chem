@@ -26,3 +26,31 @@ Atoms:
   C: 6
   H: 10
   O: 2
+
+# Molecule: Ethylene
+Name: Ethylene
+SMILES: C=C
+Formula: C2H4
+Molecular Weight: 28
+Atoms:
+  C: 2
+  H: 4
+
+# Molecule: Ethane
+Name: Ethane
+SMILES: CC
+Formula: C2H6
+Molecular Weight: 30
+Atoms:
+  C: 2
+  H: 6
+
+# Molecule: Chloroethane
+Name: Chloroethane
+SMILES: CCCl
+Formula: C2H5Cl
+Molecular Weight: 64
+Atoms:
+  C: 2
+  H: 5
+  Cl: 1

@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import tile.MapManager;
 
 public class CutsceneManager {
 
@@ -24,17 +25,19 @@ public class CutsceneManager {
 	private final CameraManager cameraManager;
 	private final Player player;
 	private final NPCManager npcManager;
+	private final MapManager mapManager;
 	private final Random random;
 	private NPC currentCutsceneNPC;
 	private AIMode previousAIMode;
 
-	public CutsceneManager(NPCManager npcManager, Player player, CameraManager cameraManager, StateManager stateManager) {
+	public CutsceneManager(NPCManager npcManager, Player player, CameraManager cameraManager, StateManager stateManager, MapManager mapManager) {
 		cutscenes = new HashMap<>();
 		this.flagManager = FlagManager.getInstance();
 		this.stateManager = stateManager;
 		this.cameraManager = cameraManager;
 		this.npcManager = npcManager;
 		this.player = player;
+		this.mapManager = mapManager;
 		this.random = new Random();
 		this.currentCutsceneNPC = null;
 		this.previousAIMode = null;
@@ -48,7 +51,7 @@ public class CutsceneManager {
 	private void initializeCutscenes() {
 		if (overworldState == null) return;
 		MethanopolisCutscenes.initialize(cutscenes, overworldState);
-		PorbitalTownCutscenes.initialize(cutscenes, stateManager, overworldState, npcManager, cameraManager, player, flagManager);
+		PorbitalTownCutscenes.initialize(cutscenes, stateManager, overworldState, npcManager, cameraManager, player, flagManager, mapManager);
 		Route1Cutscenes.initialize(cutscenes, overworldState);
 	}
 

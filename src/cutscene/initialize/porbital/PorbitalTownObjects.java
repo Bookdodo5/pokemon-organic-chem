@@ -286,5 +286,100 @@ public class PorbitalTownObjects extends CutsceneTemplate {
             ).buildCutscene(),
             getKeyLook(12, 10, "porbital_town__house1_f1")
         );
+
+/*
+* -----------------------------------------------------------------------------
+* Location: Kusari's House, Floor 1
+* -----------------------------------------------------------------------------
+*/
+
+//* water sink
+        addCutscene(cutscenes, new CutsceneBuilder()
+            .speak( "THINKING",
+                "It's a water sink.",
+                "The water is running.",
+                "You tried turning it off, but it's stuck."
+            ).buildCutscene(),
+            getKeyLook(11, 5, "porbital_town__house2_f1"),
+            getKeyLook(12, 5, "porbital_town__house2_f1")
+        );
+
+//* decorative tree
+        addCutscene(cutscenes, new CutsceneBuilder()
+            .speak( "THINKING",
+                "It's a decorative tree.",
+                "It looks like a real tree, but it's made of plastic."
+            ).buildCutscene(),
+            getKeyLook(12, 9, "porbital_town__house2_f1")
+        );
+
+//* blue bookshelf
+        addCutscene(cutscenes, new CutsceneBuilder()
+            .speak( "THINKING",
+                "It's a bookshelf.",
+                "The books are arranged in a reverse alphabetical order.",
+                "You notice they're all chemistry textbooks.",
+                "There's also a sticky note.",
+                "\"Study schedule: 7 AM - 7 PM.\""
+            ).buildCutscene(),
+            getKeyLook(1, 2, "porbital_town__house2_f1")
+        );
+
+/*
+* -----------------------------------------------------------------------------
+* Location: Kusari's House, Floor 2
+* -----------------------------------------------------------------------------
+*/
+
+//* high-tech electrical box
+        addCutscene(cutscenes, new CutsceneBuilder()
+            .speak( "THINKING",
+                "It's a high-tech electrical box.",
+                "It's blinking and making a lot of noise.",
+                "You have a feeling that if you touch it more, you'll be electrocuted.",
+                "Electrocuted by a 10,000,000 Volt Thunderbolt."
+            ).buildCutscene(),
+            getKeyLook(1, 5, "porbital_town__house2_f2"),
+            getKeyLook(2, 5, "porbital_town__house2_f2")
+        );
+
+//* Omurice
+        addCutscene(cutscenes, new CutsceneBuilder()
+            .speak( "THINKING",
+                "It's Omurice!",
+                "A Japanese dish with rice wrapped in a thin omelette.",
+                "You are hungry, so you eat it."
+            )
+            .wait(60)
+            .speak( "THINKING",
+                "You cannot physically eat it. The game won't allow you."
+            )
+            .buildCutscene(),
+            getKeyLook(12, 8, "porbital_town__house2_f2")
+        );
+
+//* clipboard hanging on wall
+        addCutscene(cutscenes, new CutsceneBuilder()
+            .speak( "THINKING",
+                "It's a clipboard hanging on the wall.",
+                "\"Daily Training Schedule\"",
+                "\"6:00 AM - Wake up and say 'Good night, Professor!'\"",
+                "\"6:05 AM - Take TETRAHYDROCANNABINOL medication\"",
+                "\"6:10 AM - Practice organic chemistry\"",
+                "\"7:00 PM - Sleep\""
+            ).buildCutscene(),
+            getKeyLook(11, 2, "porbital_town__house2_f2")
+        );
+
+//* huge machine
+        addCutscene(cutscenes, new CutsceneBuilder()
+            .speak( "THINKING",
+                "It's a huge machine that might produce something.",
+                "That something it's producing might be dangerous.",
+                "Or maybe, it's just a money printer for fraud.",
+                "You don't know."
+            ).buildCutscene(),
+            getKeyLook(2, 4, "porbital_town__house2_f2")
+        );
     }
 }
