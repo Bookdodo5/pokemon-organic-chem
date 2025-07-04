@@ -59,14 +59,21 @@ public class DialogueRenderer {
 		SPEAKER_COLORS.put("THINKING", new Color(255, 255, 255));
 		SPEAKER_COLORS.put("YUUKI", new Color(190, 50, 230));
 		SPEAKER_COLORS.put("DECANE", new Color(70, 130, 170));
-		SPEAKER_COLORS.put("CELLULOSE", new Color(100, 255, 100));
+		SPEAKER_COLORS.put("CELLULOSE", new Color(160, 255, 80));
+		SPEAKER_COLORS.put("CHLOROPHYLL", new Color(60, 250, 210));
 		SPEAKER_COLORS.put("DIRECTOR", new Color(255, 100, 100));
 		SPEAKER_COLORS.put("MOLECULAR GASTRONOMIST", new Color(210, 150, 70));
 		SPEAKER_COLORS.put("PSYCHIC", new Color(100, 70, 150));
 		SPEAKER_COLORS.put("PORBITAL COP", new Color(60, 120, 200));
 		SPEAKER_COLORS.put("DISGUISED COP", new Color(80, 150, 180));
-		SPEAKER_COLORS.put("CHLOROPHYLL", new Color(100, 250, 150));
 		SPEAKER_COLORS.put("KUSARI", new Color(240, 50, 170));
+		SPEAKER_COLORS.put("PORBITAL MAYOR", new Color(230, 200, 0));
+		SPEAKER_COLORS.put("RED", new Color(255, 0, 0));
+		SPEAKER_COLORS.put("BLUE", new Color(0, 0, 255));
+		SPEAKER_COLORS.put("GREEN", new Color(0, 255, 0));
+		SPEAKER_COLORS.put("YELLOW", new Color(255, 255, 0));
+		SPEAKER_COLORS.put("CYAN", new Color(0, 255, 255));
+		SPEAKER_COLORS.put("MAGENTA", new Color(255, 0, 255));
 	}
 
 	private Color tintWith(Color color, double weight, Color tintColor) {

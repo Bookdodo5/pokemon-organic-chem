@@ -167,10 +167,10 @@ public class MapManager {
 	}
 
     public double findGlobalX(String mapName, double x) { 
-        return maps.get(mapName).getGlobalX() + x;
+        return maps.get(mapName).getGlobalX() * 32 + x;
     }
 
     public double findGlobalY(String mapName, double y) { 
-        return maps.get(mapName).getGlobalY() + y;
+        return maps.get(mapName).getGlobalY() * 32 + y;
     }
 }

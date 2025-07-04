@@ -6,6 +6,7 @@ import cutscene.CutsceneManager;
 import entity.NPCManager;
 import entity.Player;
 import gamestates.CameraManager;
+import gamestates.FlagManager;
 import gamestates.GameStates;
 import gamestates.StateManager;
 import gamestates.states.BattleState;
@@ -37,8 +38,10 @@ public class GameContentManager {
 	private final DeveloperMode developerMode;
 
 	public GameContentManager() {
+		this.developerMode = new DeveloperMode(this);
+		
 		this.stateManager = new StateManager();
-		this.keyHandler = new KeyBindingHandler(stateManager);
+		this.keyHandler = new KeyBindingHandler(stateManager, developerMode);
 		
 		this.npcManager = new NPCManager();
 		this.mapManager = new MapManager();
@@ -55,7 +58,8 @@ public class GameContentManager {
 			player, 
 			cameraManager, 
 			stateManager,
-			mapManager
+			mapManager,
+			playerDeckManager
 			);
 		initializePlayerAndMap();
 		initializeGameStates();
@@ -64,9 +68,6 @@ public class GameContentManager {
 		this.cutsceneManager.setOverworldState(
 			(OverworldState) StateManager.states.get(GameStates.OVERWORLD)
 		);
-		
-		// Initialize developer mode (always active)
-		this.developerMode = new DeveloperMode(this);
 	}
 
 	private void initializePlayerAndMap() {
@@ -83,8 +84,14 @@ public class GameContentManager {
 	}
 
 	private void initializeFlags() {
-		//flagManager.addFlag("YUUKI_1");
-		//flagManager.addFlag("PROF_DECANE_1");
+		FlagManager.getInstance().addFlag("MANIAC_KNOW");
+		FlagManager.getInstance().addFlag("CHLOROPHYLL_KNOW");
+		FlagManager.getInstance().addFlag("MOLECULAR GASTRONOMIST_KNOW");
+		FlagManager.getInstance().addFlag("PSYCHIC_KNOW");
+		FlagManager.getInstance().addFlag("PORBITAL COP_KNOW");
+		FlagManager.getInstance().addFlag("DISGUISED COP_KNOW");
+		FlagManager.getInstance().addFlag("RED_KNOW");
+		FlagManager.getInstance().addFlag("BLUE_KNOW");
 	}
 
 	private void initializeGameStates() {

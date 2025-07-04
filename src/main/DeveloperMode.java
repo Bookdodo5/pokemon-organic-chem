@@ -348,7 +348,7 @@ public class DeveloperMode {
         }
     }
     
-    private void toggleHyperSpeed() {
+    public void toggleHyperSpeed() {
         isHyperSpeed = !isHyperSpeed;
         if (isHyperSpeed) {
             System.out.println("Hyper speed enabled!");

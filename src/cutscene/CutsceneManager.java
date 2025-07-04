@@ -14,30 +14,31 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import pokedex.PlayerDeckManager;
 import tile.MapManager;
 
 public class CutsceneManager {
 
 	private final Map<String, List<Cutscene>> cutscenes;
-	private final FlagManager flagManager;
 	private final StateManager stateManager;
 	private OverworldState overworldState;
 	private final CameraManager cameraManager;
 	private final Player player;
 	private final NPCManager npcManager;
 	private final MapManager mapManager;
+	private final PlayerDeckManager playerDeckManager;
 	private final Random random;
 	private NPC currentCutsceneNPC;
 	private AIMode previousAIMode;
 
-	public CutsceneManager(NPCManager npcManager, Player player, CameraManager cameraManager, StateManager stateManager, MapManager mapManager) {
+	public CutsceneManager(NPCManager npcManager, Player player, CameraManager cameraManager, StateManager stateManager, MapManager mapManager, PlayerDeckManager playerDeckManager) {
 		cutscenes = new HashMap<>();
-		this.flagManager = FlagManager.getInstance();
 		this.stateManager = stateManager;
 		this.cameraManager = cameraManager;
 		this.npcManager = npcManager;
 		this.player = player;
 		this.mapManager = mapManager;
+		this.playerDeckManager = playerDeckManager;
 		this.random = new Random();
 		this.currentCutsceneNPC = null;
 		this.previousAIMode = null;
@@ -51,8 +52,8 @@ public class CutsceneManager {
 	private void initializeCutscenes() {
 		if (overworldState == null) return;
 		MethanopolisCutscenes.initialize(cutscenes, overworldState);
-		PorbitalTownCutscenes.initialize(cutscenes, stateManager, overworldState, npcManager, cameraManager, player, flagManager, mapManager);
-		Route1Cutscenes.initialize(cutscenes, overworldState);
+		PorbitalTownCutscenes.initialize(cutscenes, stateManager, overworldState, npcManager, cameraManager, player, mapManager, playerDeckManager);
+		Route1Cutscenes.initialize(cutscenes, npcManager, cameraManager, player, overworldState);
 	}
 
 	private String getKeyLocation(int x, int y, String map, boolean interact, FacingDirections facing) {
@@ -101,7 +102,9 @@ public class CutsceneManager {
 		);
 		if(lookingCutscenes == null) return null;
 		lookingCutscenes = lookingCutscenes.stream()
-			.filter(cutscene -> flagManager.matchFlags(cutscene.getYesFlags(), cutscene.getNoFlags()))
+			.filter(cutscene -> FlagManager.getInstance().matchFlags(
+				cutscene.getYesFlags(), cutscene.getNoFlags()
+			))
 			.toList();
 		if(lookingCutscenes.isEmpty()) return null;
 		return lookingCutscenes.get(random.nextInt(lookingCutscenes.size()));
@@ -113,7 +116,9 @@ public class CutsceneManager {
 		);
 		if(locationCutscenes == null) return null;
 		locationCutscenes = locationCutscenes.stream()
-			.filter(cutscene -> flagManager.matchFlags(cutscene.getYesFlags(), cutscene.getNoFlags()))
+			.filter(cutscene -> FlagManager.getInstance().matchFlags(
+				cutscene.getYesFlags(), cutscene.getNoFlags()
+			))
 			.toList();
 		if(locationCutscenes.isEmpty()) return null;
 		return locationCutscenes.get(random.nextInt(locationCutscenes.size()));
@@ -123,7 +128,9 @@ public class CutsceneManager {
 		List<Cutscene> npcCutscenes = cutscenes.get(getKeyNPC(npc));
 		if(npcCutscenes == null) return null;
 		npcCutscenes = npcCutscenes.stream()
-			.filter(cutscene -> flagManager.matchFlags(cutscene.getYesFlags(), cutscene.getNoFlags()))
+			.filter(cutscene -> FlagManager.getInstance().matchFlags(
+				cutscene.getYesFlags(), cutscene.getNoFlags()
+			))
 			.toList();
 		if(npcCutscenes.isEmpty()) return null;
 		setNPCCutsceneMode(npc);

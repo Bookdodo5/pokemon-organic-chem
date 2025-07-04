@@ -10,6 +10,7 @@ import entity.NPCManager;
 import entity.NPCSprites;
 import entity.Player;
 import gamestates.CameraManager;
+import gamestates.FlagManager;
 import gamestates.GameState;
 import gamestates.GameStates;
 import gamestates.StateManager;
@@ -116,8 +117,12 @@ public class OverworldState extends GameState {
 
 	@Override
 	public void update() {
-
 		player.update(entities, mapManager);
+
+		if (player.needsMapTransition()) {
+			setMap(player.getTransitionToX(), player.getTransitionToY(), player.getTransitionToMap());
+			player.clearMapTransition();
+		}
 		
 		for (NPC npc : npcManager.getNPCs()) {
 			for(MapData map : mapManager.getVisibleMaps()) {
@@ -193,7 +198,11 @@ public class OverworldState extends GameState {
 					checkCutscene(true);
 				}
 			}
-			case P -> stateManager.setState(GameStates.POKEDEX);
+			case P -> {
+				if (FlagManager.getInstance().hasFlag("DECK_FOUND")) {
+					stateManager.setState(GameStates.POKEDEX);
+				}
+			}
 			default -> {}
 		}
 

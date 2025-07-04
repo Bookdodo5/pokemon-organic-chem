@@ -90,7 +90,6 @@ public class BattleDataManager {
     }
 
     public BattleData getBattleData(int id) {
-        System.out.println(battleData);
         return battleData.stream()
             .filter(battleDatum -> battleDatum.getId() == id)
             .findFirst()

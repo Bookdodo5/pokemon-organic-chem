@@ -10,32 +10,105 @@ import entity.NPC;
 import entity.NPCManager;
 import entity.Player;
 import gamestates.CameraManager;
-import gamestates.FlagManager;
 import java.util.List;
 import java.util.Map;
 
 public class PorbitalTownTalks extends CutsceneTemplate {
     public static void initialize(Map<String, List<Cutscene>> cutscenes, NPCManager npcManager, CameraManager cameraManager, Player player) {
-        NPC yuuki = npcManager.getNPC("Yuuki");
-        NPC professorDecane = npcManager.getNPC("ProfDecane");
         NPC molecularGastronomist = npcManager.getNPC("MolecularGastronomist");
         NPC psychic = npcManager.getNPC("Psychic");
         NPC PorbitalCop1 = npcManager.getNPC("PorbitalCop1");
         NPC PorbitalCop2 = npcManager.getNPC("PorbitalCop2");
         NPC PorbitalCop3 = npcManager.getNPC("PorbitalCop3");
-        NPC chlorophyll = npcManager.getNPC("ChlorophyllGirl");
+        NPC chlorophyll = npcManager.getNPC("Chlorophyll");
+        NPC mayor = npcManager.getNPC("PorbitalMayor");
 
-        staticTalks(cutscenes, molecularGastronomist, psychic, PorbitalCop1, PorbitalCop2, PorbitalCop3, chlorophyll, cameraManager, player, FlagManager.getInstance());
+        staticTalks(cutscenes, molecularGastronomist, psychic, PorbitalCop1, PorbitalCop2, PorbitalCop3, chlorophyll, cameraManager, player);
         
-        yuukiTalk1(cutscenes, yuuki, cameraManager, player);
-        decaneAndYuukiWaitingForChemical(cutscenes, professorDecane, yuuki, cameraManager, player);
+        mayorTalk(cutscenes, mayor, cameraManager, player);
     }
 
-    private static void staticTalks(Map<String, List<Cutscene>> cutscenes, NPC molecularGastronomist, NPC psychic, NPC PorbitalCop1, NPC PorbitalCop2, NPC PorbitalCop3, NPC chlorophyll, CameraManager cameraManager, Player player, FlagManager flagManager) {
+    private static void mayorTalk(Map<String, List<Cutscene>> cutscenes, NPC mayor, CameraManager cameraManager, Player player) {
+        addCutscene(cutscenes, new CutsceneBuilder()
+            .faceTowards(mayor, player)
+            .waitEmote(player, cameraManager, 60)
+            .speak("PORBITAL MAYOR",
+                "Ahem...",
+                "Hello, citizen of the ALKANE GRASSLANDS.",
+                "I'm the mayor of this town."
+            )
+            .react(mayor, cameraManager, Emotes.FRIENDLY)
+            .setFlag("PORBITAL MAYOR_KNOW")
+            .speak(new Dialogue(new String[] {
+                "My job is to protect you from the dangers of the world.",
+                "Especially politics. They're so dangerous, even I can't stand it.",
+                "I really really can't stand it, to the point that I have to sit down.",
+                "...",
+                "...",
+                "Haha...",
+                "Can you please leave me here...?",
+                "The ALKENISTRA OPERA HOUSE's manager might be coming at any moment.",
+                "They invited me to make a speech for some reason.",
+                "And as you probably know, the OPERA HOUSE's manager is very forceful.",
+                "I need to pretend I'm dead.",
+                "This telescope-looking thingy is my disguise. I'm hiding very well, aren't I?",
+            }, "PORBITAL MAYOR",
+            new DialogueOption("Why hide from them?", new Dialogue(new String[] {
+                "I cannot make a speech about something I don't know about...",
+                "I have basic human manners, you know?",
+                "You're better off not doing anything than faking data and lying to the people."
+            }, "PORBITAL MAYOR")),
+            new DialogueOption("Hide? Tanned leather?", new Dialogue(new String[] {
+                "...",
+                "Yeah... That's a homo-",
+                "No... It's not phobic... What is it?",
+                "Homo Erectus...",
+                "Homologous...",
+                "Homogeneity",
+                "It stuck at the tip of my tongue...",
+                "...",
+                "Ah!!!",
+                "It's a homogamous words!"
+            }, "PORBITAL MAYOR",
+                new DialogueOption("Homophones...", new Dialogue(new String[] {
+                    "Oh... I see...",
+                    "I almost thought it was homobasidiomycete...",
+                    "But that's a fungus, not a word.",
+                    "Sorry, I'm not a linguist.",
+                    "I'm just a mayor."
+                }, "PORBITAL MAYOR"))
+            )),
+            new DialogueOption("Hi \"hiding very well\"! I'm dad!", new Dialogue(new String[] {
+                "Hello, dad!",
+                "I'm not sure what you're talking about.",
+                "Can you please just leave if you're not going to make creative jokes?",
+            }, "PORBITAL MAYOR")),
+            new DialogueOption("Mayor-chan... Hai!", new Dialogue(new String[] {
+                "Nani ga suki?",
+                "Chokominto! Yori mo a~ na~ ta!",
+                "Cringe... Cringe... Cringe...",
+                "CRINGE!!!",
+                "Can't you at least do something chuuni or cool? Not this idol thing...",
+                "I am the alias of destruction incarnate, you can't defy the principles of all creations just like that!"
+            }, "PORBITAL MAYOR")),
+            new DialogueOption("Are you high?", new Dialogue(new String[] {
+                "No, I'm not high.",
+                "I'm low.",
+                "Low in self-esteem, self-confidence, and self-worth.",
+                "I'm also low-income, low-intelligence, and low-social skills.",
+                "At least I'm not low-key terrible at making jokes."
+            }, "PORBITAL MAYOR"))
+            ))
+            .buildCutscene(),
+            getKeyNPC(mayor)
+        );
+    }
+
+    private static void staticTalks(Map<String, List<Cutscene>> cutscenes, NPC molecularGastronomist, NPC psychic, NPC PorbitalCop1, NPC PorbitalCop2, NPC PorbitalCop3, NPC chlorophyll, CameraManager cameraManager, Player player) {
 
         //* CUTSCENE: Porbital Town - Molecular Gastronomist
         addCutscene(cutscenes, new CutsceneBuilder()
-            .setFlag(flagManager, "MOLECULAR GASTRONOMIST_KNOW")
+            .setFlag("MOLECULAR GASTRONOMIST_KNOW")
             .faceTowards(molecularGastronomist, player)
             .speak("MOLECULAR GASTRONOMIST",
                 "Oh... Ah!",
@@ -50,7 +123,7 @@ public class PorbitalTownTalks extends CutsceneTemplate {
 
         //* CUTSCENE: Porbital Town - Psychic
         addCutscene(cutscenes, new CutsceneBuilder()
-            .setFlag(flagManager, "PSYCHIC_KNOW")
+            .setFlag("PSYCHIC_KNOW")
             .faceTowards(psychic, player)
             .speak(new Dialogue( new String[] {
                 "The spirits whisper to me... they say... 'Press SPACE to run'.",
@@ -81,7 +154,7 @@ public class PorbitalTownTalks extends CutsceneTemplate {
         
         //* CUTSCENE: Porbital Town - Porbital Cop 1
         addCutscene(cutscenes, new CutsceneBuilder()
-            .setFlag(flagManager, "PORBITAL COP_KNOW")
+            .setFlag("PORBITAL COP_KNOW")
             .faceTowards(PorbitalCop1, player)
             .speak("PORBITAL COP",
                 "Hey there.",
@@ -97,7 +170,7 @@ public class PorbitalTownTalks extends CutsceneTemplate {
 
         //* CUTSCENE: Porbital Town - Porbital Cop 2
         addCutscene(cutscenes, new CutsceneBuilder()
-            .setFlag(flagManager, "PORBITAL COP_KNOW")
+            .setFlag("PORBITAL COP_KNOW")
             .faceTowards(PorbitalCop2, player)
             .speak("PORBITAL COP",
                 "Hello, citizen of the ALKANE GRASSLANDS.",
@@ -120,7 +193,7 @@ public class PorbitalTownTalks extends CutsceneTemplate {
 
         //* CUTSCENE: Porbital Town - Porbital Cop 3 (Scammer)
         addCutscene(cutscenes, new CutsceneBuilder()
-            .setFlag(flagManager, "DISGUISED COP_KNOW")
+            .setFlag("DISGUISED COP_KNOW")
             .faceTowards(PorbitalCop3, player)
             .speak("DISGUISED COP",
                 "No. I can't talk.",
@@ -135,7 +208,8 @@ public class PorbitalTownTalks extends CutsceneTemplate {
         //* CUTSCENE: Porbital Town - Chlorophyll Girl
         addCutscene(cutscenes, new CutsceneBuilder()
             .forbid("CHLOROPHYLL_WAIT_FOR_REMATCH")
-            .setFlag(flagManager, "CHLOROPHYLL_KNOW")
+            .forbid("CHLOROPHYLL_2")
+            .setFlag("CHLOROPHYLL_KNOW")
             .faceTowards(chlorophyll, player)
             .speak("CHLOROPHYLL",
                 "Hiiii! Isn't it a WONDERFUL day?! All the leaves are so...",
@@ -159,13 +233,13 @@ public class PorbitalTownTalks extends CutsceneTemplate {
         
         addCutscene(cutscenes, new CutsceneBuilder()
             .forbid("CHLOROPHYLL_WAIT_FOR_REMATCH")
-            .setFlag(flagManager, "CHLOROPHYLL_KNOW")
+            .forbid("CHLOROPHYLL_2")
+            .setFlag("CHLOROPHYLL_KNOW")
             .faceTowards(chlorophyll, player)
             .speak("CHLOROPHYLL",
                 "Heyyyy!!! Have you ever bitten a tea leaf RAW?",
                 "That characteristic nasty, bitter taste. You know what that is???",
-                "That's....",
-                "TANNINNNNNN!!!!!"
+                "That's...."
             )
             .parallel(
                 new CutsceneBuilder()
@@ -184,7 +258,8 @@ public class PorbitalTownTalks extends CutsceneTemplate {
 
         addCutscene(cutscenes, new CutsceneBuilder()
             .forbid("CHLOROPHYLL_WAIT_FOR_REMATCH")
-            .setFlag(flagManager, "CHLOROPHYLL_KNOW")
+            .forbid("CHLOROPHYLL_2")
+            .setFlag("CHLOROPHYLL_KNOW")
             .faceTowards(chlorophyll, player)
             .speak("CHLOROPHYLL",
                 "Sniff sniff... Who farted...?",
@@ -208,7 +283,8 @@ public class PorbitalTownTalks extends CutsceneTemplate {
         
         addCutscene(cutscenes, new CutsceneBuilder()
             .forbid("CHLOROPHYLL_WAIT_FOR_REMATCH")
-            .setFlag(flagManager, "CHLOROPHYLL_KNOW")
+            .forbid("CHLOROPHYLL_2")
+            .setFlag("CHLOROPHYLL_KNOW")
             .faceTowards(chlorophyll, player)
             .speak("CHLOROPHYLL",
                 "HELLOOOOO!!!! Ever wonder why trees can be so tall... and not flop over like noodles???",
@@ -232,82 +308,4 @@ public class PorbitalTownTalks extends CutsceneTemplate {
             .buildCutscene(), getKeyNPC(chlorophyll));  
     }
 
-    private static void yuukiTalk1(Map<String, List<Cutscene>> cutscenes, NPC yuuki, CameraManager cameraManager, Player player) {
-        /*
-        * -----------------------------------------------------------------------------
-        * CUTSCENE: Porbital Town - Yuuki Talk After Introduction
-        * Location: Yuuki's House, Floor 2
-        * -----------------------------------------------------------------------------
-        ? FLAGS USED:
-        ~   - YUUKI_1: Yuuki decided to get along with the player.
-        * -----------------------------------------------------------------------------
-        ! FLOW:
-        ^   1. Only runs if YUUKI_1 is set.
-        ^   2. Player questions Yuuki, but she sends him downstairs to eat.
-        * -----------------------------------------------------------------------------
-        */
-        addCutscene(cutscenes, new CutsceneBuilder()
-            .require("YUUKI_1")
-            .forbid("PROF_DECANE_1")
-            .faceTowards(yuuki, player)
-            .react(yuuki, cameraManager, Emotes.FRIENDLY)
-            .speak("YUUKI",
-                "We are friends now, right?",
-                "It must be tiring to appear at somebody's house all of the sudden.",
-                "Well, I guess this is now your house too...",
-                "Don't mind me and go eat some puddings downstairs!",
-                "I'll be waiting for you here!"
-            )
-            .buildCutscene(),
-            getKeyNPC(yuuki)
-        );
-    }
-
-    private static void decaneAndYuukiWaitingForChemical(Map<String, List<Cutscene>> cutscenes, NPC professorDecane, NPC yuuki, CameraManager cameraManager, Player player) {
-        /*
-        * -----------------------------------------------------------------------------
-        * CUTSCENE: Porbital Town - Decane and Child Waiting For Chemical
-        * Location: Yuuki's House, Floor 1
-        * -----------------------------------------------------------------------------
-        ? FLAGS USED:
-        ~   - PROF_DECANE_1: The professor has explained the situation to the player.
-        ~   - PROF_CELLULOSE_1: Player has the chemical. (Assumed to be implemented)
-        * -----------------------------------------------------------------------------
-        ! FLOW:
-        ^   1. Only runs if PROF_DECANE_1 is set but GOT_CELLULOSE_CHEMICAL is NOT set.
-        ^   2. Player talks to Professor Decane, she urges them to hurry.
-        ^   3. Player talks to Yuuki, she encourages them.
-        * -----------------------------------------------------------------------------
-        */
-        // For Professor Decane
-        addCutscene(cutscenes, new CutsceneBuilder()
-            .require("PROF_DECANE_1")
-            .forbid("PROF_CELLULOSE_1")
-            .faceTowards(professorDecane, player)
-            .speak("DECANE",
-                "Please, you must hurry to Professor Cellulose's house.",
-                "I'm not sure how much longer I can keep her occupied."
-            )
-            .faceTowards(professorDecane, yuuki)
-            .buildCutscene(),
-            getKeyNPC(professorDecane)
-        );
-
-        // For Yuuki
-        addCutscene(cutscenes, new CutsceneBuilder()
-            .require("PROF_DECANE_1")
-            .forbid("PROF_CELLULOSE_1")
-            .faceTowards(yuuki, player)
-            .react(yuuki, cameraManager, Emotes.FRIENDLY)
-            .speak("YUUKI",
-                "Hey, my friend! What are you doing?",
-                "I'm protecting you from this crazy perverted woman!",
-                "Trust me with this side, I'm the best at it!",
-                "Hope you enjoy this little town!"
-            )
-            .faceTowards(yuuki, professorDecane)
-            .buildCutscene(),
-            getKeyNPC(yuuki)
-        );
-    }
 }

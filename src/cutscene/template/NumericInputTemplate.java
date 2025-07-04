@@ -121,7 +121,7 @@ public class NumericInputTemplate extends CutsceneTemplate {
             .sfx("PkmnGet")
             .wait(120)
             .execute(() -> resetNumericInput())
-            .setFlag(FlagManager.getInstance(), successFlag)
+            .setFlag(successFlag)
             .buildActions();
     }
 

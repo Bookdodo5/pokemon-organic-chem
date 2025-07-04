@@ -105,6 +105,7 @@ public abstract class Human extends Entity {
 
 		CollisionTypes tileResult = collisionChecker.checkCollision(checkX, checkY, mapManager, currentDirection);
 		boolean humanCollision = humans.stream()
+				.filter(human -> human.getMap().equals(mapManager.getCurrentMapID()))
 				.anyMatch(human -> (human.getMapX() == checkX) && (human.getMapY() == checkY));
 
 		if(humanCollision) setIdleWalking();
@@ -237,15 +238,12 @@ public abstract class Human extends Entity {
 	@Override
 	public void draw(Graphics2D g2, int cameraX, int cameraY, MapManager mapManager) {
 		boolean isOnGrass = isOnGrass(mapManager);
-		boolean inCurrentMap = mapManager.getCurrentMapID().equals(getMap());
-		double newX = x;
-		double newY = y;
-		if(!inCurrentMap) {
-			newX = mapManager.findGlobalX(getMap(), x) - mapManager.getGlobalX();
-			newY = mapManager.findGlobalY(getMap(), y) - mapManager.getGlobalY();
-		}
-		int drawX = (int) (newX - cameraX);
-		int drawY = (int) (newY - cameraY - (int) ((getSpriteHeight()) / 3));
+		double globalX = mapManager.findGlobalX(getMap(), x);
+		double globalY = mapManager.findGlobalY(getMap(), y);
+		double cameraGlobalX = mapManager.findGlobalX(mapManager.getCurrentMapID(), cameraX);
+		double cameraGlobalY = mapManager.findGlobalY(mapManager.getCurrentMapID(), cameraY);
+		int drawX = (int) (globalX - cameraGlobalX);
+		int drawY = (int) (globalY - cameraGlobalY - (int) ((getSpriteHeight()) / 3));
 
 		java.awt.Shape originalClip = g2.getClip();
 		if (isOnGrass && Math.abs(x-targetX) < 20 && Math.abs(y-targetY) < 20) {

@@ -1,5 +1,6 @@
 package input;
 
+import assets.SoundManager;
 import gamestates.StateManager;
 import java.awt.event.ActionEvent;
 import java.util.Stack;
@@ -8,15 +9,18 @@ import javax.swing.ActionMap;
 import javax.swing.InputMap;
 import javax.swing.JComponent;
 import javax.swing.KeyStroke;
+import main.DeveloperMode;
 
 public class KeyBindingHandler {
 
 	private Keys currentKey = Keys.NONE;
 	private final Stack<Keys> keyStack = new Stack<>();
 	private final StateManager stateManager;
+	private final DeveloperMode developerMode;
 
-	public KeyBindingHandler(StateManager stateManager) {
+	public KeyBindingHandler(StateManager stateManager, DeveloperMode developerMode) {
 		this.stateManager = stateManager;
+		this.developerMode = developerMode;
 	}
 
 	public Keys getCurrentKey() {
@@ -70,6 +74,10 @@ public class KeyBindingHandler {
 		inputMap.put(KeyStroke.getKeyStroke("SPACE"), "runPressed");
 		inputMap.put(KeyStroke.getKeyStroke("released SPACE"), "runReleased");
 
+		// Tab key binding for hyperspeed
+		inputMap.put(KeyStroke.getKeyStroke("N"), "tabPressed");
+		inputMap.put(KeyStroke.getKeyStroke("released N"), "tabReleased");
+
 		// Set up actions
 		actionMap.put("upPressed", new KeyAction(Keys.UP, true));
 		actionMap.put("upReleased", new KeyAction(Keys.UP, false));
@@ -87,6 +95,8 @@ public class KeyBindingHandler {
 		actionMap.put("zReleased", new KeyAction(Keys.INTERACT, false));
 		actionMap.put("runPressed", new KeyAction(Keys.RUN, true));
 		actionMap.put("runReleased", new KeyAction(Keys.RUN, false));
+		actionMap.put("tabPressed", new KeyAction(Keys.TAB, true));
+		actionMap.put("tabReleased", new KeyAction(Keys.TAB, false));
 	}
 
 	public void simulateInteractPress() {
@@ -108,6 +118,11 @@ public class KeyBindingHandler {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (isPressing) {
+				if (key == Keys.TAB && !keyStack.contains(key)) {
+					SoundManager.getSfxplayer().playSE("PlayerJump");
+					developerMode.toggleHyperSpeed();
+					return;
+				}
 				if (key != Keys.RUN) {
 					currentKey = key;
 				}
@@ -117,6 +132,9 @@ public class KeyBindingHandler {
 				stateManager.keyPressed();
 			}
 			else {
+				if (key == Keys.TAB) {
+					return;
+				}
 				keyStack.remove(key);
 				stateManager.keyReleased(key);
 				if (keyStack.empty()) {

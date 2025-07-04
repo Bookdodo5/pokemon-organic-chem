@@ -11,6 +11,9 @@ public class Player extends Human {
 	KeyBindingHandler keyHandler;
 
 	private boolean acceptInput;
+	private boolean needsMapTransition = false;
+	private int transitionToX, transitionToY;
+	private String transitionToMap;
 
 	public Player(KeyBindingHandler keyHandler, MapManager mapManager) {
 		super(0, 0, mapManager.getCurrentMapID());
@@ -48,22 +51,33 @@ public class Player extends Human {
 		
 		MapData nextMap = mapManager.findMap(playerGlobalX, playerGlobalY);
 		if (nextMap == null) {
-			setMapX(Math.max(0,Math.min(getMapX(), mapManager.getWidth() - 1)));
+			setMapX(Math.max(0, Math.min(getMapX(), mapManager.getWidth() - 1)));
 			setMapY(Math.max(0, Math.min(getMapY(), mapManager.getHeight() - 1)));
 			return;
 		}
 		
-		int nextMapX = playerGlobalX - nextMap.getGlobalX();
-		int nextMapY = playerGlobalY - nextMap.getGlobalY();
-		mapManager.setCurrentMap(nextMap.getMapName());
-		setMapX(nextMapX);
-		setMapY(nextMapY);
-		setMap(nextMap.getMapName());
+		needsMapTransition = true;
+		transitionToX = playerGlobalX - nextMap.getGlobalX();
+		transitionToY = playerGlobalY - nextMap.getGlobalY();
+		transitionToMap = nextMap.getMapName();
 	}
+
+	public boolean needsMapTransition() {
+		return needsMapTransition;
+	}
+
+	public void clearMapTransition() {
+		needsMapTransition = false;
+	}
+
+	public int getTransitionToX() { return transitionToX; }
+	public int getTransitionToY() { return transitionToY; }
+	public String getTransitionToMap() { return transitionToMap; }
 	
 	@Override
 	protected void handleIdle(List<Entity> humans, MapManager mapManager) {
 		checkWalkAcrossMap(mapManager);
+		if(needsMapTransition) return;
 		canMove = false;
 		if (acceptInput) handleMovementInput(humans, mapManager);
 

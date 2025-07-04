@@ -3,11 +3,19 @@ package cutscene.initialize.porbital;
 import cutscene.Cutscene;
 import cutscene.CutsceneBuilder;
 import cutscene.template.CutsceneTemplate;
+import cutscene.template.OverworldItemTemplate;
+import dialogue.Dialogue;
+import dialogue.DialogueOption;
+import entity.FacingDirections;
+import entity.Player;
+import gamestates.CameraManager;
+import gamestates.FlagManager;
 import java.util.List;
 import java.util.Map;
+import pokedex.PlayerDeckManager;
 
 public class PorbitalTownObjects extends CutsceneTemplate {
-    public static void initialize(Map<String, List<Cutscene>> cutscenes) {
+    public static void initialize(Map<String, List<Cutscene>> cutscenes, CameraManager cameraManager, Player player, PlayerDeckManager playerDeckManager) {
 
 
 /*
@@ -120,6 +128,389 @@ public class PorbitalTownObjects extends CutsceneTemplate {
             getKeyLook(8, 15, "porbital_town")
         );
 
+//* Overworld Item
+
+        OverworldItemTemplate.addOverworldItem(
+            cutscenes, 15, 4, "porbital_town",
+            "Br2", playerDeckManager
+        );
+
+/*
+* -----------------------------------------------------------------------------
+* Location: Townhall
+* -----------------------------------------------------------------------------
+*/
+
+        addCutscene(cutscenes, new CutsceneBuilder()
+            .speak( "THINKING",
+                "It's a certificate paper hanging on the wall.",
+                "\"Certificate of Excellence in Locally Bound Politics\"",
+                "\"Awarded to the mayor of Porbital Town for outstanding contributions to the local culture of flower farming.\"",
+                "\"Signed by ALKENISTRA OPERA HOUSE manager, ARACINI\""
+            ).buildCutscene(),
+            getKeyLook(7, 2, "porbital_town__townhall")
+        );
+
+/*
+* -----------------------------------------------------------------------------
+* Location: Porbital Town Workspace
+* -----------------------------------------------------------------------------
+*/
+
+//* Glass cabinet with old paper
+        addCutscene(cutscenes, new CutsceneBuilder()
+            .speak( "THINKING",
+                "It's a glass cabinet containing an old, yellowed piece of paper.",
+                "The paper is so faded that you can barely make out any text.",
+                "It somehow reminded you of the voting paper you use in an election."
+            ).buildCutscene(),
+            getKeyLocation(8, 5, "porbital_town__workspace", true, FacingDirections.UP),
+            getKeyLocation(9, 5, "porbital_town__workspace", true, FacingDirections.UP)
+        );
+
+//* Bookshelf 1 - Alkanes
+        addCutscene(cutscenes, new CutsceneBuilder()
+            .speak(new Dialogue(new String[] {
+                "You pick up a book titled \"Alkanes: The Science of Branching and Bonding\"",
+            }, "THINKING",
+            new DialogueOption("Read the book", new Dialogue(new String[] {
+                "You choose to read the book about alkanes."
+            }, "THINKING"),
+            ()->FlagManager.getInstance().addFlag("READ_ALKANES_BOOK")
+            ),
+            new DialogueOption("Put the book back", new Dialogue(new String[] {
+                "You put the book back on the shelf."
+            }))
+            ))
+            .condition("READ_ALKANES_BOOK", new CutsceneBuilder()
+                .speak("THINKING",
+                    "Haha! You thought you will get to learn science here?",
+                    "It's all love stories here!",
+                    "Alkanes only form single bonds. They're literally SIGMA of the century.",
+                    "They never have two or three relationships with the same person at the same time.",
+                    "But here's the thing... Since they have only \"Single bonds\", they are very flexible.",
+                    "They're like:\nI have this one atom I'm dating, and I will only date it once.",
+                    "But then, they're like:\nHehe... I'm flipping and turning myself 180 degrees because I can.",
+                    "And then, the atom goes:\nYou're upside down now! You're the same and the same at the same time!",
+                    "And that's why there's only 1 BUTANE as opposed to 2 BUT-2-ENE isomers.",
+                    "The book ends with:\n\"Remember, to avoid awkward situations, flip yourself off.\""
+                )
+                .removeFlag("READ_ALKANES_BOOK")
+                .buildActions()
+            )
+            .buildCutscene(),
+            getKeyLook(1, 2, "porbital_town__workspace")
+        );
+
+//* Bookshelf 2 - Alkenes and Alkynes
+        addCutscene(cutscenes, new CutsceneBuilder()
+            .speak(new Dialogue(new String[] {
+                "You pick up a book titled \"Unending Unsaturation: Monopoly Race!\"",
+            }, "THINKING",
+            new DialogueOption("Read the book", new Dialogue(new String[] {
+                "You choose to read the book about alkenes and alkynes."
+            }, "THINKING"),
+            ()->FlagManager.getInstance().addFlag("READ_ALKENES_ALKYNES_BOOK")
+            ),
+            new DialogueOption("Put the book back", new Dialogue(new String[] {
+                "You put the book back on the shelf."
+            }))
+            ))
+            .condition("READ_ALKENES_ALKYNES_BOOK", new CutsceneBuilder()
+                .music("Gym")
+                .speak("THINKING",
+                    "WELCOME TO THE BONDING OLYMPICS!",
+                    "Today's CRAZYYY event: Who is better at eating hydrogen???"
+                )
+                .shout("THINKING", "WOOOO!!!!", cameraManager)
+                .speak( "THINKING",
+                "In the red corner: Alkenes with their DOUBLE bonds!"
+                )
+                .shout("THINKING", "WOAAHHHH!", cameraManager)
+                .speak( "THINKING",
+                "In the blue corner: Alkynes with their TRIPLE bonds!"
+                )
+                .shout("THINKING", "WOOAAAAAHHHH!", cameraManager)
+                .speak( "RED",
+                    "Hoho! You're approaching me? Me with my slick 2 bonds with both CIS and TRANS isomers?",
+                    "How would you beat me with your boring LINEAR structure?"
+                )
+                .speak( "BLUE",
+                    "If I don't approach you, I can't beat you up, can I?",
+                    "This isn't a fight for the most beautiful molecule, is it?",
+                    "It's an eating contest!"
+                )
+                .wait(60)
+                .shout("BLUE", "I'm going to eat you up!!! THROW HYDROGEN AT ME!!!", cameraManager)
+                .wait(60)
+                .shout("THINKING", "WOAAHHHH! YEAHHH!", cameraManager)
+                .speak( "THINKING",
+                    "The staff of this olympic threw a molecule of hydrogen gas at ALKYNE.",
+                    "ALKYNE was like: \"I'm not going to give up that easily!!!\""
+                )
+                .wait(60)
+                .shout("BLUE", "ONE OF MY TWO PI BOND, EAT THE HYDROGENNNN!!!!", cameraManager)
+                .wait(60)
+                .shout("THINKING", "OMG! YEAHHH! HE'S ABSORBING!!!", cameraManager)
+                .wait(60)
+                .speak("RED",
+                    "Fufufufu... You thought you can eat 2 molecules of HYDROGEN GAS and you're going to win?",
+                    "So naive...",
+                    "Your mistake is that you're not creative enough, ALKYNE.",
+                    "You always thought I am an ALKENE, and I will only have 1 DOUBLE BOND, don't you?"
+                )
+                .wait(45)
+                .shout("RED", "HAHAHAHAHAHAHAHA!!!!", cameraManager)
+                .wait(45)
+                .shout("RED", "YOU NEVER THOUGHT I CAN HAVE 3 WHOLE DOUBLE BONDS, DO YOU?", cameraManager)
+                .wait(120)
+                .shout("BLUE", "N-NANI???", cameraManager)
+                .wait(30)
+                .waitEmote(player, cameraManager, 60)
+                .speak("THINKING",
+                    "You decided this book wasn't for you, and closed it."
+                )
+                .removeFlag("READ_ALKENES_ALKYNES_BOOK")
+                .buildActions()
+            )
+            .buildCutscene(),
+            getKeyLook(3, 2, "porbital_town__workspace")
+        );
+
+//* Bookshelf 3 - Halides
+        addCutscene(cutscenes, new CutsceneBuilder()
+            .speak(new Dialogue(new String[] {
+                "You pick up a book titled \"Halides News Paper\"",
+            }, "THINKING",
+            new DialogueOption("Read the book", new Dialogue(new String[] {
+                "You choose to read the book about halides."
+            }, "THINKING"),
+            ()->FlagManager.getInstance().addFlag("READ_HALIDES_BOOK")
+            ),
+            new DialogueOption("Put the book back", new Dialogue(new String[] {
+                "You put the book back on the shelf."
+            }))
+            ))
+            .condition("READ_HALIDES_BOOK", new CutsceneBuilder()
+                .music("Cave")
+                .speak("THINKING",
+                    "BREAKING NEWS: HALOGENS DECLARE WAR ON CARBON!",
+                    "This morning, Fluorine, Chlorine, Bromine, and Iodine have formed an alliance.",
+                    "The head of this alliance is Fluorine, and he is the most reactive halogen due to his small stature.",
+                    "Their published mission statement is to attach themselves to innocent carbon atoms and cause chaos.",
+                    "With their need for only 1 electron to be stable, they are the most reactive species in the entire animal kingdom."
+                )
+                .shout("THINKING", "IF YOU SEE A HALOGEN, RUN. JUST RUN. RUNNNNNN!!!", cameraManager)
+                .wait(20)
+                .sfx("BattleDamageSuper")
+                .wait(15)
+                .sfx("BattleDamageNormal")
+                .wait(30)
+                .sfx("BattleDamageSuper")
+                .wait(30)
+                .shout("THINKING", "ARGGHGHGHGHHHH!!!!", cameraManager)
+                .wait(120)
+                .shout("THINKING", "REPORTING FROM THE NEWS REPORTER HQ. OUR EMPLOYEE HAS BEEN KILLED BY HALOGENS.", cameraManager)
+                .shout("THINKING", "I REGRET TO INFORM YOU THAT THIS NEWS PROGRAM IS TERMINATED! YOU HAVE TO---", cameraManager)
+                .wait(60)
+                .speak("THINKING",
+                    "The book ends just like that"
+                )
+                .removeFlag("READ_HALIDES_BOOK")
+                .buildActions()
+            )
+            .buildCutscene(),
+            getKeyLook(5, 2, "porbital_town__workspace")
+        );
+
+//* Bookshelf 4 - Aromatics
+        addCutscene(cutscenes, new CutsceneBuilder()
+            .speak(new Dialogue(new String[] {
+                "You pick up a book titled \"Aromatica Magical Land Guide Book\"",
+            }, "THINKING",
+            new DialogueOption("Read the book", new Dialogue(new String[] {
+                "You choose to read the book about aromatics."
+            }, "THINKING"),
+            ()->FlagManager.getInstance().addFlag("READ_AROMATICS_BOOK")
+            ),
+            new DialogueOption("Put the book back", new Dialogue(new String[] {
+                "You put the book back on the shelf."
+            }))
+            ))
+            .condition("READ_AROMATICS_BOOK", new CutsceneBuilder()
+                .music("Bicycle")
+                .speak("THINKING",
+                    "This book is a guide to the magical land of Aromatica.",
+                    "It's a land of magic and monarchy, where the air is filled with the scent of flowers."
+                )
+                .wait(60)
+                .speak("THINKING",
+                    "Chapter 1: Welcome to Aromatica",
+                    "Aromatica is a communist area where electrons belong to everyone!",
+                    "The locals call this law \"delocalization\" but tourists just call it \"confusing AF.\"",
+                    "The center stage of this land is the city of \"THE SIX RINGS\"",
+                    "It's where the monarch resides, and the citizens are all named after him.",
+                    "The city itself is a perfect hexagon, benzene shaped city with a population being a multiple of 6.",
+                    "Visitors are often confused by its layout, and the constant RESONANCE sound doesn't help with their orientation.",
+                    "Local tip: Don't try to count the electrons. Your brain will explode."
+                )
+                .removeFlag("READ_AROMATICS_BOOK")
+                .buildActions()
+            )
+            .buildCutscene(),
+            getKeyLook(7, 2, "porbital_town__workspace")
+        );
+
+//* Bookshelf 5 - Alcohols and Ethers
+        addCutscene(cutscenes, new CutsceneBuilder()
+            .speak(new Dialogue(new String[] {
+                "You pick up a book titled \"To Drink or to Die: The Alcoholic's Guide to Survival\"",
+            }, "THINKING",
+            new DialogueOption("Read the book", new Dialogue(new String[] {
+                "You choose to read the book about alcohols and ethers."
+            }, "THINKING"),
+            ()->FlagManager.getInstance().addFlag("READ_ALCOHOLS_ETHERS_BOOK")
+            ),
+            new DialogueOption("Put the book back", new Dialogue(new String[] {
+                "You put the book back on the shelf."
+            }))
+            ))
+            .condition("READ_ALCOHOLS_ETHERS_BOOK", new CutsceneBuilder()
+                .speak("THINKING",
+                    "SURVIVAL GUIDE: HOW TO NOT DIE FROM ALCOHOL",
+                    "Chapter 1: The Basics of Not Dying", 
+                    "#1: Don't drink methanol.",
+                    "#2: Don't drink isopropanol.",
+                    "#3: You can drink ethanol, but don't drink it too much.",
+                    "#4: If it smells like chemicals, it's probably not meant for drinking.",
+                    "#5: Don't drink and drive.",
+                    "Chapter 2: Emergency Procedures",
+                    "#1: If someone drinks methanol, give them ethanol immediately.",
+                    "Actually, don't do that. Just call an ambulance.",
+                    "#2: OH in alcohols are bad at leaving. Don't force it to leave the room or it will fight back.",
+                    "#3: Oxygen connected to carbons in ethers doesn't care about you."
+                )
+                .removeFlag("READ_ALCOHOLS_ETHERS_BOOK")
+                .buildActions()
+            )
+            .buildCutscene(),
+            getKeyLook(10, 2, "porbital_town__workspace")
+        );
+
+//* Bookshelf 6 - Ketones and Aldehydes
+        addCutscene(cutscenes, new CutsceneBuilder()
+            .speak(new Dialogue(new String[] {
+                "You pick up a book titled \"Sugar Recipe: Ketone and Aldehyde Cookbook\"",
+            }, "THINKING",
+            new DialogueOption("Read the book", new Dialogue(new String[] {
+                "You choose to read the book about carbonyl compounds."
+            }, "THINKING"),
+            ()->FlagManager.getInstance().addFlag("READ_CARBONYL_BOOK")
+            ),
+            new DialogueOption("Put the book back", new Dialogue(new String[] {
+                "You put the book back on the shelf."
+            }))
+            ))
+            .condition("READ_CARBONYL_BOOK", new CutsceneBuilder()
+                .speak("THINKING",
+                    "Classic Vanilla Caramel",
+                    "Ingredients:",
+                    "-1/3 cup glucose\n(aldehyde sugar with CHO at the end)",
+                    "-1/2 cup fructose\n(ketone sugar with C=O on the second carbon)",
+                    "-4 liters of water",
+                    "-1 tsp signature vanilla extract from the Porbital Town",
+                    "Instructions:",
+                    "1. In a metal saucepan, combine sugars and water. The sugars will dissolve.",
+                    "2. Cook under sunlight. Watch for the ants that are attracted to the sugar.",
+                    "3. Continue cooking until mixture turns golden.",
+                    "4. Add in vanilla. Serve warm over ice cream.",
+                    "5. Give up because the customer didn't show up."
+                )
+                .removeFlag("READ_CARBONYL_BOOK")
+                .buildActions()
+            )
+            .buildCutscene(),
+            getKeyLook(12, 2, "porbital_town__workspace")
+        );
+
+//* Bookshelf 7 - Carboxylic Acids and Esters
+        addCutscene(cutscenes, new CutsceneBuilder()
+            .speak(new Dialogue(new String[] {
+                "You pick up a book titled \"Toxic Acidity: Formal Science Research\"",
+            }, "THINKING",
+            new DialogueOption("Read the book", new Dialogue(new String[] {
+                "You choose to read the book about acids and esters."
+            }, "THINKING"),
+            ()->FlagManager.getInstance().addFlag("READ_ACIDS_ESTERS_BOOK")
+            ),
+            new DialogueOption("Put the book back", new Dialogue(new String[] {
+                "You put the book back on the shelf."
+            }))
+            ))
+            .condition("READ_ACIDS_ESTERS_BOOK", new CutsceneBuilder()
+                .music("Lab")
+                .speak("THINKING",
+                    "TOXIC ACIDITY: A FORMAL SCIENTIFIC INVESTIGATION",
+                    "ABSTRACT:",
+                    "This study examines the relationship between molecular acidity and toxicity of carboxylic derivatives.",
+                    "INTRODUCTION:",
+                    "Carboxylic acids are evil and toxic.",
+                    "They're always donating protons from their -COOH tail.",
+                    "The more carboxylic acids, the more toxic my scientific paper is.",
+                    "METHODOLOGY:",
+                    "We throw various acids at the students and see if they die.",
+                    "RESULTS:",
+                    "The more acidic the compound, the more likely it was to cause damage.",
+                    "Surprisingly, when we replace the O-H in carboxylic acids with O-R, they don't die.",
+                    "Esters are not that toxic compared to carboxylic acids.",
+                    "The students are depressed about me throwing esters at them though.",
+                    "DISCUSSION:",
+                    "I'll be in jail."
+                )
+                .removeFlag("READ_ACIDS_ESTERS_BOOK")
+                .buildActions()
+            )
+            .buildCutscene(),
+            getKeyLook(14, 2, "porbital_town__workspace")
+        );
+
+//* Bookshelf 8 - Amines and Amides
+        addCutscene(cutscenes, new CutsceneBuilder()
+            .speak(new Dialogue(new String[] {
+                "You pick up a book titled \"Nitrogen baby's first book\"",
+            }, "THINKING",
+            new DialogueOption("Read the book", new Dialogue(new String[] {
+                "You choose to read the book about amines and amides."
+            }, "THINKING"),
+            ()->FlagManager.getInstance().addFlag("READ_AMINES_AMIDES_BOOK")
+            ),
+            new DialogueOption("Put the book back", new Dialogue(new String[] {
+                "You put the book back on the shelf."
+            }))
+            ))
+            .condition("READ_AMINES_AMIDES_BOOK", new CutsceneBuilder()
+                .speak("THINKING",
+                    "NITROGEN BABY'S FIRST BOOK",
+                    "Welcome to the musical book for putting Nitrogens to sleep!"
+                )
+                .shout("THINKING", "Oh, amines, you make me blue.", cameraManager)
+                .shout("THINKING", "With your two hydrogens and one nitrogen too.", cameraManager)
+                .shout("THINKING", "You smell like fish, you smell like death.", cameraManager)
+                .shout("THINKING", "But amino acids are consists of you.", cameraManager)
+                .wait(60)
+                .waitEmote(player, cameraManager, 60)
+                .shout("THINKING", "Oh, amines, you fly in the sky.", cameraManager)
+                .shout("THINKING", "With carbonyl and nitrogen, so high.", cameraManager)
+                .shout("THINKING", "Stability from you gives us life.", cameraManager)
+                .shout("THINKING", "...", cameraManager)
+                .shout("THINKING", "I'm tired of this. This song is stupid. Bye bye.", cameraManager)
+                .removeFlag("READ_AMINES_AMIDES_BOOK")
+                .buildActions()
+            )
+            .buildCutscene(),
+            getKeyLook(16, 2, "porbital_town__workspace")
+        );
+
 /*
 * -----------------------------------------------------------------------------
 * Location: Yuuki's House, Floor 2
@@ -230,10 +621,21 @@ public class PorbitalTownObjects extends CutsceneTemplate {
 
 //* tv
         addCutscene(cutscenes, new CutsceneBuilder()
+            .forbid("CHLOROPHYLL_2")
             .speak( "THINKING",
                 "It's a TV.",
                 "It's showing a documentary about the synthesis of\n\"(2R,3S,4R,5R)-2,3,4,5,6-Pentahydroxyhexanal\"",
                 "You feel a sudden urge to change the channel."
+            ).buildCutscene(),
+            getKeyLook(12, 5, "porbital_town__house1_f1")
+        );
+
+        addCutscene(cutscenes, new CutsceneBuilder()
+            .require("CHLOROPHYLL_2")
+            .speak( "THINKING",
+                "It's a TV.",
+                "It's showing an anime...",
+                "Half metal alchemist...?"
             ).buildCutscene(),
             getKeyLook(12, 5, "porbital_town__house1_f1")
         );

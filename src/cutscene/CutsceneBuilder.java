@@ -204,13 +204,13 @@ public class CutsceneBuilder {
     // GAME STATE ACTIONS
     // ============================================================================
     
-    public CutsceneBuilder setFlag(FlagManager flagManager, String... flags) {
-        actions.add(new SetFlagAction(flagManager, flags));
+    public CutsceneBuilder setFlag(String... flags) {
+        actions.add(new SetFlagAction(FlagManager.getInstance(), flags));
         return this;
     }
     
-    public CutsceneBuilder removeFlag(FlagManager flagManager, String... flags) {
-        actions.add(new RemoveFlagAction(flagManager, flags));
+    public CutsceneBuilder removeFlag(String... flags) {
+        actions.add(new RemoveFlagAction(FlagManager.getInstance(), flags));
         return this;
     }
     
@@ -219,8 +219,8 @@ public class CutsceneBuilder {
         return this;
     }
     
-    public CutsceneBuilder battle(StateManager stateManager, FlagManager flagManager, int battleID) {
-        actions.add(new BattleAction(stateManager, flagManager, battleID));
+    public CutsceneBuilder battle(StateManager stateManager, int battleID) {
+        actions.add(new BattleAction(stateManager, FlagManager.getInstance(), battleID));
         return this;
     }
     

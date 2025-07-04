@@ -21,9 +21,6 @@ public class PlayerDeckManager {
 	}
 
 	private void initializeAvailableCards() {
-		addToCollection("Cl2", 2);
-		addToCollection("Br2", 2);
-		addToCollection("Sunny Day", 2);
 	}
 
 	public int getDeckSize() { return customDeck.size(); }
@@ -39,7 +36,7 @@ public class PlayerDeckManager {
 
 	public int getCardCount(String card) { return availableCards.get(card); }
 
-	private void addToCollection(String card, int amount) {
+	public void addToCollection(String card, int amount) {
 		availableCards.put(card, availableCards.getOrDefault(card, 0) + amount);
 	}
 

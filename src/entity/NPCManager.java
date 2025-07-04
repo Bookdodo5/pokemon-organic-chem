@@ -10,6 +10,57 @@ public class NPCManager {
 	public NPCManager() {
 		npcs = new ArrayList<>();
 		initializePorbitalTownNPCs();
+		initializeRoute1NPCs();
+	}
+
+	private void initializeRoute1NPCs() {
+		npcs.add(new NPC.Builder("Maniac1", NPCSprites.MANIAC)
+			.position(11, 50, "route1")
+			.facing(FacingDirections.LEFT)
+			.build()
+		);
+
+		npcs.add(new NPC.Builder("Maniac2", NPCSprites.MANIAC)
+			.position(18, 45, "route1") 
+			.facing(FacingDirections.LEFT)
+			.build()
+		);
+
+		npcs.add(new NPC.Builder("Maniac3", NPCSprites.MANIAC)
+			.position(13, 23, "route1")
+			.facing(FacingDirections.LEFT)
+			.build()
+		);
+
+		npcs.add(new NPC.Builder("Maniac4", NPCSprites.MANIAC)
+			.position(16, 17, "route1")
+			.facing(FacingDirections.RIGHT)
+			.build()
+		);
+
+		npcs.add(new NPC.Builder("Maniac5", NPCSprites.MANIAC)
+			.position(10, 8, "route1")
+			.facing(FacingDirections.DOWN)
+			.build()
+		);
+
+		npcs.add(new NPC.Builder("Maniac6", NPCSprites.MANIAC)
+			.position(11, 8, "route1")
+			.facing(FacingDirections.DOWN)
+			.build()
+		);
+		
+		npcs.add(new NPC.Builder("Maniac7", NPCSprites.MANIAC)
+			.position(13, 44, "route1")
+			.facing(FacingDirections.UP)
+			.build()
+		);
+		
+		npcs.add(new NPC.Builder("Maniac8", NPCSprites.MANIAC)
+			.position(12, 5, "route1")
+			.facing(FacingDirections.RIGHT)
+			.build()
+		);
 	}
 
 	private void initializePorbitalTownNPCs() {
@@ -85,7 +136,7 @@ public class NPCManager {
 			.build()
 		);
 
-		npcs.add(new NPC.Builder("ChlorophyllGirl", NPCSprites.GIRL_GREEN)
+		npcs.add(new NPC.Builder("Chlorophyll", NPCSprites.GIRL_GREEN)
 			.position(24, 16, "porbital_town")
 			.facing(FacingDirections.UP)
 			.build()
@@ -93,6 +144,12 @@ public class NPCManager {
 
 		npcs.add(new NPC.Builder("Director", NPCSprites.DIRECTOR)
 			.position(4, 5, "porbital_town__room")
+			.facing(FacingDirections.DOWN)
+			.build()
+		);
+
+		npcs.add(new NPC.Builder("PorbitalMayor", NPCSprites.MASKED)
+			.position(7, 6, "porbital_town__townhall")
 			.facing(FacingDirections.DOWN)
 			.build()
 		);
