@@ -5,7 +5,6 @@ import battle.reactions.Reaction;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.util.List;
 import static main.Constants.SCALE;
 import static main.Constants.SCREEN_HEIGHT;
 import static main.Constants.SCREEN_WIDTH;
@@ -58,7 +57,7 @@ public class PokedexRenderer {
     private final ReactionTabRenderer reactionTabRenderer;
     private final MoleculeTabRenderer moleculeTabRenderer;
 
-    public PokedexRenderer(PlayerDeckManager playerDeckManager, List<Molecule> moleculeRecord, List<Reaction> reactionRecord, SelectionState selectionState) {
+    public PokedexRenderer(PlayerDeckManager playerDeckManager, MoleculeRecord moleculeRecord, ReactionRecord reactionRecord, SelectionState selectionState) {
         this.selectionState = selectionState;
         this.deckTabRenderer = new DeckTabRenderer(playerDeckManager, moleculeRecord, reactionRecord, selectionState);
         this.reactionTabRenderer = new ReactionTabRenderer(playerDeckManager, moleculeRecord, reactionRecord, selectionState);

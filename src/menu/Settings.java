@@ -8,11 +8,11 @@ public class Settings {
 	private int FPS = 60;
 
 	public enum TextSpeed {
-		FAST(2, 1), MEDIUM(3, 1), SLOW(4, 2);
+		FAST(1.5, 0.75), MEDIUM(2, 1), SLOW(3, 1.5);
 
-		public final int baseSpeed, holdSpeed;
+		public final double baseSpeed, holdSpeed;
 
-		private TextSpeed(int baseSpeed, int holdSpeed) {
+		private TextSpeed(double baseSpeed, double holdSpeed) {
 			this.baseSpeed = baseSpeed;
 			this.holdSpeed = holdSpeed;
 		}

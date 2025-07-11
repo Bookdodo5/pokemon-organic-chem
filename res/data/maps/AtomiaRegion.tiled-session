@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "route1.tmx",
+    "activeFile": "methanopolis.tmx",
     "automapping.whileDrawing": true,
     "expandedProjectPaths": [
         "."
@@ -65,7 +65,7 @@
             "scaleInEditor": 1.5
         },
         "methanopolis.tmx": {
-            "scale": 2,
+            "scale": 0.75,
             "selectedLayer": 2,
             "viewCenter": {
                 "x": 896,
@@ -188,8 +188,8 @@
             "scale": 2,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 294,
-                "y": 242.75
+                "x": 240.25,
+                "y": 224
             }
         },
         "methanopolis__townhall_f1 - Copy.tmx": {
@@ -252,24 +252,24 @@
             "scale": 0.5430338541666667,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 896.813331734804,
-                "y": 768.8286776165927
+                "x": 895.8925788274787,
+                "y": 767.9079247092675
             }
         },
         "oxidation_observatory.tmx": {
             "scale": 0.5430338541666667,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 767.9079247092673,
-                "y": 768.8286776165927
+                "x": 768.8286776165926,
+                "y": 767.9079247092675
             }
         },
         "phenol_falls.tmx": {
             "scale": 0.75,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 1025.3333333333333,
-                "y": 768.6666666666665
+                "x": 1024.6666666666665,
+                "y": 768
             }
         },
         "pokecenters.tsx": {
@@ -284,16 +284,16 @@
             "scale": 0.41098632812499997,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 1535.3308779850302,
-                "y": 767.6654389925152
+                "x": 1536.5474634667935,
+                "y": 768.8820244742783
             }
         },
         "porbital_town.tmx": {
             "scale": 1,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 860,
-                "y": 646.5
+                "x": 832,
+                "y": 576
             }
         },
         "porbital_town__house1_f1.tmx": {
@@ -316,16 +316,16 @@
             "scale": 2.172135416666667,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 224.203332933701,
-                "y": 192.20716940414817
+                "x": 224.20333293370098,
+                "y": 191.97698117731687
             }
         },
         "porbital_town__house2_f2.tmx": {
             "scale": 2.172135416666667,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 224.203332933701,
-                "y": 192.20716940414817
+                "x": 224.20333293370098,
+                "y": 191.97698117731687
             }
         },
         "porbital_town__room.tmx": {
@@ -341,15 +341,15 @@
             "selectedLayer": 1,
             "viewCenter": {
                 "x": 240,
-                "y": 191.75
+                "y": 192
             }
         },
         "porbital_town__workspace.tmx": {
             "scale": 2.1737847222222224,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 287.976998642281,
-                "y": 159.85943614727256
+                "x": 287.97699864228093,
+                "y": 160.0894497244629
             }
         },
         "porbital_town_house1.tmx": {
@@ -433,19 +433,19 @@
             }
         },
         "route1.tmx": {
-            "scale": 0.75,
-            "selectedLayer": 2,
+            "scale": 1.5,
+            "selectedLayer": 1,
             "viewCenter": {
-                "x": 101.33333333333337,
-                "y": 1575.333333333333
+                "x": 448.3333333333333,
+                "y": 1088
             }
         },
         "route2.tmx": {
             "scale": 0.25,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 1152,
-                "y": 510
+                "x": 1154,
+                "y": 512
             }
         },
         "route3.tmx": {
@@ -519,22 +519,26 @@
         "route3.tmx",
         "pyrrole_town.tmx",
         "route2.tmx",
-        "hallogue_town.tmx"
+        "hallogue_town.tmx",
+        "oxidation_observatory.tmx",
+        "phenol_falls.tmx",
+        "nose_town.tmx",
+        "polymer_research_institute.tmx"
     ],
     "project": "AtomiaRegion.tiled-project",
     "recentFiles": [
         "porbital_town.tmx",
-        "methanopolis.tmx",
-        "porbital_town__room.tmx",
-        "porbital_town__house1_f1.tmx",
-        "porbital_town__house1_f2.tmx",
-        "porbital_town__house2_f1.tmx",
-        "porbital_town__house2_f2.tmx",
-        "porbital_town__townhall.tmx",
-        "porbital_town__workspace.tmx",
-        "methanopolis__apartment1_f1.tmx",
-        "methanopolis__apartment1_f2.tmx",
-        "methanopolis__apartment1_f3.tmx"
+        "polymer_research_institute.tmx",
+        "nose_town.tmx",
+        "phenol_falls.tmx",
+        "oxidation_observatory.tmx",
+        "hallogue_town.tmx",
+        "route2.tmx",
+        "pyrrole_town.tmx",
+        "route3.tmx",
+        "route1.tmx",
+        "methanopolis__workshop4.tmx",
+        "methanopolis__workshop3.tmx"
     ],
     "tileset.lastUsedFormat": "tsx"
 }

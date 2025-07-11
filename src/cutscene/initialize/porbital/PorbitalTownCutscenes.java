@@ -1,11 +1,9 @@
-package cutscene.initialize;
+package cutscene.initialize.porbital;
 
 import cutscene.Cutscene;
 import cutscene.CutsceneAction;
 import cutscene.CutsceneBuilder;
 import cutscene.Emotes;
-import cutscene.initialize.porbital.PorbitalTownObjects;
-import cutscene.initialize.porbital.PorbitalTownTalks;
 import cutscene.template.CutsceneTemplate;
 import cutscene.template.NumericInputTemplate;
 import dialogue.Dialogue;
@@ -94,18 +92,18 @@ public class PorbitalTownCutscenes extends CutsceneTemplate {
                 "...",
                 "...",
                 "...",
-                "No... It's not that I have no recollection of this place.",
-                "I'm not sure if I'm dreaming or not.",
+                "No... It's not that you have no recollection of this place.",
+                "You're not sure if you're dreaming or not.",
                 "...",
                 "..."
             )
             .react(player, cameraManager, Emotes.QUESTION)
             .speak("THINKING",
-                "I...",
-                "I am in a pokemon game... right?",
+                "This...",
+                "This is a pokemon game... right?",
                 "...",
-                "If so... I'm supposed to go downstairs and...",
-                "get some starter pokemo---"
+                "If so... The first thing you're supposed to do is to go downstairs and...",
+                "get some starter pokemon---"
             )
             .parallel(new CutsceneBuilder()
                 .sfx("BattleDamageWeak")
@@ -209,12 +207,18 @@ public class PorbitalTownCutscenes extends CutsceneTemplate {
             .shout("YUUKI","YOU DIDN'T EVEN SAY HI TO ME FIRST!!!", cameraManager)
             .shout("YUUKI","BUT YOU KNOW WHAT'S WORSE?\nI DON'T NEED AN ADOPTED DAD ANYMORE.", cameraManager)
             .shout("YUUKI","THE PROFESSOR JUST TOLD ME SHE PICKED ME UP FROM A HOMELESS SHELTER WHEN I WAS 2 YEARS OLD.", cameraManager)
+            .shout("YUUKI","A HOMELESS SHELTER!!!", cameraManager)
             .shout("YUUKI","AND THAT MEANS I'M ALREADY AN ADOPTED CHILD.", cameraManager)
             .shout("YUUKI","SO WHEN SHE SAID SHE WAS THINKING ABOUT GETTING ME ADOPTED,", cameraManager)
             .shout("YUUKI","SHE ACTUALLY MEANT SHE WAS GOING TO GET THE PAPER WORK DONE!!!", cameraManager)
             .shout("YUUKI","NOTHING ABOUT MY LIFE WILL ACTUALLY CHANGE.", cameraManager)
             .shout("YUUKI","NOTHING!!!!", cameraManager)
-            .shout("YUUKI","YOU ARE JUST A WORTHLESS EXTRA CHARACTER IN MY LIFE, SO...", cameraManager)
+            .shout("YUUKI","YOU ARE JUST A WORTHLESS EXTRA CHARACTER IN MY LIFE.", cameraManager)
+            .shout("YUUKI","YOU ARE JUST A PASSERBY, SOMEONE THEY HIRE TO JUST FILL UP THE SCENE.", cameraManager)
+            .shout("YUUKI","YOU HAVE NO ROLE IN MY STORY.", cameraManager)
+            .shout("YUUKI","YOU HAVE NO ROLE IN ANYBODY'S STORY.", cameraManager)
+            .shout("YUUKI","EVEN IF YOU ARE GONE, NOBODY WOULD EVEN CARE.", cameraManager)
+            .shout("YUUKI","SO...", cameraManager)
             .shout("YUUKI","SOOOO.......", cameraManager)
             .musicStop()
             .speak("YUUKI",
@@ -284,6 +288,7 @@ public class PorbitalTownCutscenes extends CutsceneTemplate {
                 "It must be tiring to appear at somebody's house all of the sudden.",
                 "Well, I guess this is now your house too...",
                 "Don't mind me and go eat some puddings downstairs!",
+                "Maybe you should also explore my room while you're at it!",
                 "I'll be waiting for you here!"
             )
             .buildCutscene(),
@@ -355,7 +360,7 @@ public class PorbitalTownCutscenes extends CutsceneTemplate {
             .speak(
                 "DECANE",
                 "Ah! You're here! I've been waiting for you!",
-                "I'm so glad to see you're... well, 'here' in one piece.",
+                "I'm so glad to see you're... well, \"here\" in one piece.",
                 "I'm PROFESSOR DECANE, and I'm sorry for making you wait."
             )
             .setFlag("DECANE_KNOW")
@@ -1221,7 +1226,15 @@ public class PorbitalTownCutscenes extends CutsceneTemplate {
             .speak("CHLOROPHYLL",
                 "Look at him. He's still doing his thing.",
                 "\"My son was excited about making a new friend.\"",
-                "\"He's upstairs, I think.\"",
+                "\"He's upstairs, I think.\""
+            )
+            .wait(30)
+            .speak("CELLULOSE",
+                "My son was excited about making a new friend.",
+                "He's upstairs, I think."
+            )
+            .wait(30)
+            .speak("CHLOROPHYLL",
                 "\"...\"",
                 "He's been saying that since this MORNING when the first light of the day hit my LEAVESSS."
             )
@@ -1239,15 +1252,18 @@ public class PorbitalTownCutscenes extends CutsceneTemplate {
             .parallel(new CutsceneBuilder()
                 .react(chlorophyll, cameraManager, Emotes.MUSIC)
                 .speak("CHLOROPHYLL",
-                    "PURURURURURUURURURURURU... PING!",
-                    "A... CURSEEE!!!",
-                    "It's a curse that's been passed down for generations.",
-                    "Everyone who's been affected by it shows different symptoms.",
-                    "For this CELLULOSEEE and KUSARIRINNN~\nit's the weird pattern of speech they're doing right now.",
-                    "For YUUKII~\nit's the way she can't control her emotions.",
-                    "And for me... it's the way I can't\nPHOTOSYNTHESIZEEE\nas efficiently anymore!!!"
+                    "PURURURURURUURURURURURU... PING!"
                 )
                 .buildActions()
+            )
+            .sfx("GUIConfirm")
+            .speak("CHLOROPHYLL",
+                "A... CURSEEE!!!",
+                "It's a curse that's been passed down for generations.",
+                "Everyone who's been affected by it shows different symptoms.",
+                "For this CELLULOSEEE and KUSARIRINNN~\nit's the weird pattern of speech they're doing right now.",
+                "For YUUKII~\nit's the way she can't control her emotions.",
+                "And for me... it's the way I can't\nPHOTOSYNTHESIZEEE\nas efficiently anymore!!!"
             )
             .wait(60)
             .react(chlorophyll, cameraManager, Emotes.SAD)
@@ -1284,7 +1300,7 @@ public class PorbitalTownCutscenes extends CutsceneTemplate {
             .faceTowards(chlorophyll, player)
             .wait(20)
             .speak("CHLOROPHYLL",
-                "HEY! This disease is not contagious!",
+                "HEY! This curse is not contagious!",
                 "Don't be so scared!",
                 "I just like PLANTTSSS, okay?",
                 "...",
@@ -1766,8 +1782,8 @@ public class PorbitalTownCutscenes extends CutsceneTemplate {
             .execute(()->yuuki.setWalking())
             .execute(()->kusari.setWalking())
             .tp(chlorophyll, 25, 31, "methanopolis", overworldState)
-            .tp(yuuki, 22, 31, "methanopolis", overworldState)
-            .tp(kusari, 22, 32, "methanopolis", overworldState)
+            .tp(yuuki, 22, 32, "methanopolis", overworldState)
+            .tp(kusari, 22, 31, "methanopolis", overworldState)
             .face(chlorophyll, FacingDirections.LEFT)
             .face(yuuki, FacingDirections.RIGHT)
             .face(kusari, FacingDirections.RIGHT)
@@ -2290,7 +2306,7 @@ public class PorbitalTownCutscenes extends CutsceneTemplate {
         )
         .wait(30)
         .face(director, FacingDirections.UP)
-        .wait(30)
+        .wait(60)
         .setFlag("DIRECTOR_1_FINISH")
         .buildCutscene(),
         getKeyLook(1, 2, "porbital_town__room")

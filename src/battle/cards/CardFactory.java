@@ -61,6 +61,8 @@ public class CardFactory {
 			case "Clock Rewind" -> new ClockRewindCard();
 			case "Disulfide Bridge" -> new SSBridgeCard();
 			case "Fish" -> new FishCard();
+			case "Lubricant" -> new LubricantCard();
+			case "Halo on Crack" -> new HaloOnCrackCard();
 
 			// Reagent Cards
 			case "Cl2" -> new ReagentCard("Cl2", "A pale yellow-green gas.", 1);

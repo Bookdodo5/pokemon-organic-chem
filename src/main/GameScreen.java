@@ -19,6 +19,10 @@ public class GameScreen extends JPanel implements Runnable {
 	StateManager stateManager;
 	KeyBindingHandler keyHandler;
 	
+	private long frameCount = 0;
+	private long lastFPSUpdate = 0;
+	private double currentFPS = 0;
+	
 	public GameScreen() {
 		setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
 		setBackground(Color.BLACK);

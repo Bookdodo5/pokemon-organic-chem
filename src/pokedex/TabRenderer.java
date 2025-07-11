@@ -6,7 +6,6 @@ import battle.reactions.Reaction;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.util.List;
 import static main.Constants.SCALE;
 import static main.Constants.SCREEN_HEIGHT;
 import static main.Constants.SCREEN_WIDTH;
@@ -34,14 +33,14 @@ public abstract class TabRenderer {
     protected final int nameHeight = 30;
 
     protected final PlayerDeckManager playerDeckManager;
-    protected final List<Molecule> moleculeRecord;
-    protected final List<Reaction> reactionRecord;
+    protected final MoleculeRecord moleculeRecord;
+    protected final ReactionRecord reactionRecord;
     protected final SelectionState selectionState;
     protected Molecule selectedMolecule;
     protected Reaction selectedReaction;
     protected Color[] currentPalette;
 
-    public TabRenderer(PlayerDeckManager playerDeckManager, List<Molecule> moleculeRecord, List<Reaction> reactionRecord, SelectionState selectionState) {
+    public TabRenderer(PlayerDeckManager playerDeckManager, MoleculeRecord moleculeRecord, ReactionRecord reactionRecord, SelectionState selectionState) {
         this.playerDeckManager = playerDeckManager;
         this.moleculeRecord = moleculeRecord;
         this.reactionRecord = reactionRecord;
@@ -112,17 +111,19 @@ public abstract class TabRenderer {
                     yield card.toUpperCase() + " [x" + count + "]";
                 }
                 case REACTION -> {
-                    if (i == focusIndex && reactionRecord.isEmpty()) {
+                    var availableReactions = reactionRecord.getAvailableReactionsList();
+                    if (i == focusIndex && availableReactions.isEmpty()) {
                         yield "No reactions available";
                     }
-                    Reaction reaction = reactionRecord.get(i);
+                    Reaction reaction = availableReactions.get(i);
                     yield reaction.getName().toUpperCase();
                 }
                 case MOLECULE -> {
-                    if (i == focusIndex && moleculeRecord.isEmpty()) {
+                    var molecules = moleculeRecord.getMoleculeRecord();
+                    if (i == focusIndex && molecules.isEmpty()) {
                         yield "No molecules available";
                     }
-                    Molecule molecule = moleculeRecord.get(i);
+                    Molecule molecule = molecules.get(i);
                     yield molecule.getName().toUpperCase();
                 }
             };
@@ -140,9 +141,9 @@ public abstract class TabRenderer {
             case DECK ->
                 index >= Math.max(playerDeckManager.getAvailableCardTypes(), 1);
             case REACTION ->
-                index >= Math.max(reactionRecord.size(), 1);
+                index >= Math.max(reactionRecord.getAvailableReactionsList().size(), 1);
             case MOLECULE ->
-                index >= Math.max(moleculeRecord.size(), 1);
+                index >= Math.max(moleculeRecord.getMoleculeRecord().size(), 1);
         };
     }
 

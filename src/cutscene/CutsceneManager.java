@@ -1,6 +1,8 @@
 package cutscene;
 
-import cutscene.initialize.*;
+import cutscene.initialize.methanopolis.MethanopolisCutscenes;
+import cutscene.initialize.porbital.PorbitalTownCutscenes;
+import cutscene.initialize.route1.Route1Cutscenes;
 import entity.AIMode;
 import entity.FacingDirections;
 import entity.NPC;	
@@ -51,9 +53,9 @@ public class CutsceneManager {
 
 	private void initializeCutscenes() {
 		if (overworldState == null) return;
-		MethanopolisCutscenes.initialize(cutscenes, overworldState);
+		MethanopolisCutscenes.initialize(cutscenes, overworldState, npcManager, cameraManager, player, playerDeckManager);
 		PorbitalTownCutscenes.initialize(cutscenes, stateManager, overworldState, npcManager, cameraManager, player, mapManager, playerDeckManager);
-		Route1Cutscenes.initialize(cutscenes, npcManager, cameraManager, player, overworldState);
+		Route1Cutscenes.initialize(cutscenes, npcManager, cameraManager, player, overworldState, playerDeckManager);
 	}
 
 	private String getKeyLocation(int x, int y, String map, boolean interact, FacingDirections facing) {

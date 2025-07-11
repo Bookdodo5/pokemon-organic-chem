@@ -1,8 +1,9 @@
-package cutscene.initialize;
+package cutscene.initialize.route1;
 
 import cutscene.Cutscene;
 import cutscene.CutsceneBuilder;
 import cutscene.Emotes;
+import cutscene.template.CutsceneTemplate;
 import cutscene.template.ManiacQuizTemplate;
 import dialogue.Dialogue;
 import dialogue.DialogueOption;
@@ -14,10 +15,12 @@ import gamestates.CameraManager;
 import gamestates.states.OverworldState;
 import java.util.List;
 import java.util.Map;
+import pokedex.PlayerDeckManager;
 
-public class Route1Cutscenes {
-    public static void initialize(Map<String, List<Cutscene>> cutscenes, NPCManager npcManager, CameraManager cameraManager, Player player, OverworldState overworldState) {
+public class Route1Cutscenes extends CutsceneTemplate {
+    public static void initialize(Map<String, List<Cutscene>> cutscenes, NPCManager npcManager, CameraManager cameraManager, Player player, OverworldState overworldState, PlayerDeckManager playerDeckManager) {
         initializeManiacQuiz(cutscenes, npcManager, cameraManager, player, overworldState);
+        Route1Objects.initialize(cutscenes, cameraManager, player, playerDeckManager);
     }
 
     private static void initializeManiacQuiz(Map<String, List<Cutscene>> cutscenes, NPCManager npcManager, CameraManager cameraManager, Player player, OverworldState overworldState) {
@@ -30,15 +33,32 @@ public class Route1Cutscenes {
         NPC maniac7 = npcManager.getNPC("Maniac7");
         NPC maniac8 = npcManager.getNPC("Maniac8");
 
+        addCutscene(cutscenes, new CutsceneBuilder()
+            .forbid("DECK_FOUND")
+            .react(maniac1, cameraManager, Emotes.SURPRISE)
+            .wait(30)
+            .faceTowards(player, maniac1)
+            .wait(30)
+            .speak("MANIAC",
+                "...",
+                "Are you kidding me? You don't even have a deck!",
+                "Go away!"
+            )
+            .moveYthenX(player, 7, 48)
+            .buildCutscene(),
+            getKeyLocation(8, 50, "route1"),
+            getKeyLocation(9, 50, "route1"),
+            getKeyLocation(10, 50, "route1")
+        );
+
         ManiacQuizTemplate.addManiacQuiz(
             cutscenes, maniac1, player, overworldState, cameraManager, 3,
             13, 4, "porbital_town__workspace", FacingDirections.DOWN,
             new CutsceneBuilder() // quiz
-                .music("BattleTrainer")
                 .shout("MANIAC", "IF YOU HAVE AN ALCHEMIST'S DECK, YOU'RE READY TO TAKE A QUIZ!", cameraManager)
                 .shout("MANIAC", "YOU CANNOT SAY NO TO MY CHALLENGE!", cameraManager)
                 .wait(60)
-                .showImage("/images/DIRECTOR_1_box_1.png")
+                .showImage("/images/MANIAC_1.png")
                 .react(maniac1, cameraManager, Emotes.QUESTION)
                 .speak(new Dialogue(new String[] {
                     "QUESTION: WHICH ONE OF THEM IS THE MOST SIGMA OF ALL MOLECULES???"
@@ -76,7 +96,6 @@ public class Route1Cutscenes {
             cutscenes, maniac2, player, overworldState, cameraManager, 2,
             13, 4, "porbital_town__workspace", FacingDirections.DOWN,
             new CutsceneBuilder() // quiz
-                .music("BattleTrainer")
                 .shout("MANIAC", "HEY!!!", cameraManager)
                 .speak("MANIAC",
                     "You wanna know my secrets?",
@@ -84,14 +103,14 @@ public class Route1Cutscenes {
                     "If you aspire to be the best, you'll have to beat me at eating too!"
                 )
                 .wait(60)
-                .showImage("/images/DIRECTOR_1_box_1.png")
+                .showImage("/images/MANIAC_2.png")
                 .react(maniac2, cameraManager, Emotes.QUESTION)
                 .speak(new Dialogue(new String[] {
                     "QUESTION: Which molecule can eat the most HYDROGEN without being saturated?"
                 }, "MANIAC",
                 ManiacQuizTemplate.getOptions(maniac2, 4,
                     "1-Nonyne",
-                    "Quadratic Acid",
+                    "Squaric Acid",
                     "Penguinone",
                     "Angelic Acid",
                     "Benzyl Benzene"
@@ -120,14 +139,13 @@ public class Route1Cutscenes {
             cutscenes, maniac3, player, overworldState, cameraManager, 5,
             13, 4, "porbital_town__workspace", FacingDirections.DOWN,
             new CutsceneBuilder() // quiz
-                .music("BattleTrainer")
                 .react(maniac3, cameraManager, Emotes.ANGRY)
                 .shout("MANIAC", "YOU ARE CONSCRIPTED INTO THE ARMY FROM THIS POINT ON!", cameraManager)
                 .shout("MANIAC", "I'M YOUR COMMANDER! GO FIGHT THE HALOGENS!!!", cameraManager)
                 .wait(30)
                 .react(player, cameraManager, Emotes.TERRIFIED)
                 .wait(60)
-                .showImage("/images/DIRECTOR_1_box_1.png")
+                .showImage("/images/MANIAC_3.png")
                 .react(maniac3, cameraManager, Emotes.QUESTION)
                 .speak(new Dialogue(new String[] {
                     "QUESTION: Which innocent carbon atoms is in most trouble?"
@@ -171,7 +189,6 @@ public class Route1Cutscenes {
             cutscenes, maniac4, player, overworldState, cameraManager, 3,
             13, 4, "porbital_town__workspace", FacingDirections.DOWN,
             new CutsceneBuilder() // quiz
-                .music("BattleTrainer")
                 .waitEmote(maniac4, cameraManager, 60)
                 .speak("MANIAC",
                     "Uhh... I'm from the AROMATICA MAGICAL LAND!",
@@ -180,7 +197,7 @@ public class Route1Cutscenes {
                     "Can you show me what you know?"
                 )
                 .wait(60)
-                .showImage("/images/DIRECTOR_1_box_1.png")
+                .showImage("/images/MANIAC_4.png")
                 .react(maniac4, cameraManager, Emotes.QUESTION)
                 .speak(new Dialogue(new String[] {
                     "QUESTION: In the communist city of \"THE SIX RINGS\", how many electrons are shared among all citizens?"
@@ -223,12 +240,11 @@ public class Route1Cutscenes {
             cutscenes, maniac5, player, overworldState, cameraManager, 3,
             13, 4, "porbital_town__workspace", FacingDirections.DOWN,
             new CutsceneBuilder() // quiz
-                .music("BattleTrainer")
                 .shout("MANIAC", "...", cameraManager)
                 .wait(60)
                 .shout("MANIAC", "...", cameraManager)
                 .wait(60)
-                .showImage("/images/DIRECTOR_1_box_1.png")
+                .showImage("/images/MANIAC_5.png")
                 .react(maniac5, cameraManager, Emotes.QUESTION)
                 .speak(new Dialogue(new String[] {
                     "QUESTION: I... want more... alcohol..."
@@ -272,22 +288,21 @@ public class Route1Cutscenes {
             cutscenes, maniac6, player, overworldState, cameraManager, 3,
             13, 4, "porbital_town__workspace", FacingDirections.DOWN,
             new CutsceneBuilder() // quiz
-                .music("BattleTrainer")
                 .shout("MANIAC", "YOU ONLY HAVE 10 MINUTES LEFT TO FINISH THIS DISH!", cameraManager)
                 .react(maniac6, cameraManager, Emotes.ANGRY)
                 .shout("MANIAC", "WHY HAVEN'T YOU BAKED YOUR CAKE YET???", cameraManager)
                 .wait(60)
-                .showImage("/images/DIRECTOR_1_box_1.png")
+                .showImage("/images/MANIAC_6.png")
                 .react(maniac6, cameraManager, Emotes.QUESTION)
                 .speak(new Dialogue(new String[] {
-                    "QUESTION: Which sugar is a ALDOPENTOSE?"
+                    "QUESTION: Which sugar is the smallest one with a ketone?"
                 }, "MANIAC",
-                ManiacQuizTemplate.getOptions(maniac6, 4,
+                ManiacQuizTemplate.getOptions(maniac6, 3,
+                    "Ribose",
+                    "Glyceraldehyde",
                     "Glucose",
-                    "Fructose",
-                    "Lactose",
-                    "Ribulose",
-                    "Ribose"
+                    "Dihydroxyacetone",
+                    "Fructose"
                 )))
                 .buildActions(),
             new CutsceneBuilder() // right
@@ -296,8 +311,8 @@ public class Route1Cutscenes {
                 .wait(30)
                 .react(maniac6, cameraManager, Emotes.FRIENDLY)
                 .speak("MANIAC",
-                    "Yes, RIBOSE is the aldopentose!",
-                    "It has an aldehyde group on the first carbon!"
+                    "Yes, DIHYDROXYACETONE is a 3 carbon sugar with a KETONE!",
+                    "It has an CARBONYL group on the second carbon!"
                 )
                 .waitEmote(maniac6, cameraManager, 60)
                 .shout("MANIAC", "QUICK!!! CONTINUE COOKING!", cameraManager)
@@ -320,7 +335,6 @@ public class Route1Cutscenes {
             cutscenes, maniac7, player, overworldState, cameraManager, 4,
             13, 4, "porbital_town__workspace", FacingDirections.DOWN,
             new CutsceneBuilder() // quiz
-                .music("BattleTrainer")
                 .react(maniac7, cameraManager, Emotes.ANGRY)
                 .speak("MANIAC",
                     "Hehehe...",
@@ -328,7 +342,7 @@ public class Route1Cutscenes {
                     "I'm conducting an acidity research."
                 )
                 .wait(60)
-                .showImage("/images/DIRECTOR_1_box_1.png")
+                .showImage("/images/MANIAC_7.png")
                 .react(maniac7, cameraManager, Emotes.QUESTION)
                 .speak(new Dialogue(new String[] {
                     "QUESTION: Subject subject on the ground, Who is the most ACIDIC in this round?"
@@ -375,12 +389,11 @@ public class Route1Cutscenes {
             cutscenes, maniac8, player, overworldState, cameraManager, 3,
             13, 4, "porbital_town__workspace", FacingDirections.DOWN,
             new CutsceneBuilder() // quiz
-                .music("BattleTrainer")
                 .shout("MANIAC", "HAVE YOU EVER SEEN ANY ROCK BABY SONG???", cameraManager)
                 .react(maniac8, cameraManager, Emotes.MUSIC)
                 .shout("MANIAC", "YOU WILL HERE ME!!!", cameraManager)
                 .wait(60)
-                .showImage("/images/DIRECTOR_1_box_1.png")
+                .showImage("/images/MANIAC_8.png")
                 .react(maniac8, cameraManager, Emotes.QUESTION)
                 .speak(new Dialogue(new String[] {
                     "QUESTION: Which compound smells like FISH and DEATH?"

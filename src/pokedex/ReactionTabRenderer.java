@@ -1,13 +1,10 @@
 package pokedex;
 
-import battle.molecules.Molecule;
-import battle.reactions.Reaction;
 import java.awt.Graphics2D;
-import java.util.List;
 
 public class ReactionTabRenderer extends TabRenderer {
 
-    public ReactionTabRenderer(PlayerDeckManager playerDeckManager, List<Molecule> moleculeRecord, List<Reaction> reactionRecord, SelectionState selectionState) {
+    public ReactionTabRenderer(PlayerDeckManager playerDeckManager, MoleculeRecord moleculeRecord, ReactionRecord reactionRecord, SelectionState selectionState) {
         super(playerDeckManager, moleculeRecord, reactionRecord, selectionState);
     }
 

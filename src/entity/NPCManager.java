@@ -11,6 +11,104 @@ public class NPCManager {
 		npcs = new ArrayList<>();
 		initializePorbitalTownNPCs();
 		initializeRoute1NPCs();
+		initializeMethanopolisNPCs();
+	}
+
+	private void initializeMethanopolisNPCs() {
+		npcs.add(new NPC.Builder("OldMan1", NPCSprites.OLD_MAN)
+			.position(22, 52, "methanopolis")
+			.facing(FacingDirections.LEFT)
+			.path(new NPCPath(new ArrayList<>(Arrays.asList(
+				new NPCPath.Point(22, 52),
+				new NPCPath.Point(13, 52),
+				new NPCPath.Point(13, 46),
+				new NPCPath.Point(22, 46)
+			))))
+			.build()
+		);
+
+		npcs.add(new NPC.Builder("OldMan2", NPCSprites.OLD_MAN_2)
+			.position(22, 46, "methanopolis")
+			.facing(FacingDirections.DOWN)
+			.path(new NPCPath(new ArrayList<>(Arrays.asList(
+				new NPCPath.Point(22, 46),
+				new NPCPath.Point(22, 52),
+				new NPCPath.Point(13, 52),
+				new NPCPath.Point(13, 46)
+			))))
+			.build()
+		);
+
+		npcs.add(new NPC.Builder("OldWoman1", NPCSprites.OLD_WOMAN_1)
+			.position(34, 17, "methanopolis")
+			.facing(FacingDirections.DOWN)
+			.rect(5, 5)
+			.build()
+		);
+
+		npcs.add(new NPC.Builder("OldWoman2", NPCSprites.OLD_WOMAN_2)
+			.position(42, 28, "methanopolis")
+			.facing(FacingDirections.LEFT)
+			.rect(5, 5)
+			.build()
+		);
+
+		npcs.add(new NPC.Builder("LazyCop", NPCSprites.COP)
+			.position(29, 47, "methanopolis")
+			.facing(FacingDirections.DOWN)
+			.build()
+		);
+
+		npcs.add(new NPC.Builder("ServiceSeller", NPCSprites.SHOPKEEPER)
+			.position(15, 44, "methanopolis")
+			.facing(FacingDirections.DOWN)
+			.build()
+		);
+
+		npcs.add(new NPC.Builder("DirtSeller", NPCSprites.SHOPKEEPER)
+			.position(40, 16, "methanopolis")
+			.facing(FacingDirections.DOWN)
+			.build()
+		);
+
+		npcs.add(new NPC.Builder("AirconRepairMan", NPCSprites.ENGINEER)
+			.position(29, 40, "methanopolis")
+			.facing(FacingDirections.DOWN)
+			.rect(2, 1)
+			.build()
+		);
+
+		npcs.add(new NPC.Builder("Chef", NPCSprites.CHEF)
+			.position(30, 17, "methanopolis")
+			.facing(FacingDirections.DOWN)
+			.build()
+		);
+
+		npcs.add(new NPC.Builder("ComputerRepairMan", NPCSprites.ENGINEER)
+			.position(11, 19, "methanopolis")
+			.facing(FacingDirections.RIGHT)
+			.rect(1, 1)
+			.build()
+		);
+
+		npcs.add(new NPC.Builder("PrimeMinisterPsychic1", NPCSprites.PSYCHIC)
+			.position(14, 24, "methanopolis")
+			.facing(FacingDirections.DOWN)
+			.build()
+		);
+
+		npcs.add(new NPC.Builder("PrimeMinisterPsychic2", NPCSprites.PSYCHIC)
+			.position(18, 24, "methanopolis")
+			.facing(FacingDirections.DOWN)
+			.build()
+		);
+
+		npcs.add(new NPC.Builder("Aromatherapist", NPCSprites.AROMALADY)
+			.position(28, 28, "methanopolis")
+			.facing(FacingDirections.RIGHT)
+			.rect(2, 0)
+			.build()
+		);
 	}
 
 	private void initializeRoute1NPCs() {

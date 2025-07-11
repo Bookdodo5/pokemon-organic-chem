@@ -457,6 +457,8 @@ public class PorbitalTownObjects extends CutsceneTemplate {
                     "Carboxylic acids are evil and toxic.",
                     "They're always donating protons from their -COOH tail.",
                     "The more carboxylic acids, the more toxic my scientific paper is.",
+                    "And for some reason, HALOGENS near the CARBOXYLs make it less potent.",
+                    "I guess it's because they have stabilizing quality.",
                     "METHODOLOGY:",
                     "We throw various acids at the students and see if they die.",
                     "RESULTS:",
@@ -499,7 +501,7 @@ public class PorbitalTownObjects extends CutsceneTemplate {
                 .shout("THINKING", "But amino acids are consists of you.", cameraManager)
                 .wait(60)
                 .waitEmote(player, cameraManager, 60)
-                .shout("THINKING", "Oh, amines, you fly in the sky.", cameraManager)
+                .shout("THINKING", "Oh, amides, you fly in the sky.", cameraManager)
                 .shout("THINKING", "With carbonyl and nitrogen, so high.", cameraManager)
                 .shout("THINKING", "Stability from you gives us life.", cameraManager)
                 .shout("THINKING", "...", cameraManager)
@@ -519,7 +521,7 @@ public class PorbitalTownObjects extends CutsceneTemplate {
 
 //* bookshelf1
         addCutscene(cutscenes, new CutsceneBuilder() 
-            .speak(
+            .speak( "THINKING",
                 "It's a bookshelf.",
                 "You've never seen one before coming here.",
                 "It's so cool!"

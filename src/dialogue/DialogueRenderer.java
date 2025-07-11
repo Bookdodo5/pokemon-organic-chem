@@ -20,8 +20,8 @@ public class DialogueRenderer {
 	// Animation state
 	private String currentText = "";
 	private int currentCharIndex = 0;
-	private int textAnimationCounter = 0;
-	private int textAnimationSpeed = Settings.getInstance().getTextSpeed().baseSpeed;
+	private double textAnimationCounter = 0.0;
+	private double textAnimationSpeed = Settings.getInstance().getTextSpeed().baseSpeed;
 	private int indicatorAnimationCounter = 0;
 	private final int indicatorAnimationSpeed = 30;
 	private boolean animationFinished = false;
@@ -34,7 +34,13 @@ public class DialogueRenderer {
 
 	private final TextStyle optionTextStyle = TextStyle.getOptionStyle().build();
 	private final BoxStyle optionBoxStyle = BoxStyle.getOptionStyle()
-		.shadowColor(new Color(80, 80, 80, 100))
+		.shadowColor(new Color(0, 0, 0, 0))
+		.shadowOffset(0)
+		.cornerArc(15)
+		.topBorderColor(new Color(80, 80, 80, 120))
+		.bottomBorderColor(new Color(80, 80, 80, 150))
+		.topFillColor(new Color(250, 250, 250))
+		.bottomFillColor(new Color(240, 240, 240))
 		.build();
 
 	private final int DIALOGUE_BOX_MARGIN;
@@ -74,6 +80,16 @@ public class DialogueRenderer {
 		SPEAKER_COLORS.put("YELLOW", new Color(255, 255, 0));
 		SPEAKER_COLORS.put("CYAN", new Color(0, 255, 255));
 		SPEAKER_COLORS.put("MAGENTA", new Color(255, 0, 255));
+		SPEAKER_COLORS.put("MANIAC", new Color(20, 100, 220));
+		SPEAKER_COLORS.put("OLD MAN", new Color(180, 120, 80)); // Warm brown for elderly
+		SPEAKER_COLORS.put("OLD WOMAN", new Color(200, 140, 100)); // Lighter warm brown
+		SPEAKER_COLORS.put("LAZY COP", new Color(120, 120, 120)); // Gray for lazy attitude
+		SPEAKER_COLORS.put("SERVICE SELLER", new Color(100, 180, 220)); // Light blue for service
+		SPEAKER_COLORS.put("DIRT SELLER", new Color(139, 69, 19)); // Saddle brown for dirt
+		SPEAKER_COLORS.put("AIRCON REPAIR MAN", new Color(70, 130, 180)); // Steel blue for technical work
+		SPEAKER_COLORS.put("COMPUTER REPAIR MAN", new Color(25, 25, 112)); // Midnight blue for tech
+		SPEAKER_COLORS.put("CHEF", new Color(255, 140, 0)); // Dark orange for cooking
+		SPEAKER_COLORS.put("AROMATHERAPIST", new Color(186, 85, 211)); // Medium violet red for aromatherapy
 	}
 
 	private Color tintWith(Color color, double weight, Color tintColor) {
@@ -94,7 +110,7 @@ public class DialogueRenderer {
 			.shadowColor(new Color(0, 0, 0, 0));
 	}
 
-	public void setTextAnimationSpeed(int textAnimationSpeed) { this.textAnimationSpeed = textAnimationSpeed; }
+	public void setTextAnimationSpeed(double textAnimationSpeed) { this.textAnimationSpeed = textAnimationSpeed; }
 
 	public void setRenderingDialogue(Dialogue dialogue, BoxStyle boxStyle, TextStyle textStyle) {
 		currentCharIndex = 0;
@@ -127,10 +143,10 @@ public class DialogueRenderer {
 		}
 
 		textAnimationCounter++;
-		if (textAnimationCounter >= textAnimationSpeed) {
+		while (textAnimationCounter >= textAnimationSpeed && currentCharIndex < page.length()) {
 			currentText += page.charAt(currentCharIndex);
 			currentCharIndex++;
-			textAnimationCounter = 0;
+			textAnimationCounter -= textAnimationSpeed;
 		}
 	}
 

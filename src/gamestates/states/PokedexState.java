@@ -9,11 +9,12 @@ import gamestates.StateManager;
 import input.KeyBindingHandler;
 import input.Keys;
 import java.awt.Graphics2D;
-import java.util.List;
 import main.GameContentManager;
+import pokedex.MoleculeRecord;
 import pokedex.PlayerDeckManager;
 import pokedex.PokedexRenderer;
 import pokedex.PokedexTab;
+import pokedex.ReactionRecord;
 import pokedex.SelectionArea;
 import pokedex.SelectionState;
 
@@ -23,8 +24,8 @@ public class PokedexState extends GameState {
     private boolean firstTimePressing;
 
     private final PlayerDeckManager playerDeckManager;
-    private final List<Molecule> moleculeRecord;
-    private final List<Reaction> reactionRecord;
+    private final MoleculeRecord moleculeRecord;
+    private final ReactionRecord reactionRecord;
 
     private final PokedexRenderer pokedexRenderer;
 
@@ -36,8 +37,8 @@ public class PokedexState extends GameState {
         super(stateManager, keyHandler, gameContentManager);
 
         this.playerDeckManager = gameContentManager.getPlayerDeckManager();
-        this.moleculeRecord = gameContentManager.getMoleculeRecord().getMoleculeRecord();
-        this.reactionRecord = gameContentManager.getReactionRecord().getAvailableReactionsList();
+        this.moleculeRecord = gameContentManager.getMoleculeRecord();
+        this.reactionRecord = gameContentManager.getReactionRecord();
         this.selection = new SelectionState();
         this.selectedMolecule = null;
         this.selectedReaction = null;
@@ -148,8 +149,8 @@ public class PokedexState extends GameState {
     private int getMaxScrollIndex() {
         return switch (selection.getCurrentTab()) {
             case DECK -> playerDeckManager.getAvailableCardTypes();
-            case REACTION -> reactionRecord.size();
-            case MOLECULE -> moleculeRecord.size();
+            case REACTION -> reactionRecord.getAvailableReactionsList().size();
+            case MOLECULE -> moleculeRecord.getMoleculeRecord().size();
         };
     }
 
@@ -270,14 +271,16 @@ public class PokedexState extends GameState {
                 }
             }
             case REACTION -> {
-                if (scrollIndex < reactionRecord.size()) {
-                    selectedReaction = reactionRecord.get(scrollIndex);
+                var availableReactions = reactionRecord.getAvailableReactionsList();
+                if (scrollIndex < availableReactions.size()) {
+                    selectedReaction = availableReactions.get(scrollIndex);
                     SoundManager.getSfxplayer().playSE("GameCursor");
                 }
             }
             case MOLECULE -> {
-                if (scrollIndex < moleculeRecord.size()) {
-                    selectedMolecule = moleculeRecord.get(scrollIndex);
+                var molecules = moleculeRecord.getMoleculeRecord();
+                if (scrollIndex < molecules.size()) {
+                    selectedMolecule = molecules.get(scrollIndex);
                     SoundManager.getSfxplayer().playSE("GameCursor");
                 }
             }

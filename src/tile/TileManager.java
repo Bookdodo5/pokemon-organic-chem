@@ -68,12 +68,12 @@ public class TileManager {
 		int endRow = Math.min(maxLayerRow, (cameraY + SCREEN_HEIGHT) / ORIGINAL_TILE_SIZE + 1);
 
 		for (int row = startRow; row < endRow; row++) {
+			int mapY = row * ORIGINAL_TILE_SIZE;
+			int screenY = mapY - cameraY;
+			
 			for (int col = startCol; col < endCol; col++) {
-
 				int mapX = col * ORIGINAL_TILE_SIZE;
-				int mapY = row * ORIGINAL_TILE_SIZE;
 				int screenX = mapX - cameraX;
-				int screenY = mapY - cameraY;
 
 				tileset.getTile(layerTileNum[row][col]).draw(g2, screenX, screenY);
 			}

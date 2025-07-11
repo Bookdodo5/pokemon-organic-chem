@@ -11,15 +11,24 @@ public class TileAnimated extends Tile {
 	private int animationCounter = 0;
 	private int currentFrame = 0;
 	private int totalFrame = 1;
+	private BufferedImage[] frames;
 	
 	public TileAnimated(BufferedImage tileImage, int tileID, int totalFrame) {
 		super(tileImage, tileID);
 		this.totalFrame = totalFrame;
+		getFrames();
+	}
+	
+	private void getFrames() {
+		frames = new BufferedImage[totalFrame];
+		for (int i = 0; i < totalFrame; i++) {
+			int frameLocation = ORIGINAL_TILE_SIZE * i;
+			frames[i] = AssetManager.getSprite(tileImage, frameLocation, 0, ORIGINAL_TILE_SIZE, ORIGINAL_TILE_SIZE);
+		}
 	}
 	
 	public BufferedImage getSpriteAnimation() {
-		int frameLocation = ORIGINAL_TILE_SIZE * currentFrame;
-		return AssetManager.getSprite(tileImage, frameLocation, 0, ORIGINAL_TILE_SIZE, ORIGINAL_TILE_SIZE);
+		return frames[currentFrame];
 	}
 
 	@Override

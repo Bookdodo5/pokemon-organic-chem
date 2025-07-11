@@ -2,14 +2,12 @@ package pokedex;
 
 import battle.cards.Card;
 import battle.cards.CardFactory;
-import battle.molecules.Molecule;
-import battle.reactions.Reaction;
 import java.awt.Graphics2D;
 import java.util.List;
 
 public class DeckTabRenderer extends TabRenderer {
 
-    public DeckTabRenderer(PlayerDeckManager playerDeckManager, List<Molecule> moleculeRecord, List<Reaction> reactionRecord, SelectionState selectionState) {
+    public DeckTabRenderer(PlayerDeckManager playerDeckManager, MoleculeRecord moleculeRecord, ReactionRecord reactionRecord, SelectionState selectionState) {
         super(playerDeckManager, moleculeRecord, reactionRecord, selectionState);
     }
 
