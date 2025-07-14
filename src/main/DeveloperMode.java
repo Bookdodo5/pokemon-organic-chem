@@ -120,6 +120,8 @@ public class DeveloperMode {
         System.out.println("  state <stateName>       - Change game state");
         System.out.println("  npc                     - Show all NPCs");
         System.out.println("  npc <id>                - Show specific NPC info");
+        System.out.println("  npc inspect front       - Inspect NPC in front of player");
+        System.out.println("  npc pos <id>            - Show NPC position by ID");
         System.out.println("  npc move <id> <x> <y>   - Move NPC to position");
         System.out.println("  cutscene                - Show available cutscenes");
         System.out.println("  fps                     - Show current FPS");
@@ -131,6 +133,8 @@ public class DeveloperMode {
         System.out.println("  map methanopolis 15 20");
         System.out.println("  state overworld");
         System.out.println("  npc move ProfDecane 5 5");
+        System.out.println("  npc inspect front");
+        System.out.println("  npc pos OldMan1");
         System.out.println("  fps 30");
     }
     
@@ -241,7 +245,7 @@ public class DeveloperMode {
         player.setMapX(x);
         player.setMapY(y);
         player.setMap(mapName);
-        mapManager.updateVisibleMaps(x, y);
+        mapManager.updateVisibleMaps(x, y, ()->{});
         gameContentManager.getCameraManager().update();
         
         System.out.println("Moved to map: " + mapName + " at (" + x + ", " + y + ")");
@@ -297,6 +301,18 @@ public class DeveloperMode {
             return;
         }
         
+        // New command: npc inspect front
+        if (args.length == 2 && args[0].equalsIgnoreCase("inspect") && args[1].equalsIgnoreCase("front")) {
+            inspectNPCInFront();
+            return;
+        }
+        
+        // New command: npc pos <id>
+        if (args.length == 2 && args[0].equalsIgnoreCase("pos")) {
+            showNPCPosition(args[1]);
+            return;
+        }
+        
         if (args.length >= 4 && args[0].equalsIgnoreCase("move")) {
             var npc = npcManager.getNPC(args[1]);
             if (npc != null) {
@@ -312,6 +328,67 @@ public class DeveloperMode {
             } else {
                 System.out.println("NPC not found: " + args[1]);
             }
+        }
+    }
+    
+    private void inspectNPCInFront() {
+        Player player = gameContentManager.getPlayer();
+        var npcManager = gameContentManager.getNpcManager();
+        String currentMap = gameContentManager.getMapManager().getCurrentMapID();
+        
+        // Calculate the position in front of the player
+        int frontX = player.getMapX();
+        int frontY = player.getMapY();
+        
+        switch (player.getCurrentDirection()) {
+            case UP:
+                frontY--;
+                break;
+            case DOWN:
+                frontY++;
+                break;
+            case LEFT:
+                frontX--;
+                break;
+            case RIGHT:
+                frontX++;
+                break;
+        }
+        
+        // Look for NPCs at that position on the current map
+        boolean found = false;
+        for (var npc : npcManager.getNPCs()) {
+            if (npc.getMap().equals(currentMap) && 
+                npc.getMapX() == frontX && 
+                npc.getMapY() == frontY) {
+                
+                System.out.println("=== NPC IN FRONT ===");
+                System.out.println("ID: " + npc.getId());
+                System.out.println("Position: (" + npc.getMapX() + ", " + npc.getMapY() + ")");
+                System.out.println("Map: " + npc.getMap());
+                System.out.println("Direction: " + npc.getCurrentDirection());
+                found = true;
+                break;
+            }
+        }
+        
+        if (!found) {
+            System.out.println("No NPC found in front of player at (" + frontX + ", " + frontY + ")");
+        }
+    }
+    
+    private void showNPCPosition(String npcId) {
+        var npcManager = gameContentManager.getNpcManager();
+        var npc = npcManager.getNPC(npcId);
+        
+        if (npc != null) {
+            System.out.println("=== NPC POSITION ===");
+            System.out.println("ID: " + npc.getId());
+            System.out.println("Position: (" + npc.getMapX() + ", " + npc.getMapY() + ")");
+            System.out.println("Map: " + npc.getMap());
+            System.out.println("Direction: " + npc.getCurrentDirection());
+        } else {
+            System.out.println("NPC not found: " + npcId);
         }
     }
     

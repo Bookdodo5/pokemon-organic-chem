@@ -93,8 +93,7 @@ public class OverworldState extends GameState {
 		player.setMap(nextMap);
 		mapManager.setCurrentMap(nextMap);
 		cameraManager.update();
-		mapManager.updateVisibleMaps(player.getMapX(), player.getMapY());
-		initializeEntities();
+		mapManager.updateVisibleMaps(player.getMapX(), player.getMapY(), this::initializeEntities);
 	}
 
 	private void checkCutscene(boolean isInteracting) {
@@ -134,7 +133,7 @@ public class OverworldState extends GameState {
 		
 		checkMapTransition();
 		checkCutscene(false);
-		mapManager.updateVisibleMaps(player.getMapX(), player.getMapY());
+		mapManager.updateVisibleMaps(player.getMapX(), player.getMapY(), this::initializeEntities);
 		cameraManager.update();
 	}
 

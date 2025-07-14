@@ -34,7 +34,7 @@ public class PorbitalTownTalks extends CutsceneTemplate {
             .waitEmote(player, cameraManager, 60)
             .speak("PORBITAL MAYOR",
                 "Ahem...",
-                "Hello, citizen of the ALKANE GRASSLANDS.",
+                "Hello, citizen of the SIGMA GRASSLANDS.",
                 "I'm the mayor of this town."
             )
             .react(mayor, cameraManager, Emotes.FRIENDLY)
@@ -173,7 +173,7 @@ public class PorbitalTownTalks extends CutsceneTemplate {
             .setFlag("PORBITAL COP_KNOW")
             .faceTowards(PorbitalCop2, player)
             .speak("PORBITAL COP",
-                "Hello, citizen of the ALKANE GRASSLANDS.",
+                "Hello, citizen of the SIGMA GRASSLANDS.",
                 "I was sent here from a place far away called AROMATICA MAGICAL LAND.",
                 "Of course, I don't know why I'm here.",
                 "The pay's good, though.",
@@ -198,7 +198,7 @@ public class PorbitalTownTalks extends CutsceneTemplate {
             .speak("DISGUISED COP",
                 "No. I can't talk.",
                 "I'm in the middle of a high-stakes surveillance operation.",
-                "This 3x3 square is the most critical strategic point in all of ALKANE GRASSLANDS.",
+                "This 3x3 square is the most critical strategic point in all of SIGMA GRASSLANDS.",
                 "I can't elaborate further. There's security protocols.",
                 "Also, if I tell you, I'd be in trouble since I'm not a cop.",
                 "Hope you understand."

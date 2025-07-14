@@ -1,5 +1,11 @@
 {
     "cSpell.words": [
         "Pokedex"
-    ]
+    ],
+    "java.format.settings.url": ".vscode/eclipse-java-google-style.xml",
+    "[java]": {
+        "editor.insertSpaces": true,
+        "editor.detectIndentation": true,
+        "editor.tabSize": 4
+    }
 }

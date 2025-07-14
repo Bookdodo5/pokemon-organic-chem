@@ -14,7 +14,7 @@ public enum NPCSprites {
     
     OLD_WOMAN_1("trainer_OLDWOMAN1"),
     OLD_WOMAN_2("trainer_OLDWOMAN2"),
-    OLD_MAN("trainer_OLDMAN1"),
+    OLD_MAN_1("trainer_OLDMAN1"),
     OLD_MAN_2("trainer_OLDMAN2"),
     
     CAMPER("trainer_CAMPER"),

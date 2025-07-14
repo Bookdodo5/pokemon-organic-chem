@@ -80,7 +80,8 @@ public class Route1Cutscenes extends CutsceneTemplate {
                 .buildActions(),
             new CutsceneBuilder() // wrong
                 .waitEmote(maniac1, cameraManager, 60)
-                .music("Rickroll")
+                .musicStop()
+                .sfx("PkmnFaint")
                 .wait(60)
                 .speak("MANIAC",
                     "You know what?",
@@ -125,7 +126,8 @@ public class Route1Cutscenes extends CutsceneTemplate {
                 .buildActions(),
             new CutsceneBuilder() // wrong
                 .waitEmote(maniac2, cameraManager, 60)
-                .music("Rickroll")
+                .musicStop()
+                .sfx("PkmnFaint")
                 .wait(60)
                 .speak("MANIAC",
                     "WRONG! You're not even close!",
@@ -173,7 +175,8 @@ public class Route1Cutscenes extends CutsceneTemplate {
                 .buildActions(),
             new CutsceneBuilder() // wrong
                 .waitEmote(maniac3, cameraManager, 60)
-                .music("Rickroll")
+                .musicStop()
+                .sfx("PkmnFaint")
                 .wait(60)
                 .speak("MANIAC",
                     "That's a rookie mistake you made, PLAYER!",
@@ -223,7 +226,8 @@ public class Route1Cutscenes extends CutsceneTemplate {
                 .buildActions(),
             new CutsceneBuilder() // wrong
                 .waitEmote(maniac4, cameraManager, 60)
-                .music("Rickroll")
+                .musicStop()
+                .sfx("PkmnFaint")
                 .wait(60)
                 .react(maniac4, cameraManager, Emotes.SAD)
                 .speak("MANIAC",
@@ -272,7 +276,8 @@ public class Route1Cutscenes extends CutsceneTemplate {
                 .buildActions(),
             new CutsceneBuilder() // wrong
                 .waitEmote(maniac5, cameraManager, 60)
-                .music("Rickroll")
+                .musicStop()
+                .sfx("PkmnFaint")
                 .wait(60)
                 .speak("MANIAC",
                     "...",
@@ -320,7 +325,8 @@ public class Route1Cutscenes extends CutsceneTemplate {
                 .buildActions(),
             new CutsceneBuilder() // wrong
                 .waitEmote(maniac6, cameraManager, 60)
-                .music("Rickroll")
+                .musicStop()
+                .sfx("PkmnFaint")
                 .wait(60)
                 .react(maniac6, cameraManager, Emotes.ANGRY)
                 .speak("MANIAC",
@@ -371,7 +377,8 @@ public class Route1Cutscenes extends CutsceneTemplate {
                 .buildActions(),
             new CutsceneBuilder() // wrong
                 .waitEmote(maniac7, cameraManager, 60)
-                .music("Rickroll")
+                .musicStop()
+                .sfx("PkmnFaint")
                 .wait(60)
                 .react(maniac7, cameraManager, Emotes.ANGRY)
                 .speak("MANIAC",
@@ -391,7 +398,7 @@ public class Route1Cutscenes extends CutsceneTemplate {
             new CutsceneBuilder() // quiz
                 .shout("MANIAC", "HAVE YOU EVER SEEN ANY ROCK BABY SONG???", cameraManager)
                 .react(maniac8, cameraManager, Emotes.MUSIC)
-                .shout("MANIAC", "YOU WILL HERE ME!!!", cameraManager)
+                .shout("MANIAC", "YOU WILL!!!", cameraManager)
                 .wait(60)
                 .showImage("/images/MANIAC_8.png")
                 .react(maniac8, cameraManager, Emotes.QUESTION)
@@ -416,7 +423,8 @@ public class Route1Cutscenes extends CutsceneTemplate {
                 .buildActions(),
             new CutsceneBuilder() // wrong
                 .waitEmote(maniac8, cameraManager, 60)
-                .music("Rickroll")
+                .musicStop()
+                .sfx("PkmnFaint")
                 .wait(60)
                 .react(maniac8, cameraManager, Emotes.SAD)
                 .speak("MANIAC",

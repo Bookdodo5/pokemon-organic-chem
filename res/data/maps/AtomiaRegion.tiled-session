@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "methanopolis.tmx",
+    "activeFile": "methanopolis__apartment2_f1.tmx",
     "automapping.whileDrawing": true,
     "expandedProjectPaths": [
         "."
@@ -65,11 +65,11 @@
             "scaleInEditor": 1.5
         },
         "methanopolis.tmx": {
-            "scale": 0.75,
+            "scale": 2,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 896,
-                "y": 896
+                "x": 1569,
+                "y": 906.25
             }
         },
         "methanopolis__apartment1_f1.tmx": {
@@ -93,15 +93,15 @@
             "selectedLayer": 2,
             "viewCenter": {
                 "x": 224,
-                "y": 176
+                "y": 175.75
             }
         },
         "methanopolis__apartment2_f1.tmx": {
             "scale": 2.172135416666667,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 224.20333293370098,
-                "y": 175.8638052991248
+                "x": 224.203332933701,
+                "y": 176.0939935259561
             }
         },
         "methanopolis__apartment2_f2.tmx": {
@@ -133,15 +133,15 @@
             "selectedLayer": 0,
             "viewCenter": {
                 "x": 224.08823882028537,
-                "y": 175.9788994125405
+                "y": 175.76789353794513
             }
         },
         "methanopolis__botanist.tmx": {
-            "scale": 2,
-            "selectedLayer": 2,
+            "scale": 4,
+            "selectedLayer": 1,
             "viewCenter": {
-                "x": 224,
-                "y": 192
+                "x": 127,
+                "y": 132.375
             }
         },
         "methanopolis__house1.tmx": {
@@ -149,7 +149,7 @@
             "selectedLayer": 2,
             "viewCenter": {
                 "x": 224,
-                "y": 192
+                "y": 191.75
             }
         },
         "methanopolis__house2.tmx": {
@@ -172,24 +172,24 @@
             "scale": 2.172135416666667,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 271.8522958877832,
-                "y": 191.97698117731687
+                "x": 271.62210766095194,
+                "y": 192.20716940414817
             }
         },
         "methanopolis__pokecenter_f2.tmx": {
             "scale": 2.172135416666667,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 271.8522958877832,
-                "y": 191.97698117731687
+                "x": 271.62210766095194,
+                "y": 192.20716940414817
             }
         },
         "methanopolis__pokemart.tmx": {
             "scale": 2,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 240.25,
-                "y": 224
+                "x": 240,
+                "y": 224.25
             }
         },
         "methanopolis__townhall_f1 - Copy.tmx": {
@@ -209,11 +209,11 @@
             }
         },
         "methanopolis__townhall_f2.tmx": {
-            "scale": 2.172135416666667,
+            "scale": 2,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 271.8522958877832,
-                "y": 191.97698117731687
+                "x": 272,
+                "y": 191.75
             }
         },
         "methanopolis__workshop1.tmx": {
@@ -441,19 +441,19 @@
             }
         },
         "route2.tmx": {
-            "scale": 0.25,
-            "selectedLayer": 1,
+            "scale": 0.5,
+            "selectedLayer": 3,
             "viewCenter": {
-                "x": 1154,
+                "x": 1153,
                 "y": 512
             }
         },
         "route3.tmx": {
-            "scale": 0.33,
-            "selectedLayer": 1,
+            "scale": 0.5,
+            "selectedLayer": 3,
             "viewCenter": {
-                "x": 510.6060606060606,
-                "y": 1151.5151515151515
+                "x": 513,
+                "y": 1152
             }
         },
         "tree-rule.tmx": {
@@ -528,17 +528,17 @@
     "project": "AtomiaRegion.tiled-project",
     "recentFiles": [
         "porbital_town.tmx",
-        "polymer_research_institute.tmx",
-        "nose_town.tmx",
-        "phenol_falls.tmx",
-        "oxidation_observatory.tmx",
-        "hallogue_town.tmx",
-        "route2.tmx",
-        "pyrrole_town.tmx",
-        "route3.tmx",
-        "route1.tmx",
-        "methanopolis__workshop4.tmx",
-        "methanopolis__workshop3.tmx"
+        "methanopolis.tmx",
+        "porbital_town__room.tmx",
+        "porbital_town__house1_f1.tmx",
+        "porbital_town__house1_f2.tmx",
+        "porbital_town__house2_f1.tmx",
+        "porbital_town__house2_f2.tmx",
+        "porbital_town__townhall.tmx",
+        "porbital_town__workspace.tmx",
+        "methanopolis__apartment1_f1.tmx",
+        "methanopolis__apartment1_f2.tmx",
+        "methanopolis__apartment1_f3.tmx"
     ],
     "tileset.lastUsedFormat": "tsx"
 }

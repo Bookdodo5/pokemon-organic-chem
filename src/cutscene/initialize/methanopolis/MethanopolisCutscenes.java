@@ -64,6 +64,7 @@ public class MethanopolisCutscenes extends CutsceneTemplate {
             .faceTowards(chlorophyll, player)
             .faceTowards(kusari, player)
             .faceTowards(yuuki, player)
+            .musicStop()
             .wait(30)
             .parallel(new CutsceneBuilder()
                 .react(chlorophyll, cameraManager, Emotes.SAD)
@@ -152,6 +153,7 @@ public class MethanopolisCutscenes extends CutsceneTemplate {
             )
             .wait(30)
             .faceTowards(player, yuuki)
+            .music("Islands")
             .react(yuuki, cameraManager, Emotes.FRIENDLY)
             .speak("YUUKI",
                 "Yeah! My friend!",
@@ -193,6 +195,7 @@ public class MethanopolisCutscenes extends CutsceneTemplate {
             .move(player, 25, 38)
             .execute(()->player.setWalking())
             .move(player, 25, 41)
+            .musicStop()
             .waitEmote(player, cameraManager, 60)
             .wait(30)
             .react(player, cameraManager, Emotes.ANGRY)
@@ -245,6 +248,7 @@ public class MethanopolisCutscenes extends CutsceneTemplate {
                 "Umm... Bile only exists in animals, not plants...",
                 "I think I'm really actually genuinely exhausted..."
             )
+            .face(chlorophyll, FacingDirections.LEFT)
             .buildCutscene(),
             getKeyNPC(chlorophyll)
         );
@@ -259,6 +263,7 @@ public class MethanopolisCutscenes extends CutsceneTemplate {
             )
             .wait(60)
             .shout("YUUKI", "MY LEGS ARE NUMBBBB", cameraManager)
+            .face(yuuki, FacingDirections.RIGHT)
             .buildCutscene(),
             getKeyNPC(yuuki)
         );
@@ -274,6 +279,7 @@ public class MethanopolisCutscenes extends CutsceneTemplate {
                 "You might be able to befriend any kind of chemicals easily",
                 "Well, it's time to head back to the Lab."
             )
+            .face(kusari, FacingDirections.RIGHT)
             .buildCutscene(),
             getKeyNPC(kusari)
         );

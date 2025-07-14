@@ -89,7 +89,21 @@ public class DialogueRenderer {
 		SPEAKER_COLORS.put("AIRCON REPAIR MAN", new Color(70, 130, 180)); // Steel blue for technical work
 		SPEAKER_COLORS.put("COMPUTER REPAIR MAN", new Color(25, 25, 112)); // Midnight blue for tech
 		SPEAKER_COLORS.put("CHEF", new Color(255, 140, 0)); // Dark orange for cooking
-		SPEAKER_COLORS.put("AROMATHERAPIST", new Color(186, 85, 211)); // Medium violet red for aromatherapy
+		SPEAKER_COLORS.put("INTERN", new Color(255, 215, 0)); // Gold for ambitious interns
+		SPEAKER_COLORS.put("OLD INTERN", new Color(160, 82, 45)); // Saddle brown for experienced interns
+		SPEAKER_COLORS.put("MAID", new Color(255, 182, 193)); // Light pink for maids
+		SPEAKER_COLORS.put("MAID FAKE", new Color(255, 20, 147)); // Deep pink for suspicious maid
+		SPEAKER_COLORS.put("PRIME MINISTER", new Color(138, 43, 226)); // Blue violet for authority
+		SPEAKER_COLORS.put("RECEPTIONIST", new Color(244, 191, 100)); // Deep sky blue for medical staff
+		SPEAKER_COLORS.put("MART WORKER", new Color(0, 191, 255)); // Deep sky blue for medical staff
+		SPEAKER_COLORS.put("RESEARCHER", new Color(70, 130, 180)); // Steel blue for research
+		SPEAKER_COLORS.put("OLD CITIZENS", new Color(176, 196, 222)); // Light steel blue for elderly
+		SPEAKER_COLORS.put("AROMA THERAPIST", new Color(221, 160, 221)); // Plum for aromatherapy
+		SPEAKER_COLORS.put("BLUE", new Color(30, 144, 255)); // Dodger blue for blue apartment residents
+		SPEAKER_COLORS.put("YELLOW", new Color(255, 215, 0)); // Gold for yellow apartment residents
+		SPEAKER_COLORS.put("GAMBLER", new Color(178, 34, 34)); // Fire brick for gambling addiction
+		SPEAKER_COLORS.put("MAY", new Color(85, 107, 47)); // Dark olive green for house residents
+		SPEAKER_COLORS.put("BLACKBELT", new Color(85, 107, 47)); // Dark olive green for house residents
 	}
 
 	private Color tintWith(Color color, double weight, Color tintColor) {

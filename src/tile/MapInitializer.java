@@ -56,10 +56,10 @@ public class MapInitializer {
         
         initInterior("pokemart", "pokemarts", "Mart");
         
-        initInterior("townhall_f1", "interiors", "Motorcycle");
-        initInterior("townhall_f2", "interiors", "Motorcycle");
+        initInterior("townhall_f1", "interiors", "Tiall");
+        initInterior("townhall_f2", "interiors", "Tiall");
         
-        initInterior("house1", "interiors", "Motorcycle");
+        initInterior("house1", "interiors", "Gym");
         initInterior("house2", "interiors", "Motorcycle");
         
         initInterior("botanist", "interiors", "Safari");
@@ -69,13 +69,13 @@ public class MapInitializer {
         initInterior("workshop3", "interiors", "Lab");
         initInterior("workshop4", "interiors", "Lab");
         
-        initInterior("apartment1_f1", "interiors", "Motorcycle");
+        initInterior("apartment1_f1", "interiors", "Frontier");
         initInterior("apartment1_f2", "interiors", "Motorcycle");
         initInterior("apartment1_f3", "interiors", "Motorcycle");
         
-        initInterior("apartment2_f1", "interiors", "Motorcycle");
+        initInterior("apartment2_f1", "interiors", "Frontier");
         initInterior("apartment2_f2", "interiors", "Motorcycle");
-        initInterior("apartment2_f3", "interiors", "Motorcycle");
+        initInterior("apartment2_f3", "interiors", "Game");
         initInterior("apartment2_f4", "interiors", "Motorcycle");
         initInterior("apartment2_f5", "interiors", "Motorcycle");
     }
@@ -85,7 +85,7 @@ public class MapInitializer {
     }
 
     private static void initializeHallogueTown() {
-        initMap("hallogue_town", "essentials", "Motorcycle", 5440, -2496);
+        initMap("hallogue_town", "essentials", "Indigo", 5440, -2496);
     }
 
     private static void initializeRoute3() {
@@ -93,6 +93,6 @@ public class MapInitializer {
     }
 
     private static void initializePyrroleTown() {
-        initMap("pyrrole_town", "essentials", "Motorcycle", 64, -5728);
+        initMap("pyrrole_town", "essentials", "NewStart", 64, -5728);
     }
 }

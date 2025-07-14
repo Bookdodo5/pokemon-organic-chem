@@ -121,7 +121,7 @@ public class MapManager {
         }
     }
 
-    public final void updateVisibleMaps(int playerMapX, int playerMapY) {
+    public final void updateVisibleMaps(int playerMapX, int playerMapY, Runnable initializeEntities) {
         synchronized (visibleMapsLock) {
             int playerGlobalX = playerMapX + currentMap.getGlobalX();
             int playerGlobalY = playerMapY + currentMap.getGlobalY();
@@ -131,6 +131,7 @@ public class MapManager {
             int bottomLimit = playerGlobalY + MAX_SCREEN_ROW / 2 + 2;
 
             Set<MapData> newVisibleMaps = new HashSet<>();
+            boolean newMapAdded = false;
             for (MapData map : maps.values()) {
                 if (map.getGlobalX() >= rightLimit
                         || map.getGlobalX() + map.getWidth() <= leftLimit
@@ -139,9 +140,13 @@ public class MapManager {
                     continue;
                 }
                 newVisibleMaps.add(map);
+                if (!visibleMaps.contains(map)) newMapAdded = true;
             }
+
             visibleMaps.clear();
             visibleMaps.addAll(newVisibleMaps);
+
+            if(newMapAdded) initializeEntities.run();
         }
     }
 

@@ -60,9 +60,9 @@ public class GameContentManager {
 			stateManager,
 			mapManager,
 			playerDeckManager
-			);
-		initializePlayerAndMap();
+		);
 		initializeGameStates();
+		initializePlayerAndMap();
 		initializeFlags();
 		
 		this.cutsceneManager.setOverworldState(
@@ -79,7 +79,7 @@ public class GameContentManager {
 		player.setMapY(startingY);
 		player.setMap(startingMap);
 		mapManager.setCurrentMap(startingMap);
-		mapManager.updateVisibleMaps(startingX, startingY);
+		mapManager.updateVisibleMaps(startingX, startingY, ()->{});
 		cameraManager.update();
 	}
 

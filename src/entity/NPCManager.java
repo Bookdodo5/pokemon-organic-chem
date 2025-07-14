@@ -15,7 +15,7 @@ public class NPCManager {
 	}
 
 	private void initializeMethanopolisNPCs() {
-		npcs.add(new NPC.Builder("OldMan1", NPCSprites.OLD_MAN)
+		npcs.add(new NPC.Builder("OldMan1", NPCSprites.OLD_MAN_1)
 			.position(22, 52, "methanopolis")
 			.facing(FacingDirections.LEFT)
 			.path(new NPCPath(new ArrayList<>(Arrays.asList(
@@ -72,9 +72,9 @@ public class NPCManager {
 		);
 
 		npcs.add(new NPC.Builder("AirconRepairMan", NPCSprites.ENGINEER)
-			.position(29, 40, "methanopolis")
+			.position(11, 19, "methanopolis")
 			.facing(FacingDirections.DOWN)
-			.rect(2, 1)
+			.rect(1, 1)
 			.build()
 		);
 
@@ -85,9 +85,9 @@ public class NPCManager {
 		);
 
 		npcs.add(new NPC.Builder("ComputerRepairMan", NPCSprites.ENGINEER)
-			.position(11, 19, "methanopolis")
+			.position(29, 40, "methanopolis")
 			.facing(FacingDirections.RIGHT)
-			.rect(1, 1)
+			.rect(2, 1)
 			.build()
 		);
 
@@ -107,6 +107,362 @@ public class NPCManager {
 			.position(28, 28, "methanopolis")
 			.facing(FacingDirections.RIGHT)
 			.rect(2, 0)
+			.build()
+		);
+
+		/*
+		 * WORKSHOP Interns
+		 */
+
+		npcs.add(new NPC.Builder("Intern1_1", NPCSprites.SUNGLASSES)
+			.position(10, 8, "methanopolis__workshop1")
+			.facing(FacingDirections.RIGHT)
+			.build()
+		);
+
+		npcs.add(new NPC.Builder("Intern1_2", NPCSprites.SUNGLASSES)
+			.position(3, 4, "methanopolis__workshop1")
+			.facing(FacingDirections.LEFT)
+			.build()
+		);
+
+		npcs.add(new NPC.Builder("Intern1_3", NPCSprites.SUNGLASSES)
+			.position(17, 3, "methanopolis__workshop1")
+			.facing(FacingDirections.RIGHT)
+			.build()
+		);
+
+		npcs.add(new NPC.Builder("Intern1_4", NPCSprites.SUNGLASSES)
+			.position(11, 4, "methanopolis__workshop1")
+			.facing(FacingDirections.UP)
+			.build()
+		);
+
+		npcs.add(new NPC.Builder("Intern2", NPCSprites.SUNGLASSES)
+			.position(6, 3, "methanopolis__workshop2")
+			.facing(FacingDirections.DOWN)
+			.build()
+		);
+
+		npcs.add(new NPC.Builder("Intern3_1", NPCSprites.SUNGLASSES)
+			.position(2, 5, "methanopolis__workshop3")
+			.facing(FacingDirections.LEFT)
+			.build()
+		);
+
+		npcs.add(new NPC.Builder("Intern3_2", NPCSprites.SUNGLASSES)
+			.position(14, 3, "methanopolis__workshop3")
+			.facing(FacingDirections.UP)
+			.build()
+		);
+
+		npcs.add(new NPC.Builder("OldIntern1", NPCSprites.OLD_MAN_1)
+			.position(8, 4, "methanopolis__workshop3")
+			.facing(FacingDirections.DOWN)
+			.build()
+		);
+
+		npcs.add(new NPC.Builder("OldIntern2", NPCSprites.OLD_MAN_2)
+			.position(9, 4, "methanopolis__workshop3")
+			.facing(FacingDirections.DOWN)
+			.build()
+		);
+
+		npcs.add(new NPC.Builder("Intern4_1", NPCSprites.FAT)
+			.position(7, 8, "methanopolis__workshop4")
+			.facing(FacingDirections.DOWN)
+			.build()
+		);
+
+		npcs.add(new NPC.Builder("Intern4_2", NPCSprites.FAT)
+			.position(8, 8, "methanopolis__workshop4")
+			.facing(FacingDirections.DOWN)
+			.build()
+		);
+
+		/*
+		 * Townhall
+		 */
+
+		npcs.add(new NPC.Builder("PrimeMinister", NPCSprites.CAMPER)
+			.position(12, 9, "methanopolis__townhall_f1")
+			.facing(FacingDirections.DOWN)
+			.rect(3,1)
+			.build()
+		);
+
+		npcs.add(new NPC.Builder("Maid1", NPCSprites.MAID)
+			.position(3, 3, "methanopolis__townhall_f1")
+			.facing(FacingDirections.UP)
+			.build()
+		);
+
+		npcs.add(new NPC.Builder("Maid2", NPCSprites.MAID)
+			.position(4, 7, "methanopolis__townhall_f1")
+			.facing(FacingDirections.DOWN)
+			.build()
+		);
+
+		npcs.add(new NPC.Builder("Maid3", NPCSprites.MAID)
+			.position(14, 6, "methanopolis__townhall_f1")
+			.facing(FacingDirections.RIGHT)
+			.build()
+		);
+
+		npcs.add(new NPC.Builder("Maid4", NPCSprites.MAID)
+			.position(10, 3, "methanopolis__townhall_f2")
+			.facing(FacingDirections.RIGHT)
+			.build()
+		);
+
+		npcs.add(new NPC.Builder("MaidFake", NPCSprites.MAID)
+			.position(7, 5, "methanopolis__townhall_f2")
+			.facing(FacingDirections.UP)
+			.build()
+		);
+
+		/* 
+		 * Pokecenter
+		*/
+
+		npcs.add(new NPC.Builder("CenterReceptionist", NPCSprites.NURSE)
+			.position(6, 4, "methanopolis__pokecenter_f1")
+			.facing(FacingDirections.DOWN)
+			.build()
+		);
+
+		npcs.add(new NPC.Builder("CenterWorker", NPCSprites.NURSE)
+			.position(9, 3, "methanopolis__pokecenter_f1")
+			.facing(FacingDirections.DOWN)
+			.rect(0, 3)
+			.build()
+		);
+
+		npcs.add(new NPC.Builder("CenterResearcher", NPCSprites.SUNGLASSES)
+			.position(7, 3, "methanopolis__pokecenter_f2")
+			.facing(FacingDirections.UP)
+			.build()
+		);
+
+		npcs.add(new NPC.Builder("CenterOld_1", NPCSprites.OLD_WOMAN_1)
+			.position(2, 5, "methanopolis__pokecenter_f1")
+			.facing(FacingDirections.UP)
+			.rect(1, 2)
+			.build()
+		);
+
+		npcs.add(new NPC.Builder("CenterOld_2", NPCSprites.OLD_MAN_2)
+			.position(8, 6, "methanopolis__pokecenter_f1")
+			.facing(FacingDirections.DOWN)
+			.build()
+		);
+
+		npcs.add(new NPC.Builder("CenterOld_3", NPCSprites.OLD_MAN_1)
+			.position(11, 9, "methanopolis__pokecenter_f1")
+			.facing(FacingDirections.UP)
+			.rect(2, 1)
+			.build()
+		);
+
+		npcs.add(new NPC.Builder("CenterOld_4", NPCSprites.OLD_WOMAN_2)
+			.position(1, 4, "methanopolis__pokecenter_f2")
+			.facing(FacingDirections.UP)
+			.build()
+		);
+
+		/* 
+		 * Pokemart
+		*/
+
+		npcs.add(new NPC.Builder("MartWorker1", NPCSprites.SHOPKEEPER)
+			.position(12, 5, "methanopolis__pokemart")
+			.facing(FacingDirections.DOWN)
+			.build()
+		);
+
+		npcs.add(new NPC.Builder("MartWorker2", NPCSprites.SHOPKEEPER)
+			.position(10, 4, "methanopolis__pokemart")
+			.facing(FacingDirections.LEFT)
+			.build()
+		);
+
+		npcs.add(new NPC.Builder("Shopper1", NPCSprites.MAID)
+			.position(6, 7, "methanopolis__pokemart")
+			.facing(FacingDirections.LEFT)
+			.rect(7, 4)
+			.build()
+		);
+
+		npcs.add(new NPC.Builder("Shopper2", NPCSprites.MAID)
+			.position(4, 7, "methanopolis__pokemart")
+			.facing(FacingDirections.LEFT)
+			.rect(6, 4)
+			.build()
+		);
+
+		/* 
+		 * Aroma house
+		 */
+
+		npcs.add(new NPC.Builder("AromaTherapist2", NPCSprites.AROMALADY)
+			.position(7, 4, "methanopolis__botanist")
+			.facing(FacingDirections.DOWN)
+			.build()
+		);
+
+		npcs.add(new NPC.Builder("AromaTherapist3", NPCSprites.AROMALADY)
+			.position(8, 10, "methanopolis__botanist")
+			.facing(FacingDirections.RIGHT)
+			.rect(1, 1)
+			.build()
+		);
+
+		/*
+		 * apartment1 blue
+		 */
+
+		npcs.add(new NPC.Builder("BlueApartmentReception", NPCSprites.BLUE)
+			.position(4, 3, "methanopolis__apartment1_f1")
+			.facing(FacingDirections.DOWN)
+			.build()
+		);
+
+		npcs.add(new NPC.Builder("Blue1", NPCSprites.BLUE)
+			.position(6, 4, "methanopolis__apartment1_f2")
+			.facing(FacingDirections.UP)
+			.rect(4, 3)
+			.build()
+		);
+
+		npcs.add(new NPC.Builder("Blue2", NPCSprites.BLUE)
+			.position(12, 6, "methanopolis__apartment1_f2")
+			.facing(FacingDirections.RIGHT)
+			.rect(2, 2)
+			.build()
+		);
+
+		npcs.add(new NPC.Builder("Blue3", NPCSprites.BLUE)
+			.position(9, 8, "methanopolis__apartment1_f2")
+			.facing(FacingDirections.DOWN)
+			.rect(8, 1)
+			.build()
+		);
+
+		npcs.add(new NPC.Builder("Blue4", NPCSprites.BLUE)
+			.position(2, 7, "methanopolis__apartment1_f3")
+			.facing(FacingDirections.RIGHT)
+			.rect(8, 3)
+			.build()
+		);
+
+		npcs.add(new NPC.Builder("Blue5", NPCSprites.BLUE)
+			.position(4, 6, "methanopolis__apartment1_f3")
+			.facing(FacingDirections.UP)
+			.rect(8, 3)
+			.build()
+		);
+
+		npcs.add(new NPC.Builder("Blue6", NPCSprites.BLUE)
+			.position(6, 8, "methanopolis__apartment1_f3")
+			.facing(FacingDirections.DOWN)
+			.rect(8, 3)
+			.build()
+		);
+
+		npcs.add(new NPC.Builder("Blue7", NPCSprites.BLUE)
+			.position(8, 6, "methanopolis__apartment1_f3")
+			.facing(FacingDirections.RIGHT)
+			.rect(8, 3)
+			.build()
+		);
+
+		npcs.add(new NPC.Builder("Blue8", NPCSprites.BLUE)
+			.position(11, 9, "methanopolis__apartment1_f3")
+			.facing(FacingDirections.LEFT)
+			.build()
+		);
+
+		/*
+		 * apartment2 yellow
+		 */
+
+		npcs.add(new NPC.Builder("YellowApartmentReception", NPCSprites.YELLOW)
+			.position(5, 3, "methanopolis__apartment2_f1")
+			.facing(FacingDirections.DOWN)
+			.build()
+		);
+
+		npcs.add(new NPC.Builder("Yellow1", NPCSprites.YELLOW)
+			.position(2, 4, "methanopolis__apartment2_f2")
+			.facing(FacingDirections.LEFT)
+			.build()
+		);
+
+		npcs.add(new NPC.Builder("Yellow2", NPCSprites.YELLOW)
+			.position(7, 6, "methanopolis__apartment2_f2")
+			.facing(FacingDirections.RIGHT)
+			.rect(4, 3)
+			.build()
+		);
+
+		npcs.add(new NPC.Builder("Yellow3", NPCSprites.YELLOW)
+			.position(4, 3, "methanopolis__apartment2_f4")
+			.facing(FacingDirections.UP)
+			.rect(3, 1)
+			.build()
+		);
+
+		npcs.add(new NPC.Builder("Yellow4", NPCSprites.YELLOW)
+			.position(11, 8, "methanopolis__apartment2_f4")
+			.facing(FacingDirections.UP)
+			.rect(1, 1)
+			.build()
+		);
+
+		npcs.add(new NPC.Builder("Yellow5", NPCSprites.YELLOW)
+			.position(5, 8, "methanopolis__apartment2_f4")
+			.facing(FacingDirections.UP)
+			.rect(5, 2)
+			.build()
+		);
+
+		npcs.add(new NPC.Builder("Yellow6", NPCSprites.YELLOW)
+			.position(7, 8, "methanopolis__apartment2_f5")
+			.facing(FacingDirections.DOWN)
+			.rect(6, 2)
+			.build()
+		);
+
+		npcs.add(new NPC.Builder("Yellow7", NPCSprites.YELLOW)
+			.position(9, 6, "methanopolis__apartment2_f5")
+			.facing(FacingDirections.RIGHT)
+			.rect(2, 2)
+			.build()
+		);
+
+		npcs.add(new NPC.Builder("Gambler", NPCSprites.OLD_MAN_1)
+			.position(1, 3, "methanopolis__apartment2_f3")
+			.facing(FacingDirections.UP)
+			.build()
+		);
+	
+		/*
+		 * house 2
+		 */
+
+		npcs.add(new NPC.Builder("House2Person", NPCSprites.MAY)
+			.position(3, 7, "methanopolis__house2")
+			.facing(FacingDirections.DOWN)
+			.build()
+		);
+
+		/*
+		 * house 1
+		 */
+
+		npcs.add(new NPC.Builder("House1Person", NPCSprites.BLACKBELT)
+			.position(10, 7, "methanopolis__house1")
+			.facing(FacingDirections.DOWN)
 			.build()
 		);
 	}
