@@ -6,6 +6,13 @@ Sub Reactions:
     Reactant Products:
       Methane: Chloromethane
       Ethane: Chloroethane
+      Propane: 2-chloropropane
+  - Required Reagents: 
+    - Br2
+    Reactant Products:
+      Methane: Bromomethane
+      Ethane: Bromoethane
+      Propane: 2-bromopropane
 
 # Ozonolysis
 Name: Ozonolysis

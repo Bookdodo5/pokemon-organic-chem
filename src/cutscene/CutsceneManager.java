@@ -53,7 +53,7 @@ public class CutsceneManager {
 
 	private void initializeCutscenes() {
 		if (overworldState == null) return;
-		MethanopolisCutscenes.initialize(cutscenes, overworldState, npcManager, cameraManager, player, playerDeckManager);
+		MethanopolisCutscenes.initialize(cutscenes, overworldState, npcManager, cameraManager, player, playerDeckManager, stateManager);
 		PorbitalTownCutscenes.initialize(cutscenes, stateManager, overworldState, npcManager, cameraManager, player, mapManager, playerDeckManager);
 		Route1Cutscenes.initialize(cutscenes, npcManager, cameraManager, player, overworldState, playerDeckManager);
 	}

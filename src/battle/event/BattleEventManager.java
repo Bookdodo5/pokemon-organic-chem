@@ -10,7 +10,7 @@ public class BattleEventManager {
     private BattleEvent currentEvent;
 
     public BattleEventManager() {
-	eventQueue = new ArrayDeque<>();
+	    eventQueue = new ArrayDeque<>();
     }
     
     public void update() {
@@ -52,5 +52,9 @@ public class BattleEventManager {
 
     public void insertEvent(BattleEvent event) {
         eventQueue.addFirst(event);
+    }
+
+    public void clear() {
+        eventQueue.clear();
     }
 }

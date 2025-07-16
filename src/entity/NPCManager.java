@@ -294,7 +294,7 @@ public class NPCManager {
 		);
 
 		npcs.add(new NPC.Builder("Shopper2", NPCSprites.MAID)
-			.position(4, 7, "methanopolis__pokemart")
+			.position(4, 8, "methanopolis__pokemart")
 			.facing(FacingDirections.LEFT)
 			.rect(6, 4)
 			.build()
@@ -363,7 +363,7 @@ public class NPCManager {
 		);
 
 		npcs.add(new NPC.Builder("Blue6", NPCSprites.BLUE)
-			.position(6, 8, "methanopolis__apartment1_f3")
+			.position(6, 7, "methanopolis__apartment1_f3")
 			.facing(FacingDirections.DOWN)
 			.rect(8, 3)
 			.build()

@@ -94,7 +94,7 @@ public class DialogueRenderer {
 		SPEAKER_COLORS.put("MAID", new Color(255, 182, 193)); // Light pink for maids
 		SPEAKER_COLORS.put("MAID FAKE", new Color(255, 20, 147)); // Deep pink for suspicious maid
 		SPEAKER_COLORS.put("PRIME MINISTER", new Color(138, 43, 226)); // Blue violet for authority
-		SPEAKER_COLORS.put("RECEPTIONIST", new Color(244, 191, 100)); // Deep sky blue for medical staff
+		SPEAKER_COLORS.put("RECEPTIONIST", new Color(254, 100, 100)); // Deep sky blue for medical staff
 		SPEAKER_COLORS.put("MART WORKER", new Color(0, 191, 255)); // Deep sky blue for medical staff
 		SPEAKER_COLORS.put("RESEARCHER", new Color(70, 130, 180)); // Steel blue for research
 		SPEAKER_COLORS.put("OLD CITIZENS", new Color(176, 196, 222)); // Light steel blue for elderly

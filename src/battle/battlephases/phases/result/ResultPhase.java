@@ -81,8 +81,7 @@ public class ResultPhase extends BattlePhase {
             AnimationPosition position = topCard.getAnimationPosition();
             if(!playerPlay) position = position.getOpposite();
 
-            String dialogue = playerPlay ? "You played " : "Opponent played ";
-            dialogue += topCard.getName();
+            String[] dialogues = topCard.getPlayDialogue(playerPlay);
 
             battle.getEventManager().addEvent(new AnimationBattleEvent(
                     animationPath, position, 1, 5
@@ -91,7 +90,7 @@ public class ResultPhase extends BattlePhase {
                     actor, topCard, battle
             ));
             battle.getEventManager().addEvent(new DialogueBattleEvent(
-                    new Dialogue(new String[]{dialogue})
+                    new Dialogue(dialogues)
             ));
 
             bothEmpty = player.isQueueEmpty() && opponent.isQueueEmpty();

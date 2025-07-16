@@ -145,7 +145,7 @@ public class Reaction extends LPApplicable {
         player.setMolecule(MoleculeFactory.create(product));
         SoundManager.getSfxplayer().playSE("BattleDamageSuper");
         battle.getEventManager().insertEvent(new DialogueBattleEvent(
-            new Dialogue(new String[]{"Reaction Success!\nYour molecule has evolved into\n" + product.toUpperCase()})
+            new Dialogue(new String[]{"Reaction Success!\nThe molecule has evolved into\n" + product.toUpperCase()})
         ));
     }
 

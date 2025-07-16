@@ -54,3 +54,32 @@ Atoms:
   C: 2
   H: 5
   Cl: 1
+
+# Molecule: Propane
+Name: Propane
+SMILES: CCC
+Formula: C3H8
+Molecular Weight: 44
+Atoms:
+  C: 3
+  H: 8
+
+# Molecule: 2-bromopropane
+Name: 2-bromopropane
+SMILES: CC(Br)C
+Formula: C3H7Br
+Molecular Weight: 123
+Atoms:
+  C: 3
+  H: 7
+  Br: 1
+
+# Molecule: 2-chloropropane
+Name: 2-chloropropane
+SMILES: CC(Cl)C
+Formula: C3H7Cl
+Molecular Weight: 93
+Atoms:
+  C: 3
+  H: 7
+  Cl: 1

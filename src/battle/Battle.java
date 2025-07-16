@@ -97,6 +97,8 @@ public class Battle {
     }
 
     public void win() {
+        System.out.println("WIN");
+        eventManager.clear();
         eventManager.addEvent(new DialogueBattleEvent(
                 new Dialogue( new String[] {
                     "You successfully synthesized the target molecule!\nYou win the battle!",
@@ -106,6 +108,8 @@ public class Battle {
     }
 
     public void lose(boolean run) {
+        System.out.println("LOSE");
+        eventManager.clear();
         eventManager.addEvent(new DialogueBattleEvent(
                 new Dialogue( new String[] {
                     run ? "You ran away cowardly.\nYou lose the battle!" :

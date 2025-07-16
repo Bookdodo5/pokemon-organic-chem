@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "methanopolis__apartment2_f1.tmx",
+    "activeFile": "methanopolis__townhall_f2.tmx",
     "automapping.whileDrawing": true,
     "expandedProjectPaths": [
         "."
@@ -65,11 +65,11 @@
             "scaleInEditor": 1.5
         },
         "methanopolis.tmx": {
-            "scale": 2,
+            "scale": 1.5,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 1569,
-                "y": 906.25
+                "x": 896,
+                "y": 895.9999999999999
             }
         },
         "methanopolis__apartment1_f1.tmx": {
@@ -77,7 +77,7 @@
             "selectedLayer": 2,
             "viewCenter": {
                 "x": 224,
-                "y": 176
+                "y": 175.75
             }
         },
         "methanopolis__apartment1_f2.tmx": {
@@ -93,7 +93,7 @@
             "selectedLayer": 2,
             "viewCenter": {
                 "x": 224,
-                "y": 175.75
+                "y": 176
             }
         },
         "methanopolis__apartment2_f1.tmx": {
@@ -108,8 +108,8 @@
             "scale": 2.172135416666667,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 224.20333293370098,
-                "y": 175.8638052991248
+                "x": 224.203332933701,
+                "y": 176.0939935259561
             }
         },
         "methanopolis__apartment2_f3.tmx": {
@@ -140,8 +140,8 @@
             "scale": 4,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 127,
-                "y": 132.375
+                "x": 224,
+                "y": 192.125
             }
         },
         "methanopolis__house1.tmx": {
@@ -210,7 +210,7 @@
         },
         "methanopolis__townhall_f2.tmx": {
             "scale": 2,
-            "selectedLayer": 3,
+            "selectedLayer": 1,
             "viewCenter": {
                 "x": 272,
                 "y": 191.75
@@ -228,24 +228,24 @@
             "scale": 2,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 192.25,
-                "y": 160
+                "x": 192,
+                "y": 159.75
             }
         },
         "methanopolis__workshop3.tmx": {
             "scale": 1.972734375,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 320.1140548889153,
-                "y": 160.18375509880798
+                "x": 319.8605995802147,
+                "y": 159.93029979010734
             }
         },
         "methanopolis__workshop4.tmx": {
             "scale": 1.972734375,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 240.0221773395113,
-                "y": 160.18375509880798
+                "x": 239.7687220308107,
+                "y": 159.93029979010734
             }
         },
         "nose_town.tmx": {
@@ -260,8 +260,8 @@
             "scale": 0.5430338541666667,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 768.8286776165926,
-                "y": 767.9079247092675
+                "x": 767.9079247092673,
+                "y": 768.8286776165927
             }
         },
         "phenol_falls.tmx": {
@@ -332,8 +332,8 @@
             "scale": 2.172135416666667,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 224.20333293370098,
-                "y": 191.97698117731687
+                "x": 224.203332933701,
+                "y": 192.20716940414817
             }
         },
         "porbital_town__townhall.tmx": {
@@ -421,7 +421,7 @@
             "selectedLayer": 0,
             "viewCenter": {
                 "x": 897.1698707847463,
-                "y": 1080.4765206429245
+                "y": 1024.9681689253073
             }
         },
         "pyrrole_town.tmx": {
@@ -523,7 +523,8 @@
         "oxidation_observatory.tmx",
         "phenol_falls.tmx",
         "nose_town.tmx",
-        "polymer_research_institute.tmx"
+        "polymer_research_institute.tmx",
+        "port_oxton.tmx"
     ],
     "project": "AtomiaRegion.tiled-project",
     "recentFiles": [

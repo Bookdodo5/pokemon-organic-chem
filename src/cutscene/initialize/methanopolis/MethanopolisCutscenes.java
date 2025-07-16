@@ -12,6 +12,7 @@ import entity.NPC;
 import entity.NPCManager;
 import entity.Player;
 import gamestates.CameraManager;
+import gamestates.StateManager;
 import gamestates.states.OverworldState;
 import java.util.List;
 import java.util.Map;
@@ -19,7 +20,7 @@ import pokedex.PlayerDeckManager;
 
 public class MethanopolisCutscenes extends CutsceneTemplate {
 
-    public static void initialize(Map<String, List<Cutscene>> cutscenes, OverworldState overworldState, NPCManager npcManager, CameraManager cameraManager, Player player, PlayerDeckManager playerDeckManager) {
+    public static void initialize(Map<String, List<Cutscene>> cutscenes, OverworldState overworldState, NPCManager npcManager, CameraManager cameraManager, Player player, PlayerDeckManager playerDeckManager, StateManager stateManager) {
         ElevatorTemplate.addElevator(
                 overworldState, cutscenes,
                 "methanopolis", "apartment1", 11, 3, 3
@@ -29,13 +30,97 @@ public class MethanopolisCutscenes extends CutsceneTemplate {
                 "methanopolis", "apartment2", 11, 3, 5
         );
         
-        MethanopolisTalks.initialize(cutscenes, npcManager, cameraManager, player, playerDeckManager);
+        MethanopolisTalks.initialize(cutscenes, npcManager, cameraManager, player, playerDeckManager, stateManager);
         MethanopolisObjects.initialize(cutscenes, cameraManager, player, playerDeckManager);
     
         NPC chlorophyll = npcManager.getNPC("Chlorophyll");
         NPC yuuki = npcManager.getNPC("Yuuki");
         NPC kusari = npcManager.getNPC("Kusari");
         chlorophyllArrival(cutscenes, chlorophyll, yuuki, kusari, cameraManager, player);
+        enterMaidCode(cutscenes, cameraManager, player, overworldState);
+    }
+
+    private static void enterMaidCode(Map<String, List<Cutscene>> cutscenes, CameraManager cameraManager, Player player, OverworldState overworldState) {
+        addCutscene(cutscenes, new CutsceneBuilder()
+            .require("MAID_FAKE_GOT_KEY")
+            .sfx("BattleDamageSuper")
+            .camShake(cameraManager, 120)
+            .fadeIn(60)
+            .tp(player, 7, 6, "porbital_town__house1_f2", overworldState)
+            .music("Credits")
+            .fadeOut(60)
+            .face(player, FacingDirections.DOWN)
+            .speak("THINKING",
+                "THANK YOU FOR PLAYING.",
+                "This is Bookdodo / ARandomSquid, the creator of this game.",
+                "If you're seeing this, it means you've reached the end of the journey...",
+                "For now, and probably forever."
+            )
+            .tp(player, 9, 6, "porbital_town__house1_f1", overworldState)
+            .speak("THINKING",
+                "I've been working on this game for almost 2 months, and I know I severely underestimated the time needed to write and design an RPG world.",
+                "After putting everything into my NPCs and dialogues, I'm very exhausted now.",
+                "I'll be stopping development right here...",
+                "But before I part ways with this project, I want to share the world I wanted to build..."
+            )
+            .tp(player, 13, 4, "porbital_town__workspace", overworldState)
+            .speak("THINKING",
+                "The story was planned to be a 10-day journey through the ATOMIA region.",
+                "The region itself is shaped like a real molecule called \"Saxitoxin\", with towns as atoms, and routes as bonds.",
+                "It was meant to be a world where molecules was once really alive."
+            )
+            .tp(player, 6, 6, "porbital_town__room", overworldState)
+            .showImage("/images/RegionMap.png")
+            .speak("THINKING",
+                "Long ago, this world was inhabited by molecules.",
+                "They have their own laws, kingdoms, and their own way of living.",
+                "Their government is a democratic system, and every 4 years, they vote a molecule to rule the kingdom."
+            )
+            .tp(player, 13, 32, "route1", overworldState)
+            .speak("THINKING",
+            "But one day, a war broke out between two factions, the Z- and the E-faction, who fought over which isomer should rule.",
+            "The war escalated to the point that one dictator, Saxitoxin, seized the power, ending the democracy system entirely.",
+            "But nobody agrees, and the fight culminates in the destruction of all stereochemistry altogether",
+            "And the shape of the region now reflects the lone winner, Saxitoxin."
+            )
+            .tp(player, 6, 7, "methanopolis__botanist", overworldState)
+            .speak("THINKING",
+            "Some molecules couldn't accept this new environment. They disguised themselves and escaped to the 2D human world.",
+            "Which is the world of this game.",
+            "They hoped to find someone, anyone from a 3D world who could visualize stereochemistry and restore their old home.",
+            "DECANE is the main operator of this operation. And you are the 5th person she tried to seek help. (manipulatively)"
+            )
+            .tp(player, 8, 8, "methanopolis__pokecenter_f1", overworldState)
+            .speak("THINKING",
+                "This is a story and a game I can't finish, but I'm glad I can start it.",
+                "I've always been too ambitious when starting a project with a new technology I'm learning.",
+                "As my first Java code, I'm very proud of it."
+            )
+            .tp(player, 6, 6, "methanopolis__workshop2", overworldState)
+            .speak("THINKING",
+                "Even if it's incomplete, I'm happy the system code works well enough for me to not worry about not finishing the code.",
+                "The engine itself is ready for easy story writing.",
+                "The molecules, reactions, cards, battles, NPC, maps, and dialogues, can be added relatively easily.",
+                "So if you like this messy code I made and you like my idea, please feel free to build upon it.",
+                "I'll have a documentation and code ready by the time I release it."
+            )
+            .tp(player, 7, 5, "methanopolis__apartment2_f1", overworldState)
+            .speak("THINKING",
+                "Even though I didn't create a full game, I hope you enjoyed the journey, and have some laughs, despite how short it is.",
+                "Thank you, again, for playing my game."
+            )
+            .parallel(new CutsceneBuilder()
+                .fadeIn(240)
+                .sequential(new CutsceneBuilder()
+                    .wait(240)
+                    .tp(player, 24, 35, "methanopolis", overworldState)
+                    .buildActions()
+                )
+                .buildActions()
+            )
+            .fadeOut(120)
+            .buildCutscene(),
+            getKeyLocation(14, 3, "methanopolis__townhall_f2"));
     }
 
     private static void chlorophyllArrival(Map<String, List<Cutscene>> cutscenes, NPC chlorophyll, NPC yuuki, NPC kusari, CameraManager cameraManager, Player player) {

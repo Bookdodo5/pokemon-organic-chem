@@ -21,6 +21,10 @@ public abstract class Card extends LPApplicable {
 		this.animationPath = animationPath;
 		this.animationPosition = animationPosition;
 	}
+
+	public void onPlay(BattlePlayer player, ConditionBoard board) {
+		
+	}
 	
 	public boolean canPlay(BattlePlayer player, ConditionBoard board, Battle battle) {
 		int lpCost = getCurrentLP(player, board);
@@ -34,6 +38,7 @@ public abstract class Card extends LPApplicable {
 	protected abstract boolean isRightTurn(Battle battle);
 	
 	public void play(BattlePlayer player, ConditionBoard board, int handIndex) {
+		onPlay(player, board);
 		player.spend(getCurrentLP(player, board));
 		player.addToQueue(this);
 		handleCardAfterPlay(player, handIndex);
@@ -42,6 +47,13 @@ public abstract class Card extends LPApplicable {
 	protected abstract void handleCardAfterPlay(BattlePlayer player, int handIndex);
 	
 	public abstract void executeEffect(BattlePlayer player, BattlePlayer opponent, ConditionBoard board);
+
+	public String[] getPlayDialogue(boolean isPlayer) {
+		String actorName = isPlayer ? "You" : "Opponent";
+		return new String[] {
+			actorName + " played " + name
+		};
+	}
 
 	public String getName() {
 		return name;

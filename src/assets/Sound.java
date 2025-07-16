@@ -67,7 +67,6 @@ public class Sound implements Runnable {
 		loadSound("Title", "/music/Title.wav");
 		loadSound("BattleVictoryLeader", "/music/BattleVictoryLeader.wav");
 		loadSound("BattleGymLeader", "/music/BattleGymLeader.wav");
-		loadSound("BattleVictoryWild", "/music/BattleVictoryWild.wav");
 		loadSound("BattleVictoryTrainer", "/music/BattleVictoryTrainer.wav");
 		loadSound("BattleWild", "/music/BattleWild.wav");
 		loadSound("BattleTrainer", "/music/BattleTrainer.wav");
@@ -75,7 +74,6 @@ public class Sound implements Runnable {
 		loadSound("Lab", "/music/Lab.wav");
 		loadSound("Route2", "/music/Route2.wav");
 		loadSound("Route1", "/music/Route1.wav");
-		loadSound("Lerucean", "/music/Lerucean.wav");
 		loadSound("Lappet", "/music/Lappet.wav");
 		loadSound("NewStart", "/music/NewStart.wav");
 		loadSound("Credits", "/music/Credits.wav");
@@ -90,7 +88,6 @@ public class Sound implements Runnable {
 		loadSound("Mart", "/music/Mart.wav");
 		loadSound("Safari", "/music/Safari.wav");
 		loadSound("Tiall", "/music/Tiall.wav");
-		loadSound("Underwater", "/music/Underwater.wav");
 		loadSound("Rickroll", "/music/Rickroll.wav");
 	}
 

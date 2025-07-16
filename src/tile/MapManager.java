@@ -50,16 +50,16 @@ public class MapManager {
 
     protected void initializeMap(String mapName, String tilesetName, String music, int globalX, int globalY) {
         TileManager ground = new TileManager(
-            "/data/maps/" + mapName + "/ground.txt", tilesetName
+            "/data/maps/" + mapName + "/Ground.txt", tilesetName
         );
         TileManager decoration = new TileManager(
-            "/data/maps/" + mapName + "/decoration.txt", tilesetName
+            "/data/maps/" + mapName + "/Decoration.txt", tilesetName
         );
         TileManager obstacle = new TileManager(
-            "/data/maps/" + mapName + "/obstacle.txt", tilesetName
+            "/data/maps/" + mapName + "/Obstacle.txt", tilesetName
         );
         TileManager air = new TileManager(
-            "/data/maps/" + mapName + "/air.txt",  tilesetName
+            "/data/maps/" + mapName + "/Air.txt",  tilesetName
         );
 
         MapData mapData = new MapData(
@@ -113,8 +113,9 @@ public class MapManager {
         if (maps.containsKey(newMap)) {
             MapData newMapData = maps.get(newMap);
             String currentMusic = currentMap == null ? "" : currentMap.getMusic();
-            
-            if(!currentMusic.equals("") && !newMapData.getMusic().equals(currentMusic)) {
+
+            String playing = SoundManager.getMusicplayer().getCurrentTrackName();           
+            if(!currentMusic.equals("") && !playing.equals("Credits") && !newMapData.getMusic().equals(currentMusic)) {
                 SoundManager.getMusicplayer().play(newMapData.getMusic());
             }
             currentMap = newMapData;

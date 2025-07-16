@@ -22,15 +22,14 @@ public class ReactionRecord {
     
     private void initializeBattleReactionMap() {
         battleReactionMap.put("BATTLE_1", Set.of(
-            "Radical Halogenation",
             "Hydrohalogenation"
         ));
         battleReactionMap.put("BATTLE_2", Set.of(
-            "Alkene Hydrogenation",
-            "Alkene Halogenation"
+            "Radical Halogenation"
         ));
         battleReactionMap.put("BATTLE_3", Set.of(
-            "Hydrohalogenation",
+            "Alkene Hydrogenation",
+            "Alkene Halogenation",
             "Radical Hydrohalogenation",
             "Acid-Catalyzed Hydration",
             "Oxymecuration",

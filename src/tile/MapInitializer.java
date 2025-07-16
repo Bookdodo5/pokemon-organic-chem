@@ -18,11 +18,13 @@ public class MapInitializer {
     }
 
     private static void initMap(String name, String tile, String music, int x, int y) {
+        System.out.println("init: " + name);
         mapName = name;
         mapManager.initializeMap(name, tile, music, x, y);
     }
 
     private static void initInterior(String name, String tile, String music) {
+        System.out.println("init: " + name); 
         String fullName = mapName + "__" + name;
         mapManager.initializeMap(fullName, tile, music, interiorX, interiorX);
         interiorX += 10000;

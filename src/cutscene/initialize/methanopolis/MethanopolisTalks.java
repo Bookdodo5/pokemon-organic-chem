@@ -4,6 +4,7 @@ import cutscene.Cutscene;
 import cutscene.CutsceneBuilder;
 import cutscene.Emotes;
 import cutscene.template.CutsceneTemplate;
+import cutscene.template.NumericInputTemplate;
 import cutscene.template.OverworldItemTemplate;
 import dialogue.Dialogue;
 import dialogue.DialogueOption;
@@ -13,6 +14,7 @@ import entity.NPCManager;
 import entity.Player;
 import gamestates.CameraManager;
 import gamestates.FlagManager;
+import gamestates.StateManager;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -21,7 +23,7 @@ import pokedex.PlayerDeckManager;
 public class MethanopolisTalks extends CutsceneTemplate {
 
     public static void initialize(Map<String, List<Cutscene>> cutscenes, NPCManager npcManager,
-            CameraManager cameraManager, Player player, PlayerDeckManager playerDeckManager) {
+            CameraManager cameraManager, Player player, PlayerDeckManager playerDeckManager, StateManager stateManager) {
         NPC oldMan1 = npcManager.getNPC("OldMan1");
         NPC oldMan2 = npcManager.getNPC("OldMan2");
         NPC oldWoman1 = npcManager.getNPC("OldWoman1");
@@ -47,7 +49,7 @@ public class MethanopolisTalks extends CutsceneTemplate {
         botanistHouseTalks(cutscenes, npcManager, cameraManager, player);
         apartment1Talks(cutscenes, npcManager, player);
         apartment2Talks(cutscenes, npcManager, cameraManager, player);
-        housesTalks(cutscenes, npcManager, cameraManager, player);
+        housesTalks(cutscenes, npcManager, player, stateManager);
     }
 
     private static void staticTalks(Map<String, List<Cutscene>> cutscenes, NPC oldMan1, NPC oldMan2, NPC oldWoman1,
@@ -203,7 +205,8 @@ public class MethanopolisTalks extends CutsceneTemplate {
                     "You know? During the STEREOCHEMISTRY WAR, the Z-faction used living dirt to attack the E-faction.",
                     "The E-faction was completely annihilated by the living dirt.",
                     "The way it works is pretty simple. The living dirt contains microscopic organisms called \"Dirtus Agressiticus\".",
-                    "These little organisms can sense the 3D molecular structure of their targets and flip the structure in seconds.",
+                    "These little organisms are so powerful it DESTROY EVERY OTHER BACTERIA IN THE DIRT!",
+                    "They can sense the 3D molecular structure of their targets and flip the structure in seconds.",
                     "The Z-faction would throw handfuls of this living dirt at the E-faction soldiers.",
                     "Within minutes, the soldiers would change sides to the Z-faction!",
                     "Wanna buy some?"}, "DIRT SELLER")),
@@ -400,6 +403,28 @@ public class MethanopolisTalks extends CutsceneTemplate {
                 .buildCutscene(), getKeyNPC(aromatherapist));
     }
 
+    static Dialogue askEthylene(String speaker, String[] response) {
+        return new Dialogue(
+                new String[]{"..."}, speaker,
+                new DialogueOption("Uh, about ETHYLENE...?", new Dialogue(response, speaker))
+        );
+    }
+
+    static Dialogue askEthylene(String speaker, String response) {
+        return askEthylene(speaker, new String[]{response});
+    }
+
+    static Dialogue askEthyleneMaid(String speaker, String[] response) {
+        return new Dialogue(
+                new String[]{"..."}, speaker,
+                new DialogueOption("Did you carry the ETHYLENE box here?", new Dialogue(response, speaker))
+        );
+    }
+
+    static Dialogue askEthyleneMaid(String speaker, String response) {
+        return askEthyleneMaid(speaker, new String[]{response});
+    }
+
     private static void workshopTalks(Map<String, List<Cutscene>> cutscenes, NPCManager npcManager,
             CameraManager cameraManager, Player player) {
         NPC intern1_1 = npcManager.getNPC("Intern1_1");
@@ -415,7 +440,11 @@ public class MethanopolisTalks extends CutsceneTemplate {
                 .speak("INTERN", "Ahem...",
                         "This sunglass is one of our LAB's product. You can get it at a low low cost of...",
                         "1 TRILLION CHEMS!!!", "Would you like some?")
-                .wait(180).speak("INTERN", "Okay, fine.").face(intern1_1, FacingDirections.RIGHT)
+                .wait(180)
+                .speak("INTERN", "Okay, fine.")
+                .speak(askEthylene("INTERN",
+                        "Ethylene? Never heard of it. Why would sunglasses have anything to do with that?"))
+                .face(intern1_1, FacingDirections.RIGHT)
                 .buildCutscene(), getKeyNPC(intern1_1));
 
         NPC intern1_2 = npcManager.getNPC("Intern1_2");
@@ -427,6 +456,8 @@ public class MethanopolisTalks extends CutsceneTemplate {
                         "Even without clear glasses, you can see.",
                         "Protect yourself from RADICALS with our sunglasses!",
                         "With a price of 1 trillion chems, you can see, and be safe!")
+                .speak(askEthylene("INTERN",
+                        "I can see... You're asking about classified information. Of course I can't tell you."))
                 .face(intern1_2, FacingDirections.LEFT).buildCutscene(), getKeyNPC(intern1_2));
 
         NPC intern1_3 = npcManager.getNPC("Intern1_3");
@@ -441,6 +472,9 @@ public class MethanopolisTalks extends CutsceneTemplate {
                         cameraManager)
                 .shout("INTERN", "A NEW TECHNOLOGY NEVER THOUGHT OF BEFORE!", cameraManager)
                 .shout("INTERN", "1 TRILLION CHEMS ONLY!", cameraManager)
+                .speak(askEthylene("INTERN", new String[] {
+                        "Wow... You're breaking conventional thinking by asking that!",
+                        "And I'm going to break conventional thinking by not answering you!"}))
                 .face(intern1_3, FacingDirections.RIGHT).buildCutscene(), getKeyNPC(intern1_3));
 
         NPC intern1_4 = npcManager.getNPC("Intern1_4");
@@ -454,6 +488,9 @@ public class MethanopolisTalks extends CutsceneTemplate {
                 .shout("INTERN", "PAY US PROPERLY!!!", cameraManager).wait(30)
                 .shout("INTERN", "WITH ONLY 1 TRILLION CHEMS, YOU CAN BE SAFE, AND I CAN BE FREE!!!",
                         cameraManager)
+                .speak(askEthylene("INTERN", new String[] {
+                        "I'M NOT AN INFORMATION SOURCE!!!",
+                        "I'M HUMAN!!!"}))
                 .face(intern1_4, FacingDirections.UP).buildCutscene(), getKeyNPC(intern1_4));
 
         NPC intern2 = npcManager.getNPC("Intern2");
@@ -478,11 +515,9 @@ public class MethanopolisTalks extends CutsceneTemplate {
                 "I will try my best to manipulate the court to my favor.",
                 "You will lose everything.", "You can't win.",
                 "Because I'm more negative than you.", "Electronegative...",
-                "If you select HOMOLYTIC CLEAVAGE, you will lose everything.",
-                "No HOMO.",
-                "(LYTIC CLEAVAGE)",
+                "If you select HETEROLYTIC CLEAVAGE, you will lose everything.",
                 "So...", "What's the solution?")
-                .wait(90).shout("INTERN", "HETEROLYTIC CLEAVAGE!!!", cameraManager).wait(30)
+                .wait(90).shout("INTERN", "HOMOLYTIC CLEAVAGE!!!", cameraManager).wait(30)
                 .speak("INTERN", "You don't go to court.", "You ask someone else to break us up.",
                         "There's no court, no judge, no jury.",
                         "There's no way I can manipulate things to my favor.",
@@ -494,7 +529,9 @@ public class MethanopolisTalks extends CutsceneTemplate {
                         "And since this isn't anyone's fault by the rule of court, we will be free.",
                         "We will get half of what we have built up together.",
                         "You will get fairness...")
-                .wait(30).shout("INTERN", "HOMOLYTIC CLEAVAGE!!!", cameraManager).wait(30)
+                .wait(30)
+                .shout("INTERN", "HOMOLYTIC CLEAVAGE!!!", cameraManager)
+                .wait(30)
                 .waitEmote(player, cameraManager, 60).wait(30).music("Lab")
                 .speak("INTERN", "That's all I have for you.",
                         "Even if it's a story about breaking up, it's the start of the new stage of life.",
@@ -502,6 +539,16 @@ public class MethanopolisTalks extends CutsceneTemplate {
                         "If you like my explanation, please buy my sunglasses V2.",
                         "It's 300% better than the ones the big LABs with multiple people are building.",
                         "It's 999 billion chems, and it's worth it.", "I guarantee.")
+                .speak(askEthylene("INTERN",
+                        new String[] {
+                        "Huh...",
+                        "I see...",
+                        "You know about ETHYLENE...",
+                        "YOU, an OUTSIDER, know about ETHYLENE...?",
+                        "...",
+                        "...",
+                        "It seems like someone in the other labs are about to make a HETEROLYTIC CLEAVAGE for themselves and ruin us all...",
+                        "There's an imposter among us..."}))
                 .react(intern2, cameraManager, Emotes.FRIENDLY).face(intern2, FacingDirections.DOWN)
                 .buildCutscene(), getKeyNPC(intern2));
 
@@ -511,6 +558,8 @@ public class MethanopolisTalks extends CutsceneTemplate {
                         "It involves a lot of staring into nothingness. With sunglasses.",
                         "Empty, going on forever, until it stops",
                         "Buy my glasses, and it will stop.", "Trust me.")
+                .speak(askEthylene("INTERN",
+                        "Buy my glasses, and I'll answer."))
                 .face(intern3_1, FacingDirections.LEFT).buildCutscene(), getKeyNPC(intern3_1));
 
         NPC intern3_2 = npcManager.getNPC("Intern3_2");
@@ -520,15 +569,24 @@ public class MethanopolisTalks extends CutsceneTemplate {
                         "If you can tag someone, you're safe, and that person needs to tag someone else.",
                         "Let's say you are IT, you are a RADICAL.",
                         "You have never felt love in this life. You want love.",
-                        "You go tag someone else, and not only that, you steal their loved ones.",
+                        "You go tag some NON-RADICAL normal person, and not only that, you steal their loved ones.",
                         "Because you are evil radical. You can steal anybody's loved ones.",
                         "You became fullfilled. However...",
                         "That someone lose their loved ones. They now want love.",
+                        "They're unfulfilled.",
                         "They now want to tag someone else. They now want to steal someone else's loved ones.",
                         "That's how life goes.", "That's how life PROPAGATES.",
                         "That's how evil propagates to the world...",
                         "And that's why you will buy my glasses for 1.1 trillion CHEMS.",
                         "You lack loved ones, and this sunglasses will fill that place...")
+                .speak(askEthylene("INTERN", new String[] {
+                        "...",
+                        "Wow... Really?",
+                        "You're asking about ETHYLENE...?",
+                        "...",
+                        "There's an IT among us...",
+                        "And that IT already tagged you...?",
+                        "There's no hope for the LABs anymore..."}))
                 .face(intern3_2, FacingDirections.UP).buildCutscene(), getKeyNPC(intern3_2));
 
         NPC oldIntern1 = npcManager.getNPC("OldIntern1");
@@ -537,6 +595,17 @@ public class MethanopolisTalks extends CutsceneTemplate {
                         "We were cool back then.",
                         "But as time passes, the only thing I can contribute to this lab is eating.",
                         "I don't have the power to sell sunglasses anymore.")
+                .speak(askEthylene("OLD INTERN", new String[] {
+                        "Ho? You're asking about ETHYLENE...?",
+                        "...",
+                        "I'm too old to understand the new things that are coming to the lab.",
+                        "Hm...",
+                        "Hmm...",
+                        "Hmmm...",
+                        "...",
+                        "If it's that box of chemical sent here yesterday, a MAID carried it to the TOWNHALL...",
+                        "I don't know what's going on, but I hope that helps."}))
+                .setFlag("CLUE_MAID")
                 .face(oldIntern1, FacingDirections.DOWN).buildCutscene(), getKeyNPC(oldIntern1));
 
         NPC oldIntern2 = npcManager.getNPC("OldIntern2");
@@ -544,6 +613,8 @@ public class MethanopolisTalks extends CutsceneTemplate {
                 .speak("OLD INTERN", "I've been an intern here for 40 years.",
                         "One day, I'll graduate...", "The day I can buy my own sunglasses.",
                         "Please buy it...")
+                .speak(askEthylene("OLD INTERN",
+                        "I just want to be a happy graduate..."))
                 .face(oldIntern2, FacingDirections.DOWN).buildCutscene(), getKeyNPC(oldIntern2));
 
         NPC intern4_1 = npcManager.getNPC("Intern4_1");
@@ -554,13 +625,18 @@ public class MethanopolisTalks extends CutsceneTemplate {
                         "And it's how two evil RADICALS that love each other very much meet each other, and they become stable.",
                         "They no longer need to wreak havoc to the world.",
                         "They have each other...", "And that's enough.",
+                        "It's TERMINATION!",
                         "BTW, Buy my innovative sunglasses, please?")
+                .speak(askEthylene("INTERN",
+                        "I know all secrets except that one. That's not in my food..."))
                 .face(intern4_1, FacingDirections.DOWN).buildCutscene(), getKeyNPC(intern4_1));
 
         NPC intern4_2 = npcManager.getNPC("Intern4_2");
         addCutscene(cutscenes, new CutsceneBuilder().setFlag("INTERN_KNOW").faceTowards(intern4_2, player)
                 .speak("INTERN", "I ate the secrets of the universe.", "They tasted like... chicken.",
                         "My sunglasses taste better.", "Only 999,999,999,999 CHEMS.")
+                .speak(askEthylene("INTERN",
+                        "If I eat information about ETHYLENE, I might have a food poisoning..."))
                 .face(intern4_2, FacingDirections.DOWN)
                 .buildCutscene(), getKeyNPC(intern4_2));
     }
@@ -644,21 +720,37 @@ public class MethanopolisTalks extends CutsceneTemplate {
 
         NPC maid1 = npcManager.getNPC("Maid1");
         addCutscene(cutscenes, new CutsceneBuilder().setFlag("MAID_KNOW").faceTowards(maid1, player)
-                .speak("MAID", "Welcome. Please wash your hands.",
-                        "The Prime Minister is very particular about germs.",
-                        "He doesn't want to contract CYSTIC FIBROSIS from anyone.",
+                .speak("MAID",
+                        "I'm MAID 12348.",
+                        "Welcome. Please wash your hands.",
+                        "The Prime Minister is very particular about BOND CLEAVAGE.",
+                        "He doesn't want anyone to INITIATE radical reactions in his house.",
                         "He says it... clogs his gears of democracy.",
                         "I'm not sure what that means, but I'm sure it's important to him.")
                 .wait(30)
                 .waitEmote(maid1, cameraManager, 60)
                 .wait(30)
                 .speak("MAID",
-                        "Also... Don't tell him that CYSTIC FIBROSIS isn't caused by a germ.",
-                        "It's just a genetic mutation passed down from generation to generation.",
-                        "It effects mucus-producing cells and they can't produce good quality mucus.",
+                        "Also... Don't tell him that HOMOLYTIC CLEAVAGE that creates RADICALS isn't caused by a germ.",
+                        "It's just a dissociation of a bond from some external energy, like LIGHT.",
+                        "Even if you washed your hand, nothing happens...",
                         "...",
                         "So, don't tell him please? Let him dream in peace...",
-                        "Just like when kids dream about unicorns and santa..."
+                        "He didn't study in the LABs, so he doesn't know.",
+                        "Just like when kids don't know the truth about unicorns and santa..."
+                )
+                .wait(60)
+                .condition("CLUE_MAID", new CutsceneBuilder()
+                .speak(askEthyleneMaid("MAID", new String[]{
+                                "I don't know what you're talking about...",
+                                "Why would there be an ETHYLENE box in this town?",
+                                "This town of METHANOPOLIS, whose specialty is single SIGMA bonds?",
+                                "...",
+                                "Wait, come to think of it, the maid working upstairs came from ALKENISTRA...",
+                                "Could it be that she's related to what you're talking about?",
+                                "I'm not sure."
+                        }))
+                        .buildActions()
                 )
                 .face(maid1, FacingDirections.UP)
                 .buildCutscene(), getKeyNPC(maid1));
@@ -666,11 +758,27 @@ public class MethanopolisTalks extends CutsceneTemplate {
         NPC maid2 = npcManager.getNPC("Maid2");
         addCutscene(cutscenes, new CutsceneBuilder().setFlag("MAID_KNOW").faceTowards(maid2, player)
                 .speak("MAID",
+                        "I'm MAID 24209.",
                         "I polished this table for three hours today.",
                         "You can literally see your reflection in it.",
                         "See? That's your face.",
                         "...",
-                        "The face that nobody takes seriously."
+                        "The face that nobody takes seriously.",
+                        "You reminded me of that AROMA girl who made a joke about BICYCLIC molecule...",
+                        "She compares BICYCLIC and BICYCLE... How unserious.",
+                        "You and she should just submerge yourself in LIVING DIRT and breathe in the BACTERIA-produced GEOSMIN.",
+                        "You two will eat STREPTOMYCES for food.",
+                        "If you're lucky, you'll die by breathing in too much dirt.",
+                        "And you'll be born into a better life."
+                )
+                .wait(60)
+                .condition("CLUE_MAID", new CutsceneBuilder()
+                .speak(askEthyleneMaid("MAID", new String[]{
+                                "You aren't even trying to take yourself seriously, huh?",
+                                "What do you mean by ETHYLENE box?",
+                                "Don't mess with me. I'm continuing my work."
+                        }))
+                        .buildActions()
                 )
                 .face(maid2, FacingDirections.DOWN)
                 .buildCutscene(), getKeyNPC(maid2));
@@ -678,22 +786,45 @@ public class MethanopolisTalks extends CutsceneTemplate {
         NPC maid3 = npcManager.getNPC("Maid3");
         addCutscene(cutscenes, new CutsceneBuilder().setFlag("MAID_KNOW").faceTowards(maid3, player).speak(
                 "MAID",
+                "I'm MAID 69420.",
                 "The other maids and I have a bet on how long the Prime Minister's latest policy will last.",
                 "It's for \"cleaning\" up the city.",
-                "The policy prohibits people from walking around in circle, wandering randomly, and following paths.",
+                "The policy prohibits NORMAL PEOPLE from walking around the town to prevent RADICALS from attacking them.",
+                "And since there will only be RADICALS walking around, when they bump into each other, they will become good people again.",
+                "He said it's the perfect way to prevent PROPAGATION and TERMINATE the undesired reactions.",
+                "Buttttt... That's unrealistic.",
                 "I'm betting on \"less than a week\".",
                 "The other maid bet on \"not even a minute\".",
-                "Since it's work time, and a minute has passed since we made the bet, can you please go confirm it for us?",
+                "A minute has already passed since we made a bet. Can you tell me if the policy is still going fine?",
+                "If people follow it, you should only see RAINBOW-HAIRED RADICALS walking outsides and no one else...",
+                "...",
                 "...")
-                .wait(30)
+                .wait(60)
                 .waitEmote(player, cameraManager, 60)
                 .react(player, cameraManager, Emotes.SAD)
                 .wait(30)
                 .speak("MAID",
                         "Ha... That face tells me everything.",
+                        "You really can't prevent lovey dovey couple from walking...",
                         "I lost huh?",
                         "That's too bad.",
                         "I guess I'll need to pay her 2 MAID OUTFITS"
+                )
+                .wait(60)
+                .condition("CLUE_MAID", new CutsceneBuilder()
+                .speak(askEthyleneMaid("MAID", new String[]{
+                                "That's...",
+                                "I've never heard of its existence before.",
+                                "Yeah, I'm the one working with boxes, but I can assure you there's nothing like that here.",
+                                "We have actual section for quality control of LPG we produce.",
+                                "There's no way we would let any LPG with ETHYLENE pass through.",
+                                "I'm sure these boxes aren't the one you're looking for.",
+                                "But if I were to help you... It might be the maid in front of the sink who did it.",
+                                "She's new here, and she might not know what's going on.",
+                                "So... Maybe she mistakenly took that box you mentioned...?",
+                                "I guess...?"
+                        }))
+                        .buildActions()
                 )
                 .face(maid3, FacingDirections.RIGHT)
                 .buildCutscene(), getKeyNPC(maid3));
@@ -701,13 +832,30 @@ public class MethanopolisTalks extends CutsceneTemplate {
         NPC maid4 = npcManager.getNPC("Maid4");
         addCutscene(cutscenes, new CutsceneBuilder().setFlag("MAID_KNOW").faceTowards(maid4, player)
                 .speak("MAID",
+                        "I'm MAID 13377.",
                         "This is the second floor. It's... the same as the first floor, but higher.",
                         "You're closer to the sun.",
                         "Isn't it profound?",
                         "Everything's so easy. You can just randomly win 2 MAID OUTFITS from other maids out of nowhere.",
                         "Luck is something else when you receive solar energy.",
-                        "What idiots would cover their eyes with black glasses just to not receive solar energy?",
+                        "...",
+                        "If it's possible, I would like to work in the 5-FLOOR APARTMENT instead of this.",
+                        "The sun there must be so delicious on the 5th floor...",
+                        "Delicious like DURIAN, like the smell of ETHANETHIOL added to LPG.",
+                        "Like the smell of sulfur.",
                         "Don't you agree?"
+                )
+                .wait(60)
+                .condition("CLUE_MAID", new CutsceneBuilder()
+                .speak(askEthyleneMaid("MAID", new String[]{
+                                "...",
+                                "Isn't it that girl who made a bet with me?",
+                                "If I think about it again, someone who cannot even predict the outcome of a policy can't be a maid.",
+                                "Maids should be way more precise and competent than that.",
+                                "Isn't she the one who would do something strange like carrying a box of chemical that's not related to our job at all?",
+                                "Isn't she the culprit?",
+                        }))
+                        .buildActions()
                 )
                 .face(maid4, FacingDirections.RIGHT)
                 .buildCutscene(), getKeyNPC(maid4));
@@ -724,7 +872,7 @@ public class MethanopolisTalks extends CutsceneTemplate {
                         }, "MAID FAKE",
                         new DialogueOption("Are you a spy?", new Dialogue(new String[]{
                         "A spy? Don't be ridiculous!",
-                        "Why would a spy tell you who they are..",
+                        "Why would a spy tell you who they are...",
                 }, "MAID FAKE"), ()->FlagManager.getInstance().addFlag("SELECT_SPY")),
                         new DialogueOption("You don't look like a maid.", new Dialogue(new String[]{
                     "I'm not a maid. I'm the Prime Minister.",
@@ -764,18 +912,49 @@ public class MethanopolisTalks extends CutsceneTemplate {
                         .music("Cave")
                         .speak("MAID FAKE",
                                 "Rather... There might be a spy maid among us...",
-                                "I don't know who they are though... I only remember hiring 4 maids, not 5.",
+                                "I don't know who they are though... I only remember hiring 6 maids, not 7.",
                                 "One maid is assigned to pretend to be the prime minister",
-                                "And the other 3 is meant to do the actual work.",
+                                "Three maids are meant to do the actual work in the house.",
+                                "And the other 2 are for shopping.",
                                 "But when I walk around the house, I can see 4 maids doing actual works...",
-                                "I don't know...",
-                                "Can you help me find out which maid is the spy?"
+                                "I don't know..."
+                        )
+                        .condition("CLUE_MAID", new CutsceneBuilder()
+                                .speak(new Dialogue(new String[]{
+                                        "...",
+                                }, "MAID FAKE", new DialogueOption("Spy... ETHYLENE...", new Dialogue(new String[]{
+                                        "Ethylene...?",
+                                        "Do you mean the spy has started executing the plan?",
+                                        "And... that plan is stealing ETHYLENE from the LABs?",
+                                        "...",
+                                        "I really need you to find the spy now.",
+                                        "Our town is at risk.",
+                                        "There might be a way to distinguish spy from the real maids...",
+                                        "The maids in this house is supposed to have extensive knowledge about chemicals.",
+                                        "If someone says any facts that contradicts what's known in the town, that person must be the spy...",
+                                        "Please find the spy for me, and enter the spy's maid code to the key pedestal in my bedroom.",
+                                        "Be warned, it's a high-tech security system. One wrong guess, and it will trigger an alarm and... nothing will happen.",
+                                        "You are the only one I can rely on."
+                                }, "MAID FAKE"))))
+                                .wait(30)
+                                .react(maidFake, cameraManager, Emotes.SAD)
+                                .wait(60)
+                                .setFlag("MAID_FAKE_START")
+                                .buildActions()
                         )
                         .removeFlag("SELECT_SPY")
                         .buildActions()
                 )
                 .face(maidFake, FacingDirections.UP)
                 .buildCutscene(), getKeyNPC(maidFake));
+
+        NumericInputTemplate.addNumericInput(
+                cutscenes, "methanopolis__townhall_f2",
+                14, 2, List.of(2, 4, 2, 0, 9),
+                "MAID_FAKE_GOT_KEY",
+                new String[]{"MAID_FAKE_START"},
+                new String[]{"MAID_FAKE_GOT_KEY"}
+        );
     }
 
     private static void pokecenterTalks(Map<String, List<Cutscene>> cutscenes, NPCManager npcManager,
@@ -955,7 +1134,7 @@ public class MethanopolisTalks extends CutsceneTemplate {
                         .speak("AROMA THERAPIST",
                             "GEOSMINN!!!",
                             "It's the molecule produced by soil bacteria that gives rain its signature smell!",
-                            "The structure of the molecule has TWO 6-carbon rings. It's DOUBLE rings.",
+                            "The structure of the molecule has TWO 6-carbon rings connected together. It's DOUBLE rings.",
                             "It's called BICYCLIC. Not to be confused with BICYCLE.",
                             "Bicycle is more painful because you can fall off it and die.",
                             "FUN FACT:\nThe bactaria \"Streptomyces\" evolve this smell for a symbiotic relationship!",
@@ -1026,10 +1205,22 @@ public class MethanopolisTalks extends CutsceneTemplate {
             String[] messages = switch (i) {
                 case 1 -> new String[]{"You know? Yellow, compared to blue, has a lot less things you can do with.", "In english, nothing really sounds like \"Yellow\". You can yell \"OH!!!\", and that's it."};
                 case 2 -> new String[]{"I'm yellow like a banana.", "Ba Ba Ba Ba Ba Banana.", "Potato Na Ah Ah", "Don't eat me."};
-                case 3 -> new String[]{"Yellow is the color of gold.", "It's the color of scamming rich people without education.", "It's also the color of theives in B-grade movies who only mindlessly steal valuables."};
+                case 3 -> new String[]{"When life gives me green limes,", "I demand yellow lemons from it.", "NO GREEN ALLOWED HERE IN MY PLACE!"};
                 case 4 -> new String[]{"Yellow...", "It doesn't exist...", "You're seeing illusions. I'm not yellow...", "I'm a mix of green and red, but your eyes are too bad to distinguish..."};
                 case 5 -> new String[]{"You know why rubber ducks are yellow?", "Because if it's not yellow, it's not a rubber duck!"};
-                case 6 -> new String[]{"When life gives me green limes,", "I demand yellow lemons from it.", "NO GREEN ALLOWED HERE IN MY PLACE!"};
+                case 6 -> new String[]{
+                        "...",
+                        "I know, you're coming here to listen about sulfur, didn't you?",
+                        "If I'm wrong, sorry for confusing you, but I'll continue.",
+                        "Sulfur is a yellow molecule used in some organic chemistry reactions.",
+                        "SULFURIC ACID, a common acid for reactions, has sulfur in it.",
+                        "DIMETHYL SULFOXIDE (DMSO), an important polar aprotic solvent, has sulfur in it.",
+                        "SULFONATION, a reaction you can use to control the product of an aromatic molecule and then revert...",
+                        "Also has sulfur as the main element in the reaction.",
+                        "Yellow is the color of sulfur.",
+                        "Remember that.",
+                        "If you want to listen more, go to the AROMA THERAPIST's house. Someone there really likes the smell of sulfur for some reason..."
+                };
                 case 7 -> new String[]{"Ever thought why file explorer icons are yellow?", "If you are thinking about that, please get help.", "That knowledge doesn't help with your life in any way.", "Go do something productive."};
                 default -> new String[]{""};
             };
@@ -1104,7 +1295,7 @@ public class MethanopolisTalks extends CutsceneTemplate {
     }
 
     private static void housesTalks(Map<String, List<Cutscene>> cutscenes, NPCManager npcManager,
-            CameraManager cameraManager, Player player) {
+            Player player, StateManager stateManager) {
         NPC house2Person = npcManager.getNPC("House2Person");
         addCutscene(cutscenes, new CutsceneBuilder().setFlag("MAY_KNOW").faceTowards(house2Person, player)
                 .speak("MAY",
@@ -1123,8 +1314,24 @@ public class MethanopolisTalks extends CutsceneTemplate {
                         "To be a true alchemist, you must train your mind and your soul!",
                         "Here in this gym, we do 100 push ups, 100 sit ups, and a 10km run every single day!",
                         "And on top of that, we do 10 synthesis battles after lunch break!",
-                        "That's how we become true alchemist."
+                        "That's how we become true alchemist.",
+                        "Let's fight!"
                 )
+                .battle(stateManager, 2)
+                .condition("BATTLE_WIN", new CutsceneBuilder()
+                        .speak("BLACKBELT",
+                                "You won!",
+                                "Congrats!"
+                        )
+                        .removeFlag("BATTLE_WIN")
+                        .buildActions())
+                .condition("BATTLE_LOSE", new CutsceneBuilder()
+                        .speak("BLACKBELT",
+                                "You lost!",
+                                "Come back anytime!"
+                        )
+                        .removeFlag("BATTLE_LOSE")
+                        .buildActions())
                 .buildCutscene(), getKeyNPC(house1Person));
     }
 }

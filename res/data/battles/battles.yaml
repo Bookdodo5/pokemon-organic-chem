@@ -16,4 +16,19 @@ Opponent Molecule: Ethane
 Target Molecule: Chloroethane
 Battle Theme: indoor
 
+# Gym - Propane vs Propane
+ID: 2
+Battle Specific Cards:
+  - Cl2
+  - Br2
+  - Halo on Crack
+  - Sunny Day
+Opponent Deck:
+  - Rain Dance
+  - Rain Dance
+Player Molecule: Propane
+Opponent Molecule: Propane
+Target Molecule: 2-bromopropane
+Battle Theme: CHAMPION1
+
 # End
